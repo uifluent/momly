@@ -12,18 +12,30 @@ import styles from "./ResultScreen.module.css";
 const activities = activitiesData as Activity[];
 
 const TIME_LABEL: Record<string, string> = {
-  short: "⏱ 20–40 min",
-  medium: "⏱ 40–90 min",
-  long: "⏱ 1.5–3 hrs",
+  short:  "⏱ 20–40 мин",
+  medium: "⏱ 40–90 мин",
+  long:   "⏱ 1.5–3 ч",
 };
 const ENERGY_LABEL: Record<string, string> = {
-  low: "😴 Low energy",
-  medium: "🙂 Okay",
-  high: "⚡ High energy",
+  low:    "😴 Малко енергия",
+  medium: "🙂 Ставам де",
+  high:   "⚡ На вълна",
 };
 const CTX_LABEL: Record<string, string> = {
-  alone: "🌙 Just me",
-  child: "👶 With child",
+  alone: "🌙 Само аз",
+  child: "👶 С детето",
+};
+const CATEGORY_LABEL: Record<string, string> = {
+  "self-care":  "ГРИЖА",
+  "movement":   "ДВИЖЕНИЕ",
+  "calm":       "СПОКОЙСТВИЕ",
+  "creative":   "ТВОРЧЕСТВО",
+  "social":     "СОЦИАЛНО",
+  "survival":   "ОЦЕЛЯВАНЕ",
+  "real-life":  "РЕАЛЕН ЖИВОТ",
+  "reset":      "ПАУЗА",
+  "explore":    "ИЗСЛЕДВАНЕ",
+  "life-admin": "ОРГАНИЗАЦИЯ",
 };
 
 export default function ResultScreen() {
@@ -57,19 +69,19 @@ export default function ResultScreen() {
       <div className={styles.wrap}>
         <div className={styles.acceptedWrap}>
           <div className={styles.acceptedIcon}>🌿</div>
-          <h2 className={styles.acceptedTitle}>Наслади се на момента.</h2>
+          <h2 className={styles.acceptedTitle}>Наслади се — заслужаваш го.</h2>
           <p className={styles.acceptedSub}>
             Избра: <strong>{acceptedTitle}</strong>.<br />
-            Върни се когато си готова.
+            Върни се когато си готова. Никакъв натиск.
           </p>
           <Btn onClick={() => { setAccepted(false); router.push("/decide"); }}>
-            Обратно
+            ← Назад
           </Btn>
         </div>
         <BottomNav
           items={[
-            { icon: "💡", label: "DECIDE", href: "/decide", active: true },
-            { icon: "🌿", label: "TODAY",  href: "/decide" },
+            { icon: "💡", label: "Реши", href: "/decide", active: true },
+            { icon: "🌿", label: "Днес", href: "/decide" },
           ]}
         />
       </div>
@@ -81,7 +93,7 @@ export default function ResultScreen() {
       <div className={styles.scrollBody}>
         {/* ── Header ──────────────────────────────────────────────────────── */}
         <div className={`${styles.header} anim-fade-up`}>
-          <h1 className={styles.headerTitle}>Let's make this easy ✨</h1>
+          <h1 className={styles.headerTitle}>Хайде, имам нещо за теб ✨</h1>
           <div className={styles.metaPills}>
             {filters.time   && <span className={styles.pill}>{TIME_LABEL[filters.time]}</span>}
             {filters.energy && <span className={styles.pill}>{ENERGY_LABEL[filters.energy]}</span>}
@@ -99,9 +111,9 @@ export default function ResultScreen() {
           />
         ) : (
           <div className={styles.empty}>
-            <p>Няма перфектно съвпадение. Опитай с различни филтри.</p>
+            <p>Хм, нищо точно не изникна. Опитай с различни отговори.</p>
             <Btn variant="outline" onClick={() => router.push("/decide")} className={styles.emptyBtn}>
-              Промени
+              Да опитаме пак
             </Btn>
           </div>
         )}
@@ -113,15 +125,15 @@ export default function ResultScreen() {
 
         <div className={styles.backRow}>
           <Btn variant="ghost" onClick={() => router.push("/decide")}>
-            ← Промени филтрите
+            ← Промени отговорите
           </Btn>
         </div>
       </div>
 
       <BottomNav
         items={[
-          { icon: "💡", label: "DECIDE", href: "/decide", active: true },
-          { icon: "🌿", label: "TODAY",  href: "/decide" },
+          { icon: "💡", label: "РЕШИ", href: "/decide", active: true },
+          { icon: "🌿", label: "ДНЕС", href: "/decide" },
         ]}
       />
     </div>
@@ -143,12 +155,17 @@ function PrimaryCard({
 }) {
   const ageMeta =
     activity.ageRange
-      ? `👶 ${Math.floor(activity.ageRange[0] / 12)}–${Math.floor(activity.ageRange[1] / 12)} yrs`
+      ? `👶 ${Math.floor(activity.ageRange[0] / 12)}–${Math.floor(activity.ageRange[1] / 12)} г.`
       : null;
+
+  const effortLabel =
+    activity.effort === "zero"   ? "✦ Без подготовка" :
+    activity.effort === "low"    ? "✦ Леко усилие"    :
+                                   "✦ Средно усилие";
 
   return (
     <div className={`${styles.primaryCard} anim-card-in`}>
-      <p className={styles.cardCategory}>{activity.category.toUpperCase()}</p>
+      <p className={styles.cardCategory}>{CATEGORY_LABEL[activity.category[0]] ?? activity.category[0].toUpperCase()}</p>
       <h2 className={styles.cardTitle}>{activity.title}</h2>
       <p className={styles.cardDesc}>{activity.description}</p>
 
@@ -163,18 +180,16 @@ function PrimaryCard({
 
       <div className={styles.cardMeta}>
         <span className={styles.metaTag}>{TIME_LABEL[filters.time]}</span>
-        <span className={styles.metaTag}>
-          {activity.effort === "zero" ? "✦ Без подготовка" : `${activity.effort} усилие`}
-        </span>
+        <span className={styles.metaTag}>{effortLabel}</span>
         {ageMeta && <span className={styles.metaTag}>{ageMeta}</span>}
       </div>
 
       <div className={styles.cardActions}>
-        <button className={styles.btnDo} onClick={onAccept}>✓ Ще го направим</button>
-        <button className={styles.btnNext} onClick={onShuffle}>Покажи друго →</button>
+        <button className={styles.btnDo} onClick={onAccept}>✓ Да! Това правим.</button>
+        <button className={styles.btnNext} onClick={onShuffle}>Нещо друго →</button>
       </div>
 
-      <p className={styles.warmth}>Не трябва да е перфектно. Достатъчно е. 🤍</p>
+      <p className={styles.warmth}>Не е нужно да е идеално. Важното е, че се грижиш за себе си. 🤍</p>
     </div>
   );
 }
@@ -190,12 +205,12 @@ function SecondaryCard({
 }) {
   return (
     <div className={`${styles.secondaryCard} anim-card-in delay-2`}>
-      <p className={styles.secondaryLabel}>Също добър вариант</p>
+      <p className={styles.secondaryLabel}>Или пък това...</p>
       <h3 className={styles.secondaryTitle}>{activity.title}</h3>
       <p className={styles.secondaryDesc}>{activity.description}</p>
       <div className={styles.secondaryFooter}>
-        <span className={styles.secondaryTime}>{TIME_LABEL[filters.time]} · {activity.category[0]}</span>
-        <button className={styles.secondaryBtn} onClick={onAccept}>Избери</button>
+        <span className={styles.secondaryTime}>{TIME_LABEL[filters.time]} · {CATEGORY_LABEL[activity.category[0]] ?? activity.category[0]}</span>
+        <button className={styles.secondaryBtn} onClick={onAccept}>Тази!</button>
       </div>
     </div>
   );

@@ -8,18 +8,18 @@ import { Topbar, ProgressBar, Btn, LargeChip } from "./UI";
 import styles from "./Onboarding.module.css";
 
 const NEEDS: { value: Need; emoji: string; label: string }[] = [
-  { value: "me-time",          emoji: "🛁", label: "Time for myself"      },
-  { value: "meals",            emoji: "🍳", label: "Quick meals"          },
-  { value: "child-activities", emoji: "🧸", label: "Activities with child" },
-  { value: "outside",          emoji: "🌿", label: "Going outside"        },
-  { value: "calm",             emoji: "🌙", label: "Calm / rest"          },
-  { value: "creative",         emoji: "🎨", label: "Creative activities"  },
+  { value: "me-time",          emoji: "🛁", label: "Малко за себе си"      },
+  { value: "meals",            emoji: "🍳", label: "Нещо бързо за ядене"   },
+  { value: "child-activities", emoji: "🧸", label: "Занимание с детето"    },
+  { value: "outside",          emoji: "🌿", label: "Навън на въздух"       },
+  { value: "calm",             emoji: "🌙", label: "Спокойствие / почивка" },
+  { value: "creative",         emoji: "🎨", label: "Нещо творческо"        },
 ];
 
 const WEEK_FEELS: { value: WeekFeel; emoji: string; label: string; sub: string; bg: string }[] = [
-  { value: "tough", emoji: "😮‍💨", label: "Pretty tough",   sub: "Running on empty",  bg: "#f8e4d4" },
-  { value: "okay",  emoji: "🙂",   label: "Getting by",    sub: "Steady and okay",   bg: "#d6ead9" },
-  { value: "good",  emoji: "✨",   label: "Actually good", sub: "I have some energy", bg: "#e8f3ea" },
+  { value: "tough", emoji: "😮‍💨", label: "Доста тежко",      sub: "Газ на резерва",     bg: "#f8e4d4" },
+  { value: "okay",  emoji: "🙂",   label: "Ставам де",         sub: "Горе-долу стабилно", bg: "#d6ead9" },
+  { value: "good",  emoji: "✨",   label: "Изненадващо добре", sub: "Имам малко заряд",   bg: "#e8f3ea" },
 ];
 
 export default function Onboarding() {
@@ -48,12 +48,12 @@ export default function Onboarding() {
       {/* ── Step 1: Children + DOB ────────────────────────────────────────── */}
       {step === 1 && (
         <div className={styles.body}>
-          <p className="label-caps anim-fade-up">Step 1 of 3</p>
+          <p className="label-caps anim-fade-up">Стъпка 1 от 3</p>
           <h2 className={`${styles.title} anim-fade-up delay-1`}>
-            How many children do you have?
+            Колко деца имаш?
           </h2>
           <p className={`${styles.sub} anim-fade-up delay-2`}>
-            We'll tailor suggestions to your family.
+            Помага ми да намеря нещо точно за теб.
           </p>
 
           <div className={`${styles.chipRow} anim-fade-up delay-2`}>
@@ -67,7 +67,7 @@ export default function Onboarding() {
                 }}
               >
                 <span className={styles.numChipMain}>{n === 3 ? "3+" : n}</span>
-                <span className={styles.numChipSub}>{n === 1 ? "child" : "children"}</span>
+                <span className={styles.numChipSub}>{n === 1 ? "дете" : "деца"}</span>
               </button>
             ))}
           </div>
@@ -75,7 +75,7 @@ export default function Onboarding() {
           {numChildren && (
             <div className={`${styles.dobWrap} anim-fade-up`}>
               <label className={styles.dobLabel} htmlFor="dob">
-                📅 Date of birth of youngest child
+                📅 Кога е роден/а най-малкото?
               </label>
               <input
                 id="dob"
@@ -92,7 +92,7 @@ export default function Onboarding() {
           )}
 
           <Btn onClick={next} disabled={!numChildren || !dob} className={styles.ctaBtn}>
-            Continue
+            Продължи
           </Btn>
         </div>
       )}
@@ -100,12 +100,12 @@ export default function Onboarding() {
       {/* ── Step 2: Needs ─────────────────────────────────────────────────── */}
       {step === 2 && (
         <div className={styles.body}>
-          <p className="label-caps anim-fade-up">Step 2 of 3</p>
+          <p className="label-caps anim-fade-up">Стъпка 2 от 3</p>
           <h2 className={`${styles.title} anim-fade-up delay-1`}>
-            What do you need more of right now?
+            Какво ти липсва в момента?
           </h2>
           <p className={`${styles.sub} anim-fade-up delay-2`}>
-            Pick 2 or 3 that feel most true today.
+            Избери 2–3, които звучат вярно за днес.
           </p>
 
           <div className={`${styles.needsGrid} anim-fade-up delay-2`}>
@@ -125,10 +125,10 @@ export default function Onboarding() {
           </div>
 
           <Btn onClick={next} disabled={profile.needs.length < 2} className={styles.ctaBtn}>
-            Continue
+            Продължи
           </Btn>
           <Btn variant="ghost" onClick={back} className={styles.ghostBtn}>
-            Back
+            Назад
           </Btn>
         </div>
       )}
@@ -136,12 +136,12 @@ export default function Onboarding() {
       {/* ── Step 3: Week feel ─────────────────────────────────────────────── */}
       {step === 3 && (
         <div className={styles.body}>
-          <p className="label-caps anim-fade-up">Step 3 of 3</p>
+          <p className="label-caps anim-fade-up">Стъпка 3 от 3</p>
           <h2 className={`${styles.title} anim-fade-up delay-1`}>
-            How does this week feel?
+            Как е тази седмица?
           </h2>
           <p className={`${styles.sub} anim-fade-up delay-2`}>
-            This helps us understand your baseline, not judge you.
+            Да знаем как си — без осъждане, обещаваме.
           </p>
 
           <div className={`${styles.largeChips} anim-fade-up delay-2`}>
@@ -159,10 +159,10 @@ export default function Onboarding() {
           </div>
 
           <Btn onClick={finishOnboarding} disabled={!profile.weekFeel} className={styles.ctaBtn}>
-            Done — let's go →
+            Готово — да вървим →
           </Btn>
           <Btn variant="ghost" onClick={back} className={styles.ghostBtn}>
-            Back
+            Назад
           </Btn>
         </div>
       )}

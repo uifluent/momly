@@ -3,55 +3,53 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 22px 0;
+  padding: 20px 24px 0;
   flex-shrink: 0;
 }
 .logo {
-  font-family: 'Lora', serif;
+  font-family: 'PT Serif', serif;
   font-size: 20px;
+  font-weight: 400;
   color: var(--primary);
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
 }
 .backBtn {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  background: var(--surface-2);
+  background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-2);
-  transition: background 0.15s;
+  color: var(--text-3);
+  transition: color 0.15s;
 }
-.backBtn:hover { background: var(--border); }
+.backBtn:hover { color: var(--text-2); }
 .avatar {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  background: var(--primary-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 20px;
 }
 .topbarSpacer { width: 36px; }
 
 /* ── Progress bar ───────────────────────────────────────────────────────────── */
-.progressWrap { padding: 14px 22px 0; }
+.progressWrap { padding: 18px 24px 0; }
 .progressTrack {
-  height: 3px;
+  height: 2px;
   background: var(--border);
-  border-radius: 3px;
+  border-radius: 2px;
   overflow: hidden;
 }
 .progressFill {
   height: 100%;
-  background: var(--primary);
-  border-radius: 3px;
-  transition: width 0.4s ease;
+  background: var(--primary-light);
+  border-radius: 2px;
+  transition: width 0.5s ease;
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
@@ -60,96 +58,102 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 56px;
-  border-radius: var(--r-full);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  height: 52px;
+  border-radius: 9999px;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   border: none;
-  transition: all 0.2s;
+  transition: opacity 0.15s;
 }
-.btn:active { transform: scale(0.98); }
-.btn:disabled { background: var(--border) !important; color: var(--text-3) !important; cursor: not-allowed; transform: none; }
+.btn:active { opacity: 0.72; }
+.btn:disabled {
+  background: var(--surface-2) !important;
+  color: var(--text-3) !important;
+  cursor: not-allowed;
+  opacity: 1;
+}
 
 .btnPrimary { background: var(--primary); color: #fff; }
-.btnPrimary:not(:disabled):hover { background: #3a6147; }
+.btnPrimary:not(:disabled):hover { background: var(--primary-hover); }
 
 .btnGhost {
   background: transparent;
   color: var(--text-3);
-  border: 1.5px solid var(--border);
-  height: 48px;
+  border: none;
+  height: 40px;
   font-size: 14px;
+  font-weight: 400;
 }
-.btnGhost:hover { background: var(--surface-2); }
+.btnGhost:hover { color: var(--text-2); }
 
 .btnOutline {
   background: var(--surface-2);
   color: var(--text-2);
-  border: 1.5px solid var(--border);
-  height: 48px;
+  border: none;
+  height: 44px;
   font-size: 14px;
+  font-weight: 400;
 }
 .btnOutline:hover { background: var(--border); }
 
-/* ── Chip ───────────────────────────────────────────────────────────────────── */
+/* ── Chip (pill) ────────────────────────────────────────────────────────────── */
 .chip {
   flex: 1;
-  padding: 16px 10px;
-  border-radius: var(--r);
-  border: 1.5px solid var(--border);
-  background: var(--surface);
+  padding: 10px 8px;
+  border-radius: 9999px;
+  border: none;
+  background: var(--surface-2);
   text-align: center;
   cursor: pointer;
-  transition: all 0.18s;
+  transition: background 0.15s;
   display: flex;
   flex-direction: column;
   gap: 3px;
   align-items: center;
 }
-.chip:active { transform: scale(0.97); }
-.chipSelected { border-color: var(--primary); background: var(--primary-dim); }
-.chipMain { font-size: 14px; font-weight: 600; color: var(--text); }
-.chipSub { font-size: 11px; color: var(--text-3); }
-.chipSelected .chipMain { color: var(--primary); }
+.chip:active { opacity: 0.72; }
+.chipSelected { background: var(--primary-light); }
+.chipMain { font-size: 13px; font-weight: 400; color: var(--text-3); }
+.chipSub  { font-size: 10px; color: var(--text-3); opacity: 0.7; }
+.chipSelected .chipMain { color: var(--text); font-weight: 500; }
+.chipSelected .chipSub  { opacity: 1; }
 
 /* ── Large chip ─────────────────────────────────────────────────────────────── */
 .largeChip {
   width: 100%;
-  padding: 16px 20px;
-  border-radius: var(--r);
-  border: 1.5px solid var(--border);
-  background: var(--surface);
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: none;
+  background: var(--surface-2);
   display: flex;
   align-items: center;
   gap: 14px;
   cursor: pointer;
-  transition: all 0.18s;
+  transition: background 0.15s;
   text-align: left;
 }
-.largeChip:active { transform: scale(0.98); }
-.largeChipSelected { border-color: var(--primary); background: var(--primary-dim); }
+.largeChip:active { opacity: 0.72; }
+.largeChipSelected { background: var(--primary-light); }
 .largeChipIcon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 20px;
   flex-shrink: 0;
-  background: var(--surface-2);
 }
-.largeChipText { display: flex; flex-direction: column; gap: 2px; }
-.largeChipLabel { font-size: 15px; font-weight: 500; color: var(--text); }
-.largeChipSelected .largeChipLabel { color: var(--primary); }
-.largeChipSub { font-size: 12px; color: var(--text-3); }
+.largeChipText  { display: flex; flex-direction: column; gap: 2px; }
+.largeChipLabel { font-size: 15px; font-weight: 400; color: var(--text-2); }
+.largeChipSelected .largeChipLabel { color: var(--text); }
+.largeChipSub   { font-size: 12px; color: var(--text-3); }
 
 /* ── Bottom nav ─────────────────────────────────────────────────────────────── */
 .bottomNav {
   display: flex;
-  background: var(--surface);
+  background: var(--bg);
   border-top: 1px solid var(--border);
   padding: 8px 0 max(16px, env(safe-area-inset-bottom));
   flex-shrink: 0;
@@ -166,15 +170,12 @@
   background: transparent;
 }
 .navIcon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--r-sm);
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  transition: background 0.2s;
+  font-size: 16px;
 }
-.navItemActive .navIcon { background: var(--primary-dim); }
-.navLabel { font-size: 10px; font-weight: 600; letter-spacing: 0.03em; color: var(--text-3); }
+.navLabel { font-size: 10px; font-weight: 400; color: var(--text-3); }
 .navItemActive .navLabel { color: var(--primary); }

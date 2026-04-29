@@ -12,20 +12,20 @@ import styles from "./DecideScreen.module.css";
 const activities = activitiesData as Activity[];
 
 const TIME_OPTIONS: { value: Duration; label: string; sub: string }[] = [
-  { value: "short",  label: "20–40m",  sub: "quick breath"  },
-  { value: "medium", label: "40–90m",  sub: "real break"    },
-  { value: "long",   label: "1.5–3h",  sub: "whole stretch" },
+  { value: "short",  label: "20–40м",  sub: "за малко въздух"  },
+  { value: "medium", label: "40–90м",  sub: "истинска пауза"   },
+  { value: "long",   label: "1.5–3ч",  sub: "цяло парче"       },
 ];
 
 const ENERGY_OPTIONS: { value: EnergyLevel; label: string; sub: string }[] = [
-  { value: "low",    label: "😴 Low",    sub: "nearly empty" },
-  { value: "medium", label: "🙂 Okay",   sub: "getting by"   },
-  { value: "high",   label: "⚡ High",   sub: "let's go"     },
+  { value: "low",    label: "😴 Без сили",  sub: "почти на нула" },
+  { value: "medium", label: "🙂 Ставам",   sub: "горе-долу"    },
+  { value: "high",   label: "⚡ На вълна", sub: "имам сили"    },
 ];
 
 const CTX_OPTIONS = [
-  { value: "alone" as const, label: "🌙 Just me",    sub: "solo time"   },
-  { value: "child" as const, label: "🧸 Together",   sub: "with child"  },
+  { value: "alone" as const, label: "🌙 Само аз",  sub: "само за мен"        },
+  { value: "child" as const, label: "🧸 С детето", sub: "заедно"             },
 ];
 
 export default function DecideScreen() {
@@ -50,13 +50,13 @@ export default function DecideScreen() {
 
       <div className={styles.body}>
         <div className={`${styles.question} anim-fade-up`}>
-          <h2 className={styles.questionTitle}>What does right now look like?</h2>
-          <p className={styles.questionSub}>Answer three things — I'll do the rest.</p>
+          <h2 className={styles.questionTitle}>Как е при теб в момента?</h2>
+          <p className={styles.questionSub}>Три въпроса и аз поемам от там.</p>
         </div>
 
         {/* Time */}
         <section className={`${styles.filterSection} anim-fade-up delay-1`}>
-          <p className={`label-caps ${styles.filterLabel}`}>⏱ How much time?</p>
+          <p className={`label-caps ${styles.filterLabel}`}>⏱ С колко време разполагаш?</p>
           <div className={styles.chipRow}>
             {TIME_OPTIONS.map((o) => (
               <Chip
@@ -72,7 +72,7 @@ export default function DecideScreen() {
 
         {/* Energy */}
         <section className={`${styles.filterSection} anim-fade-up delay-2`}>
-          <p className={`label-caps ${styles.filterLabel}`}>💛 Energy level?</p>
+          <p className={`label-caps ${styles.filterLabel}`}>💛 На каква вълна си?</p>
           <div className={styles.chipRow}>
             {ENERGY_OPTIONS.map((o) => (
               <Chip
@@ -88,7 +88,7 @@ export default function DecideScreen() {
 
         {/* Context */}
         <section className={`${styles.filterSection} anim-fade-up delay-3`}>
-          <p className={`label-caps ${styles.filterLabel}`}>👶 Who's with you?</p>
+          <p className={`label-caps ${styles.filterLabel}`}>👶 С кого си в момента?</p>
           <div className={styles.chipRow}>
             {CTX_OPTIONS.map((o) => (
               <Chip
@@ -104,15 +104,15 @@ export default function DecideScreen() {
 
         <div className={`${styles.ctaWrap} anim-fade-up delay-4`}>
           <Btn onClick={handleDecide} disabled={!ready}>
-            Show me what to do →
+            Дай ми идея →
           </Btn>
         </div>
       </div>
 
       <BottomNav
         items={[
-          { icon: "💡", label: "DECIDE", href: "/decide", active: true },
-          { icon: "🌿", label: "TODAY",  href: "/decide" },
+          { icon: "💡", label: "Реши",  href: "/decide", active: true },
+          { icon: "🌿", label: "Днес",  href: "/decide" },
         ]}
       />
     </div>

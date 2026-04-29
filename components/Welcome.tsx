@@ -9,19 +9,18 @@ export default function Welcome() {
   return (
     <main className={styles.wrap}>
       <div className={`${styles.icon} anim-fade-up`}>🌿</div>
-      <h1 className={`${styles.title} anim-fade-up delay-1`}>Hi, I'm Momly.</h1>
+      <h1 className={`${styles.title} anim-fade-up delay-1`}>Хей! Аз съм Момли.</h1>
       <p className={`${styles.sub} anim-fade-up delay-2`}>
-        I help you decide what to do right now — <br />
-        without the mental load.
+        Когато не знаеш откъде да хванеш — аз съм тук.
         <br />
         <br />
-        No plans. No pressure. Just a calm next step.
+        Без натиск. Без перфекция. Само едно малко, спокойно нещо.
       </p>
       <div className={`${styles.btnWrap} anim-fade-up delay-3`}>
-        <Btn onClick={() => router.push("/onboarding")}>Let's get started</Btn>
+        <Btn onClick={() => router.push("/onboarding")}>Да започнем</Btn>
       </div>
       <p className={`${styles.note} anim-fade-up delay-4`}>
-        Takes about 2 minutes · Free to use
+        Около 2 минути · Безплатно
       </p>
     </main>
   );

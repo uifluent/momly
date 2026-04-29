@@ -16,7 +16,7 @@ export function Topbar({ showBack, backHref = "/" }: TopbarProps) {
   return (
     <header className={styles.topbar}>
       {showBack ? (
-        <button className={styles.backBtn} onClick={() => router.push(backHref)} aria-label="Go back">
+        <button className={styles.backBtn} onClick={() => router.push(backHref)} aria-label="Назад">
           ←
         </button>
       ) : (

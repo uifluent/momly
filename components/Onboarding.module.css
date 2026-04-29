@@ -6,111 +6,116 @@
 }
 .body {
   flex: 1;
-  padding: 24px 22px 32px;
+  padding: 28px 24px 36px;
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 .title {
-  font-family: 'Lora', serif;
-  font-size: 26px;
-  font-weight: 500;
+  font-family: 'PT Serif', serif;
+  font-size: 27px;
+  font-weight: 400;
   color: var(--text);
-  line-height: 1.25;
-  margin: 12px 0 8px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  margin: 16px 0 10px;
 }
 .sub {
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
-  color: var(--text-2);
+  font-weight: 400;
+  color: var(--text-3);
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 /* ── Number chips ───────────────────────────────────────────────────────────── */
 .chipRow {
   display: flex;
   gap: 10px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 .numChip {
   flex: 1;
-  padding: 18px 10px;
-  border-radius: var(--r);
-  border: 1.5px solid var(--border);
-  background: var(--surface);
+  padding: 16px 10px;
+  border-radius: 9999px;
+  border: none;
+  background: var(--surface-2);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3px;
   cursor: pointer;
-  transition: all 0.18s;
+  transition: background 0.15s;
 }
-.numChip:active { transform: scale(0.97); }
-.numChipSel { border-color: var(--primary); background: var(--primary-dim); }
-.numChipMain { font-size: 20px; font-weight: 600; color: var(--text); }
-.numChipSub  { font-size: 11px; color: var(--text-3); }
-.numChipSel .numChipMain { color: var(--primary); }
+.numChip:active { opacity: 0.72; }
+.numChipSel { background: var(--primary-light); }
+.numChipMain { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 400; color: var(--text-2); }
+.numChipSub  { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); }
+.numChipSel .numChipMain { color: var(--text); }
 
 /* ── DOB input ──────────────────────────────────────────────────────────────── */
 .dobWrap { margin-bottom: 28px; }
 .dobLabel {
   display: block;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 500;
-  color: var(--text-2);
+  font-weight: 400;
+  color: var(--text-3);
   margin-bottom: 8px;
 }
 .dobInput {
   width: 100%;
-  height: 52px;
-  border-radius: var(--r);
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  padding: 0 16px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  height: 50px;
+  border-radius: 9999px;
+  border: none;
+  background: var(--surface-2);
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif;
   font-size: 15px;
+  font-weight: 400;
   color: var(--text);
   outline: none;
-  transition: border 0.2s;
+  transition: background 0.15s;
 }
-.dobInput:focus { border-color: var(--primary); }
+.dobInput:focus { background: var(--primary-dim); }
 
 /* ── Needs grid ─────────────────────────────────────────────────────────────── */
 .needsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 28px;
 }
 .needChip {
-  padding: 16px 12px;
-  border-radius: var(--r);
-  border: 1.5px solid var(--border);
-  background: var(--surface);
+  padding: 14px 10px;
+  border-radius: 16px;
+  border: none;
+  background: var(--surface-2);
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 500;
-  color: var(--text-2);
+  font-weight: 400;
+  color: var(--text-3);
   cursor: pointer;
-  transition: all 0.18s;
+  transition: background 0.15s;
   text-align: center;
   line-height: 1.4;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
-.needChip:active { transform: scale(0.97); }
-.needChipSel { border-color: var(--primary); background: var(--primary-dim); color: var(--primary); }
-.needEmoji { font-size: 22px; }
+.needChip:active { opacity: 0.72; }
+.needChipSel { background: var(--primary-light); color: var(--text); }
+.needEmoji { font-size: 20px; }
 
 /* ── Large chips ────────────────────────────────────────────────────────────── */
 .largeChips {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 28px;
 }
 
 /* ── CTA positioning ────────────────────────────────────────────────────────── */
-.ctaBtn { margin-top: auto; }
-.ghostBtn { margin-top: 10px; }
+.ctaBtn  { margin-top: auto; }
+.ghostBtn { margin-top: 8px; }
