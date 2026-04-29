@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --bg: #f9f6f1;
+  --surface: #ffffff;
+  --surface-2: #f3efe9;
+  --border: #e8e3db;
+  --primary: #4a7c59;
+  --primary-light: #d6ead9;
+  --primary-dim: #e8f3ea;
+  --text: #1e1e1e;
+  --text-2: #5a5a5a;
+  --text-3: #9a9a9a;
+  --peach: #f8e4d4;
+  --peach-dark: #c26a3a;
+  --lilac: #ebe5f5;
+  --lilac-dark: #7b5ea7;
+  --shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 32px rgba(0, 0, 0, 0.10);
+  --r: 20px;
+  --r-sm: 12px;
+  --r-full: 9999px;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  background: #e8e3db;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App shell — keeps mobile feel on desktop ──────────────────────────────── */
+#app-shell {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Typography helpers ─────────────────────────────────────────────────────── */
+.serif { font-family: 'Lora', serif; }
+.label-caps {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* ── Animations ─────────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.97) translateY(10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+.anim-fade-up   { animation: fadeUp  0.4s ease both; }
+.anim-card-in   { animation: cardIn  0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.delay-1 { animation-delay: 0.06s; }
+.delay-2 { animation-delay: 0.12s; }
+.delay-3 { animation-delay: 0.20s; }
+.delay-4 { animation-delay: 0.28s; }

@@ -1,0 +1,116 @@
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.body {
+  flex: 1;
+  padding: 24px 22px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.title {
+  font-family: 'Lora', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.25;
+  margin: 12px 0 8px;
+}
+.sub {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* ── Number chips ───────────────────────────────────────────────────────────── */
+.chipRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.numChip {
+  flex: 1;
+  padding: 18px 10px;
+  border-radius: var(--r);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.numChip:active { transform: scale(0.97); }
+.numChipSel { border-color: var(--primary); background: var(--primary-dim); }
+.numChipMain { font-size: 20px; font-weight: 600; color: var(--text); }
+.numChipSub  { font-size: 11px; color: var(--text-3); }
+.numChipSel .numChipMain { color: var(--primary); }
+
+/* ── DOB input ──────────────────────────────────────────────────────────────── */
+.dobWrap { margin-bottom: 28px; }
+.dobLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+.dobInput {
+  width: 100%;
+  height: 52px;
+  border-radius: var(--r);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  padding: 0 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  outline: none;
+  transition: border 0.2s;
+}
+.dobInput:focus { border-color: var(--primary); }
+
+/* ── Needs grid ─────────────────────────────────────────────────────────────── */
+.needsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.needChip {
+  padding: 16px 12px;
+  border-radius: var(--r);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.18s;
+  text-align: center;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.needChip:active { transform: scale(0.97); }
+.needChipSel { border-color: var(--primary); background: var(--primary-dim); color: var(--primary); }
+.needEmoji { font-size: 22px; }
+
+/* ── Large chips ────────────────────────────────────────────────────────────── */
+.largeChips {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+/* ── CTA positioning ────────────────────────────────────────────────────────── */
+.ctaBtn { margin-top: auto; }
+.ghostBtn { margin-top: 10px; }

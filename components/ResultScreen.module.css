@@ -1,0 +1,270 @@
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.scrollBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 0 16px;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────────── */
+.header {
+  padding: 20px 22px 16px;
+}
+.headerTitle {
+  font-family: 'Lora', serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.metaPills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pill {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* ── Primary card ────────────────────────────────────────────────────────────── */
+.primaryCard {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 24px;
+  margin: 0 16px 14px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.primaryCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--primary);
+}
+
+.cardCategory {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.cardTitle {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.cardDesc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+/* ── Steps ───────────────────────────────────────────────────────────────────── */
+.stepsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.stepNum {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--primary-dim);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.stepText {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ── Card meta tags ──────────────────────────────────────────────────────────── */
+.cardMeta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.metaTag {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  color: var(--text-3);
+}
+
+/* ── Card actions ────────────────────────────────────────────────────────────── */
+.cardActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btnDo {
+  width: 100%;
+  height: 52px;
+  border-radius: var(--r-full);
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btnDo:active { transform: scale(0.98); background: #3a6147; }
+.btnNext {
+  width: 100%;
+  height: 46px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  color: var(--text-2);
+  border: 1.5px solid var(--border);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btnNext:active { background: var(--border); }
+
+.warmth {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: italic;
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+/* ── Secondary card ──────────────────────────────────────────────────────────── */
+.secondaryCard {
+  background: var(--surface-2);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 0 16px 14px;
+  border: 1px solid var(--border);
+}
+.secondaryLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.secondaryTitle {
+  font-family: 'Lora', serif;
+  font-size: 17px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.secondaryDesc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.secondaryFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.secondaryTime {
+  font-size: 12px;
+  color: var(--text-3);
+}
+.secondaryBtn {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--primary);
+  background: var(--primary-dim);
+  border: none;
+  border-radius: var(--r-full);
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.secondaryBtn:active { background: var(--primary-light); }
+
+/* ── Back row ────────────────────────────────────────────────────────────────── */
+.backRow {
+  padding: 4px 16px 8px;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────────── */
+.empty {
+  padding: 32px 22px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.emptyBtn {
+  margin-top: 20px;
+}
+
+/* ── Accepted state ──────────────────────────────────────────────────────────── */
+.acceptedWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 28px;
+  text-align: center;
+}
+.acceptedIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--primary-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 20px;
+}
+.acceptedTitle {
+  font-family: 'Lora', serif;
+  font-size: 24px;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.acceptedSub {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
