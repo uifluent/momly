@@ -9,7 +9,7 @@ export default function Welcome() {
   return (
     <main className={styles.wrap}>
       <div className={`${styles.header} anim-fade-up`}>
-        <div className={styles.icon}>🌿</div>
+        <div className={styles.icon}>✨</div>
         <h1 className={styles.title}>Едно спокойно нещо за днес.</h1>
         <p className={styles.meta}>около 2 мин · без натиск</p>
       </div>

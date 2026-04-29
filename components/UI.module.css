@@ -7,11 +7,10 @@
   flex-shrink: 0;
 }
 .logo {
-  font-family: 'IBM Plex Serif', serif;
-  font-size: 20px;
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: 0.01em;
+  display: block;
+  height: 30px;
+  width: auto;
+  object-fit: contain;
 }
 .backBtn {
   width: 36px;
@@ -36,6 +35,21 @@
   font-size: 20px;
 }
 .topbarSpacer { width: 36px; }
+.favBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-3);
+  transition: opacity 0.15s, transform 0.15s;
+  flex-shrink: 0;
+}
+.favBtn:hover  { opacity: 0.65; }
+.favBtn:active { transform: scale(0.94); }
 
 /* ── Progress bar ───────────────────────────────────────────────────────────── */
 .progressWrap { padding: 18px 24px 0; }
@@ -59,7 +73,7 @@
   justify-content: center;
   width: 100%;
   height: 52px;
-  border-radius: 9999px;
+  border-radius: var(--radius-lg);
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -78,7 +92,7 @@
 .btnPrimary {
   background: var(--primary);
   color: #fff;
-  box-shadow: 0 8px 18px rgba(244, 167, 157, 0.22);
+  box-shadow: 0 4px 16px rgba(232, 175, 163, 0.25);
 }
 .btnPrimary:not(:disabled):hover { background: var(--primary-hover); }
 
@@ -86,6 +100,7 @@
   background: transparent;
   color: var(--text-3);
   border: none;
+  border-radius: var(--radius-md);
   height: 40px;
   font-size: 14px;
   font-weight: 400;
@@ -96,6 +111,7 @@
   background: var(--surface-2);
   color: var(--text);
   border: none;
+  border-radius: var(--radius-md);
   height: 44px;
   font-size: 14px;
   font-weight: 400;
@@ -106,12 +122,12 @@
 .chip {
   flex: 1;
   padding: 14px 16px;
-  border-radius: 9999px;
-  border: none;
-  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-chip);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: #F7F4F2;
   text-align: center;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s, transform 0.15s;
+  transition: background 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -119,19 +135,21 @@
 }
 .chip:active { opacity: 0.72; }
 .chipSelected {
-  background: #F4A79D;
+  background: var(--primary);
+  border-color: var(--primary);
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(232, 175, 163, 0.35);
 }
-.chipMain { font-size: 13px; font-weight: 400; color: #2C2A28; }
+.chipMain { font-size: 13px; font-weight: 400; color: #6F6F6F; }
 .chipSub  { font-size: 10px; color: var(--text-3); opacity: 0.7; }
-.chipSelected .chipMain { color: #FFFFFF; font-weight: 400; }
+.chipSelected .chipMain { color: #FFFFFF; font-weight: 500; }
 .chipSelected .chipSub  { color: #FFFFFF; opacity: 0.86; }
 
 /* ── Large chip ─────────────────────────────────────────────────────────────── */
 .largeChip {
   width: 100%;
   padding: 17px 18px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: none;
   background: var(--surface-2);
   display: flex;
@@ -160,9 +178,11 @@
 /* ── Bottom nav ─────────────────────────────────────────────────────────────── */
 .bottomNav {
   display: flex;
-  background: rgba(253, 251, 255, 0.82);
-  backdrop-filter: blur(10px);
-  padding: 8px 0 max(16px, env(safe-area-inset-bottom));
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  margin: 8px 16px max(12px, env(safe-area-inset-bottom));
+  padding: 8px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   flex-shrink: 0;
 }
 .navItem {

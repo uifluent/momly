@@ -58,6 +58,7 @@ export function scoreActivities(
     if (needs.includes("outside") && (cats.includes("movement") || cats.includes("reset") || cats.includes("explore"))) score += 1;
     if (needs.includes("child-activities") && a.withChild) score += 2;
     if (needs.includes("meals") && cats.includes("real-life")) score += 1;
+    if (needs.includes("movement") && cats.includes("movement")) score += 2;
 
     // Novelty: de-prioritise recently shown (id is string)
     if (recentIds.includes(a.id)) score -= 5;

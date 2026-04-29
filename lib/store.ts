@@ -29,6 +29,10 @@ interface MomlyState {
   // ── Accepted activity ────────────────────────────────────────────────────────
   acceptedActivity: Activity | null;
   setAccepted: (a: Activity | null) => void;
+
+  // ── Favorites ────────────────────────────────────────────────────────────────
+  favorites: string[];
+  toggleFavorite: (id: string) => void;
 }
 
 const defaultProfile: UserProfile = {
@@ -147,11 +151,19 @@ export const useMomlyStore = create<MomlyState>()(
       // ── Accepted ─────────────────────────────────────────────────────────────
       acceptedActivity: null,
       setAccepted: (a) => set({ acceptedActivity: a }),
+
+      // ── Favorites ────────────────────────────────────────────────────────────
+      favorites: [],
+      toggleFavorite: (id) =>
+        set((s) => ({
+          favorites: s.favorites.includes(id)
+            ? s.favorites.filter((f) => f !== id)
+            : [...s.favorites, id],
+        })),
     }),
     {
       name: "momly-state",
-      // Only persist profile and recent IDs — filters are ephemeral
-      partialize: (s) => ({ profile: s.profile, recentIds: s.recentIds }),
+      partialize: (s) => ({ profile: s.profile, recentIds: s.recentIds, favorites: s.favorites }),
     }
   )
 );

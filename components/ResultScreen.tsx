@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
-import { decide } from "@/lib/engine";
+import { getBestIdeas } from "@/lib/getBestIdeas";
 import type { Activity, Filters } from "@/lib/types";
 import activitiesData from "@/data/activities.json";
-import { BottomNav, Btn } from "./UI";
+import { Btn } from "./UI";
 import styles from "./ResultScreen.module.css";
 
 const activities = activitiesData as Activity[];
@@ -25,6 +25,17 @@ const CTX_LABEL: Record<string, string> = {
   alone: "🌙 Само аз",
   child: "👶 С детето",
 };
+const DURATION_LABEL: Record<string, string> = {
+  short:  "20–40 мин",
+  medium: "40–90 мин",
+  long:   "1.5–3 ч",
+};
+const EFFORT_LABEL: Record<string, string> = {
+  zero:   "без подготовка",
+  low:    "леко усилие",
+  medium: "средно усилие",
+};
+
 const CATEGORY_LABEL: Record<string, string> = {
   "self-care":  "ГРИЖА",
   "movement":   "ДВИЖЕНИЕ",
@@ -45,44 +56,53 @@ export default function ResultScreen() {
   const filters = store.filters as Filters;
   const profile = store.profile;
 
-  const [accepted, setAccepted] = useState(false);
-  const [acceptedTitle, setAcceptedTitle] = useState("");
+  const [chosenActivity, setChosenActivity] = useState<Activity | null>(null);
 
   const primary = results[0];
   const secondary = results[1] ?? null;
 
   function handleAccept(activity: Activity) {
-    setAccepted(true);
-    setAcceptedTitle(activity.title);
+    setChosenActivity(activity);
     store.addRecentId(activity.id);
   }
 
   function handleShuffle() {
-    const fresh = decide(activities, filters, profile, store.recentIds);
+    const fresh = getBestIdeas(activities, filters, profile, store.recentIds);
     store.setResults(fresh);
     if (fresh[0]) store.addRecentId(fresh[0].id);
-    setAccepted(false);
+    setChosenActivity(null);
   }
 
-  if (accepted) {
+  if (chosenActivity) {
     return (
       <div className={styles.wrap}>
         <div className={styles.acceptedWrap}>
-          <div className={styles.acceptedIcon}>🌿</div>
+          <div className={styles.acceptedIcon}>✨</div>
           <h2 className={styles.acceptedTitle}>Добре. Това стига.</h2>
-          <p className={styles.acceptedSub}>
-            Избра: <strong>{acceptedTitle}</strong>.
+          <p className={styles.acceptedChosen}>{chosenActivity.title}</p>
+
+          {chosenActivity.steps.length > 0 && (
+            <div className={styles.acceptedCard}>
+              <p className={styles.acceptedStepsLabel}>Как да започнеш:</p>
+              <ul className={styles.acceptedSteps}>
+                {chosenActivity.steps.slice(0, 3).map((step, i) => (
+                  <li key={i} className={styles.acceptedStep}>
+                    <span className={styles.acceptedStepDot} />
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <p className={styles.acceptedContext}>
+            {DURATION_LABEL[chosenActivity.duration[0]]} · {EFFORT_LABEL[chosenActivity.effort]}
           </p>
-          <Btn onClick={() => { setAccepted(false); router.push("/decide"); }}>
-            Върни ме
+
+          <Btn onClick={() => { setChosenActivity(null); router.push("/decide"); }}>
+            Готово
           </Btn>
         </div>
-        <BottomNav
-          items={[
-            { icon: "💡", label: "Реши", href: "/decide", active: true },
-            { icon: "🌿", label: "Днес", href: "/decide" },
-          ]}
-        />
       </div>
     );
   }
@@ -106,6 +126,8 @@ export default function ResultScreen() {
             activity={primary}
             filters={filters}
             onAccept={() => handleAccept(primary)}
+            isFavorite={store.favorites.includes(primary.id)}
+            onToggleFavorite={() => store.toggleFavorite(primary.id)}
           />
         ) : (
           <div className={styles.empty}>
@@ -118,14 +140,21 @@ export default function ResultScreen() {
 
         {/* ── Secondary card ───────────────────────────────────────────────── */}
         {secondary && (
-          <SecondaryCard activity={secondary} filters={filters} onAccept={() => handleAccept(secondary)} />
+          <SecondaryCard
+            activity={secondary}
+            filters={filters}
+            onAccept={() => handleAccept(secondary)}
+            isFavorite={store.favorites.includes(secondary.id)}
+            onToggleFavorite={() => store.toggleFavorite(secondary.id)}
+          />
         )}
 
         {primary && (
-          <button className={`${styles.shuffleCard} anim-card-in delay-3`} onClick={handleShuffle}>
-            <span className={styles.shuffleLabel}>Още една идея</span>
-            <span className={styles.shuffleText}>Покажи нещо друго</span>
-          </button>
+          <div className={styles.shuffleRow}>
+            <button className={styles.shuffleBtn} onClick={handleShuffle}>
+              Покажи друга идея
+            </button>
+          </div>
         )}
 
         <div className={styles.backRow}>
@@ -135,12 +164,6 @@ export default function ResultScreen() {
         </div>
       </div>
 
-      <BottomNav
-        items={[
-          { icon: "💡", label: "РЕШИ", href: "/decide", active: true },
-          { icon: "🌿", label: "ДНЕС", href: "/decide" },
-        ]}
-      />
     </div>
   );
 }
@@ -151,44 +174,38 @@ function PrimaryCard({
   activity,
   filters,
   onAccept,
+  isFavorite,
+  onToggleFavorite,
 }: {
   activity: Activity;
   filters: Filters;
   onAccept: () => void;
+  isFavorite: boolean;
+  onToggleFavorite: () => void;
 }) {
-  const ageMeta =
-    activity.ageRange
-      ? `👶 ${Math.floor(activity.ageRange[0] / 12)}–${Math.floor(activity.ageRange[1] / 12)} г.`
-      : null;
+  const [isPopping, setIsPopping] = useState(false);
 
-  const effortLabel =
-    activity.effort === "zero"   ? "✦ Без подготовка" :
-    activity.effort === "low"    ? "✦ Леко усилие"    :
-                                   "✦ Средно усилие";
+  function handleHeartClick() {
+    onToggleFavorite();
+    setIsPopping(true);
+    setTimeout(() => setIsPopping(false), 250);
+  }
 
   return (
     <div className={`${styles.primaryCard} anim-card-in`}>
+      <button
+        className={[styles.heartBtn, isPopping ? styles.heartBtnPop : ""].join(" ")}
+        onClick={handleHeartClick}
+        aria-label={isFavorite ? "Премахни от любими" : "Запази идеята"}
+      >
+        {isFavorite ? "❤️" : "🤍"}
+      </button>
       <p className={styles.cardCategory}>{CATEGORY_LABEL[activity.category[0]] ?? activity.category[0].toUpperCase()}</p>
       <h2 className={styles.cardTitle}>{activity.title}</h2>
       <p className={styles.cardDesc}>{activity.description}</p>
 
-      <ol className={styles.stepsList}>
-        {activity.steps.slice(0, 3).map((step, i) => (
-          <li key={i} className={styles.step}>
-            <span className={styles.stepDot} />
-            <span className={styles.stepText}>{step}</span>
-          </li>
-        ))}
-      </ol>
-
-      <div className={styles.cardMeta}>
-        <span className={styles.metaTag}>{TIME_LABEL[filters.time]}</span>
-        <span className={styles.metaTag}>{effortLabel}</span>
-        {ageMeta && <span className={styles.metaTag}>{ageMeta}</span>}
-      </div>
-
       <div className={styles.cardActions}>
-        <button className={styles.btnDo} onClick={onAccept}>Да, това правим</button>
+        <button className={styles.btnDo} onClick={onAccept}>Това е</button>
       </div>
     </div>
   );
@@ -198,18 +215,39 @@ function SecondaryCard({
   activity,
   filters,
   onAccept,
+  isFavorite,
+  onToggleFavorite,
 }: {
   activity: Activity;
   filters: Filters;
   onAccept: () => void;
+  isFavorite: boolean;
+  onToggleFavorite: () => void;
 }) {
+  const [isPopping, setIsPopping] = useState(false);
+
+  function handleHeartClick() {
+    onToggleFavorite();
+    setIsPopping(true);
+    setTimeout(() => setIsPopping(false), 250);
+  }
+
   return (
     <div className={`${styles.secondaryCard} anim-card-in delay-2`}>
       <p className={styles.secondaryLabel}>{TIME_LABEL[filters.time]} · {CATEGORY_LABEL[activity.category[0]] ?? activity.category[0]}</p>
       <h3 className={styles.secondaryTitle}>{activity.title}</h3>
       <div className={styles.secondaryFooter}>
-        <span className={styles.secondaryTime}>алтернатива</span>
-        <button className={styles.secondaryBtn} onClick={onAccept}>Това</button>
+        <span className={styles.secondaryTime}>Друга идея</span>
+        <div className={styles.secondaryActions}>
+          <button
+            className={[styles.heartBtnSm, isPopping ? styles.heartBtnPop : ""].join(" ")}
+            onClick={handleHeartClick}
+            aria-label={isFavorite ? "Премахни от любими" : "Запази идеята"}
+          >
+            {isFavorite ? "❤️" : "🤍"}
+          </button>
+          <button className={styles.secondaryBtn} onClick={onAccept}>Това</button>
+        </div>
       </div>
     </div>
   );

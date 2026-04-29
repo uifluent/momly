@@ -2,41 +2,41 @@
 
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
-import { decide } from "@/lib/engine";
+import { getBestIdeas } from "@/lib/getBestIdeas";
 import type { Duration, EnergyLevel, Filters } from "@/lib/types";
 import activitiesData from "@/data/activities.json";
 import type { Activity } from "@/lib/types";
-import { Topbar, Btn, Chip, BottomNav } from "./UI";
+import { Topbar, Btn, Chip } from "./UI";
 import styles from "./DecideScreen.module.css";
 
 const activities = activitiesData as Activity[];
 
 const TIME_OPTIONS: { value: Duration; label: string; sub: string }[] = [
-  { value: "short",  label: "20–40м",  sub: "за малко въздух"  },
-  { value: "medium", label: "40–90м",  sub: "истинска пауза"   },
-  { value: "long",   label: "1.5–3ч",  sub: "цяло парче"       },
+  { value: "short", label: "20 – 40мин", sub: "" },
+  { value: "medium", label: "40 – 90мин", sub: "" },
+  { value: "long", label: "1.5 – 3ч", sub: "" },
 ];
 
 const ENERGY_OPTIONS: { value: EnergyLevel; label: string; sub: string }[] = [
-  { value: "low",    label: "Доста тежко",        sub: "газ на резерва" },
-  { value: "medium", label: "Горе-долу съм",      sub: "стабилно"       },
-  { value: "high",   label: "Изненадващо добре", sub: "имам енергия"   },
+  { value: "low", label: "Доста изморена 🥱", sub: "" },
+  { value: "medium", label: "Добре съм 👌", sub: "" },
+  { value: "high", label: "Изненадващо добре 🤩", sub: "" },
 ];
 
 const CTX_OPTIONS = [
-  { value: "alone" as const, label: "🌙 Само аз",  sub: "само за мен"        },
-  { value: "child" as const, label: "🧸 С детето", sub: "заедно"             },
+  { value: "alone" as const, label: "Сама 🙍‍♀️", sub: "" },
+  { value: "child" as const, label: "С детето 🐥", sub: "" },
 ];
 
 const TIME_META: Record<Duration, string> = {
-  short: "20–40 мин",
-  medium: "40–90 мин",
-  long: "1.5-3 ч",
+  short: "20–40м",
+  medium: "40–90м",
+  long: "1.5–3ч",
 };
 const ENERGY_META: Record<EnergyLevel, string> = {
-  low: "доста тежко",
-  medium: "горе-долу",
-  high: "изненадващо добре",
+  low: "уморена",
+  medium: "добре",
+  high: "на вълна",
 };
 const CTX_META: Record<Filters["ctx"], string> = {
   alone: "сама",
@@ -51,14 +51,19 @@ export default function DecideScreen() {
 
   const ready = !!(filters.time && filters.energy && filters.ctx);
   const meta = [
-    filters.time ? TIME_META[filters.time] : "колко време",
-    filters.energy ? ENERGY_META[filters.energy] : "каква енергия",
-    filters.ctx ? CTX_META[filters.ctx] : "с кого си",
+    filters.time ? TIME_META[filters.time] : "време",
+    filters.energy ? ENERGY_META[filters.energy] : "енергия",
+    filters.ctx ? CTX_META[filters.ctx] : "сама / с детето",
   ].join(" • ");
 
   function handleDecide() {
     if (!ready) return;
-    const results = decide(activities, filters as Filters, profile, store.recentIds);
+    const results = getBestIdeas(
+      activities,
+      filters as Filters,
+      profile,
+      store.recentIds,
+    );
     store.setResults(results);
     if (results[0]) store.addRecentId(results[0].id);
     router.push("/result");
@@ -70,13 +75,13 @@ export default function DecideScreen() {
 
       <div className={styles.body}>
         <div className={`${styles.header} anim-fade-up`}>
-          <h2 className={styles.title}>Какво ти се прави сега?</h2>
+          <h2 className={styles.title}>Хайде да измислим нещо за теб</h2>
           <p className={styles.meta}>{meta}</p>
         </div>
 
         <section className={`${styles.card} anim-card-in delay-1`}>
           <div className={styles.choiceGroup}>
-            <p className={styles.choiceLabel}>Колко време имаш?</p>
+            <p className={styles.choiceLabel}>С колко време разполагаш?</p>
             <div className={styles.chipRow}>
               {TIME_OPTIONS.map((o) => (
                 <Chip
@@ -91,7 +96,7 @@ export default function DecideScreen() {
           </div>
 
           <div className={styles.choiceGroup}>
-            <p className={styles.choiceLabel}>Как си точно сега?</p>
+            <p className={styles.choiceLabel}>Как се чувстваш днес?</p>
             <div className={styles.chipRow}>
               {ENERGY_OPTIONS.map((o) => (
                 <Chip
@@ -106,7 +111,7 @@ export default function DecideScreen() {
           </div>
 
           <div className={styles.choiceGroup}>
-            <p className={styles.choiceLabel}>С кого си?</p>
+            <p className={styles.choiceLabel}>Сама ли си или с детето?</p>
             <div className={styles.chipRow}>
               {CTX_OPTIONS.map((o) => (
                 <Chip
@@ -129,12 +134,6 @@ export default function DecideScreen() {
         </div>
       </div>
 
-      <BottomNav
-        items={[
-          { icon: "💡", label: "Реши",  href: "/decide", active: true },
-          { icon: "🌿", label: "Днес",  href: "/decide" },
-        ]}
-      />
     </div>
   );
 }

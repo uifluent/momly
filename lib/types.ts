@@ -51,13 +51,15 @@ export type Need =
   | "child-activities"
   | "outside"
   | "calm"
-  | "creative";
+  | "creative"
+  | "movement";
 
 export type ChildGender = "" | "boy" | "girl" | "any";
 
 export interface ChildProfile {
   birthDate: string;
   gender: ChildGender;
+  name?: string;
 }
 
 export interface UserProfile {

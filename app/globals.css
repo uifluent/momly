@@ -18,9 +18,14 @@
   --text-2: #8E8782;
   --text-3: #8E8782;
 
-  --r:      12px;
-  --r-sm:   8px;
+  --r:      16px;
+  --r-sm:   10px;
   --r-full: 9999px;
+
+  --radius-sm:   10px;   /* inputs, small interactive elements */
+  --radius-md:   16px;   /* cards, containers, large chips */
+  --radius-lg:   20px;   /* primary CTA buttons */
+  --radius-chip: 12px;   /* chips, tags, selectable options */
 }
 
 /* ── Reset ──────────────────────────────────────────────────────────────────── */

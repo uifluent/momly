@@ -1,36 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { useMomlyStore } from "@/lib/store";
 import type { ChildGender, Need } from "@/lib/types";
 import { Topbar, Btn } from "./UI";
 import styles from "./Onboarding.module.css";
 
 const NEEDS: { value: Need; emoji: string; label: string }[] = [
-  { value: "me-time",          emoji: "🛁", label: "Малко за себе си"      },
-  { value: "meals",            emoji: "🍳", label: "Нещо бързо за ядене"   },
-  { value: "child-activities", emoji: "🧸", label: "Занимание с детето"    },
-  { value: "outside",          emoji: "🌿", label: "Навън на въздух"       },
-  { value: "calm",             emoji: "🌙", label: "Спокойствие / почивка" },
-  { value: "creative",         emoji: "🎨", label: "Нещо творческо"        },
+  { value: "me-time", emoji: "🛁", label: "Време за мен" },
+  { value: "meals", emoji: "🍳", label: "Здравословни рецепти" },
+  { value: "child-activities", emoji: "🧸", label: "Занимания с детето" },
+  { value: "outside", emoji: "🌤️", label: "Активности на въздух" },
+  { value: "movement", emoji: "🧘‍♀️", label: "Да се раздвижа" },
+  { value: "calm", emoji: "🌙", label: "Спокойствие / почивка" },
+  { value: "creative", emoji: "🎨", label: "Нещо творческо" },
 ];
 
 const GENDER_OPTIONS: { value: ChildGender; label: string }[] = [
-  { value: "boy", label: "Момче" },
-  { value: "girl", label: "Момиче" },
-  { value: "any", label: "Няма значение" },
+  { value: "boy", label: "Момче 🧒" },
+  { value: "girl", label: "Момиче 👧" },
+  { value: "any", label: "Няма значение 🧸" },
 ];
 
 function formatAge(birthDate: string) {
   const birth = new Date(birthDate);
   const now = new Date();
-  let months = (now.getFullYear() - birth.getFullYear()) * 12 + now.getMonth() - birth.getMonth();
+
+  let months =
+    (now.getFullYear() - birth.getFullYear()) * 12 +
+    now.getMonth() -
+    birth.getMonth();
+
   if (now.getDate() < birth.getDate()) months -= 1;
   if (months < 0) return "";
 
   const years = Math.floor(months / 12);
   const restMonths = months % 12;
+
   if (years === 0) return `${restMonths} м.`;
   if (restMonths === 0) return `${years} г.`;
   return `${years} г. и ${restMonths} м.`;
@@ -39,14 +47,32 @@ function formatAge(birthDate: string) {
 export default function Onboarding() {
   const router = useRouter();
   const store = useMomlyStore();
+
   const [step, setStep] = useState(1);
-  const [numChildren, setNumChildrenLocal] = useState<number | null>(null);
 
   const profile = store.profile;
   const children = profile.children ?? [];
-  const childrenReady = !!numChildren && children.length >= numChildren && children.every((child) => child.birthDate);
 
-  function next() { setStep((s) => s + 1); }
+  useEffect(() => {
+    function maybeAddDefault() {
+      if (useMomlyStore.getState().profile.children.length === 0) {
+        useMomlyStore.getState().addChild();
+      }
+    }
+
+    if (useMomlyStore.persist.hasHydrated()) {
+      maybeAddDefault();
+    } else {
+      return useMomlyStore.persist.onFinishHydration(maybeAddDefault);
+    }
+  }, []);
+  const childrenReady =
+    children.length > 0 && children.every((child) => child.birthDate);
+
+  function next() {
+    setStep((s) => s + 1);
+  }
+
   function back() {
     if (step > 1) {
       setStep((s) => s - 1);
@@ -60,106 +86,156 @@ export default function Onboarding() {
     router.push("/decide");
   }
 
+  // ✅ delete child
+  function removeChild(index: number) {
+    if (children.length === 1) return; // safeguard
+
+    const updated = children.filter((_, i) => i !== index);
+    store.setChildren(updated); // 👉 трябва да имаш този метод в store
+  }
+
   return (
     <div className={styles.wrap}>
       <Topbar showBack backHref={step === 1 ? "/" : undefined} />
 
-      {/* ── Step 1: Children + DOB ────────────────────────────────────────── */}
+      {/* STEP 1 */}
       {step === 1 && (
         <div className={styles.body}>
           <div className={`${styles.header} anim-fade-up`}>
-            <h2 className={styles.title}>Първо, за кого мислим?</h2>
+            <h2 className={styles.title}>Добави децата си 🤍</h2>
             <p className={styles.meta}>1 от 2 · децата</p>
           </div>
 
           <div className={`${styles.card} anim-card-in delay-1`}>
-            <p className={styles.cardLabel}>Колко деца имаш?</p>
-            <div className={styles.chipRow}>
-              {[1, 2, 3].map((n) => (
-                <button
-                  key={n}
-                  className={[styles.numChip, numChildren === n ? styles.numChipSel : ""].join(" ")}
-                  onClick={() => {
-                    setNumChildrenLocal(n);
-                    store.setNumChildren(n);
-                  }}
-                >
-                  <span className={styles.numChipMain}>{n === 3 ? "3+" : n}</span>
-                  <span className={styles.numChipSub}>{n === 1 ? "дете" : "деца"}</span>
-                </button>
-              ))}
-            </div>
-
-            {numChildren && (
-              <div className={styles.childrenList}>
+            <motion.div layout className={styles.childrenList}>
+              <AnimatePresence initial={false}>
                 {children.map((child, index) => (
-                  <section className={styles.childBlock} key={index}>
+                  <motion.section
+                    key={index}
+                    layout
+                    initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                    transition={{ duration: 0.22, ease: "easeOut" }}
+                    className={styles.childBlock}
+                  >
                     <div className={styles.childHeader}>
-                      <p className={styles.childTitle}>Дете {index + 1}</p>
-                      {child.birthDate && <span className={styles.childAge}>{formatAge(child.birthDate)}</span>}
+                      <input
+                        type="text"
+                        className={styles.nameInput}
+                        value={child.name ?? ""}
+                        placeholder={`Дете ${index + 1} (по желание: име)`}
+                        onChange={(e) =>
+                          store.updateChild(index, { name: e.target.value })
+                        }
+                      />
+
+                      <div className={styles.childHeaderRight}>
+                        {child.birthDate && (
+                          <span className={styles.childAge}>
+                            {formatAge(child.birthDate)}
+                          </span>
+                        )}
+
+                        {children.length > 1 && (
+                          <button
+                            className={styles.deleteBtn}
+                            onClick={() => removeChild(index)}
+                            type="button"
+                            aria-label="Изтрий дете"
+                          >
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                              <path d="M1 3.5h12M5 3.5V2.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M5.5 6.5v4M8.5 6.5v4M2.5 3.5l.75 7.5A1 1 0 0 0 4.24 12h5.52a1 1 0 0 0 .99-.9l.75-7.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          </button>
+                        )}
+                      </div>
                     </div>
 
-                    <label className={styles.dobLabel} htmlFor={`child-birth-${index}`}>
-                      Рождена дата
-                    </label>
+                    <label className={styles.dobLabel}>Рождена дата</label>
+
                     <input
-                      id={`child-birth-${index}`}
                       type="date"
                       className={styles.dobInput}
                       value={child.birthDate}
                       max={new Date().toISOString().split("T")[0]}
-                      onChange={(e) => store.updateChild(index, { birthDate: e.target.value })}
+                      onChange={(e) =>
+                        store.updateChild(index, {
+                          birthDate: e.target.value,
+                        })
+                      }
                     />
 
                     {child.birthDate && (
                       <div className={styles.genderWrap}>
                         <p className={styles.dobLabel}>Пол (по желание)</p>
+
                         <div className={styles.genderRow}>
                           {GENDER_OPTIONS.map((option) => (
                             <button
                               key={option.value}
+                              type="button"
                               className={[
                                 styles.genderChip,
-                                child.gender === option.value ? styles.genderChipSel : "",
+                                child.gender === option.value
+                                  ? styles.genderChipSel
+                                  : "",
                               ].join(" ")}
-                              onClick={() => store.updateChild(index, { gender: option.value })}
-                              type="button"
+                              onClick={() =>
+                                store.updateChild(index, {
+                                  gender: option.value,
+                                })
+                              }
                             >
                               <span>{option.label}</span>
-                              {child.gender === option.value && <span className={styles.genderCheck}>✓</span>}
+                              {child.gender === option.value && (
+                                <span className={styles.genderCheck}>✓</span>
+                              )}
                             </button>
                           ))}
                         </div>
                       </div>
                     )}
-                  </section>
+                  </motion.section>
                 ))}
+              </AnimatePresence>
 
-                {numChildren === 3 && (
-                  <button className={styles.addChildBtn} onClick={store.addChild} type="button">
-                    + Добави дете
-                  </button>
-                )}
-              </div>
-            )}
+              <motion.button
+                className={styles.addChildBtn}
+                onClick={store.addChild}
+                type="button"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
+              >
+                + Добави дете
+              </motion.button>
+            </motion.div>
           </div>
 
-          <Btn onClick={next} disabled={!childrenReady} className={styles.ctaBtn}>
+          <Btn
+            onClick={next}
+            disabled={!childrenReady}
+            className={styles.ctaBtn}
+          >
             Продължи
           </Btn>
         </div>
       )}
 
-      {/* ── Step 2: Needs ─────────────────────────────────────────────────── */}
+      {/* STEP 2 */}
       {step === 2 && (
         <div className={styles.body}>
           <div className={`${styles.header} anim-fade-up`}>
-            <h2 className={styles.title}>Какво ти липсва днес?</h2>
-            <p className={styles.meta}>2 от 2 · {profile.needs.length}/3 избрани</p>
+            <h2 className={styles.title}>От какво най-вече имаш нужда?</h2>
+            <p className={styles.meta}>
+              2 от 2 · {profile.needs.length}/3 избрани
+            </p>
           </div>
 
           <div className={`${styles.card} anim-card-in delay-1`}>
-            <p className={styles.cardLabel}>Избери близкото</p>
+            <p className={styles.cardLabel}>Избери до 3</p>
+
             <div className={styles.needsGrid}>
               {NEEDS.map((n) => (
                 <button
@@ -177,15 +253,19 @@ export default function Onboarding() {
             </div>
           </div>
 
-          <Btn onClick={finishOnboarding} disabled={profile.needs.length < 2} className={styles.ctaBtn}>
+          <Btn
+            onClick={finishOnboarding}
+            disabled={profile.needs.length < 2}
+            className={styles.ctaBtn}
+          >
             Готово
           </Btn>
+
           <Btn variant="ghost" onClick={back} className={styles.ghostBtn}>
             Назад
           </Btn>
         </div>
       )}
-
     </div>
   );
 }

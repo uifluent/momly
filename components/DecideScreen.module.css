@@ -13,7 +13,7 @@
   flex-direction: column;
 }
 .header {
-  padding: 34px 24px 32px;
+  padding: 42px 24px 32px;
 }
 .title {
   font-family: 'IBM Plex Serif', serif;
@@ -22,13 +22,13 @@
   color: var(--text);
   line-height: 1.28;
   letter-spacing: 0.01em;
-  margin-bottom: 8px;
+  margin-bottom: 14px;
 }
 .meta {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: #6F6762;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
   line-height: 1.5;
 }
 
@@ -54,7 +54,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 400;
-  color: #6F6762;
+  color: var(--text-3);
   margin-bottom: 14px;
 }
 .chipRow {
@@ -78,11 +78,11 @@
   min-height: 54px;
   height: auto;
   padding: 16px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #F4A79D 0%, #E89286 100%);
+  border-radius: var(--radius-lg);
+  background: var(--primary);
   color: #fff;
-  box-shadow: 0 10px 24px rgba(244, 167, 157, 0.28);
+  box-shadow: 0 6px 20px rgba(232, 175, 163, 0.32);
 }
 .ctaWrap button:not(:disabled):hover {
-  background: linear-gradient(135deg, #F4A79D 0%, #E89286 100%);
+  background: var(--primary-hover);
 }
