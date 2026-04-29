@@ -53,14 +53,19 @@ export type Need =
   | "calm"
   | "creative";
 
-export type WeekFeel = "tough" | "okay" | "good";
+export type ChildGender = "" | "boy" | "girl" | "any";
+
+export interface ChildProfile {
+  birthDate: string;
+  gender: ChildGender;
+}
 
 export interface UserProfile {
   numChildren: number | null;
+  children: ChildProfile[];
   childDob: string | null; // ISO date string "YYYY-MM-DD"
   childAgeMonths: number | null;
   needs: Need[];
-  weekFeel: WeekFeel | null;
   onboardingComplete: boolean;
 }
 

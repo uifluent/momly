@@ -8,20 +8,26 @@ export default function Welcome() {
   const router = useRouter();
   return (
     <main className={styles.wrap}>
-      <div className={`${styles.icon} anim-fade-up`}>🌿</div>
-      <h1 className={`${styles.title} anim-fade-up delay-1`}>Хей! Аз съм Момли.</h1>
-      <p className={`${styles.sub} anim-fade-up delay-2`}>
-        Когато не знаеш откъде да хванеш — аз съм тук.
-        <br />
-        <br />
-        Без натиск. Без перфекция. Само едно малко, спокойно нещо.
-      </p>
-      <div className={`${styles.btnWrap} anim-fade-up delay-3`}>
-        <Btn onClick={() => router.push("/onboarding")}>Да започнем</Btn>
+      <div className={`${styles.header} anim-fade-up`}>
+        <div className={styles.icon}>🌿</div>
+        <h1 className={styles.title}>Едно спокойно нещо за днес.</h1>
+        <p className={styles.meta}>около 2 мин · без натиск</p>
       </div>
-      <p className={`${styles.note} anim-fade-up delay-4`}>
-        Около 2 минути · Безплатно
-      </p>
+
+      <section className={`${styles.card} anim-card-in delay-1`}>
+        <p className={styles.cardLabel}>Момли</p>
+        <h2 className={styles.cardTitle}>Когато не знаеш откъде да започнеш.</h2>
+        <p className={styles.cardText}>Ще ти предложа само една лека стъпка.</p>
+        <Btn onClick={() => router.push("/onboarding")} className={styles.cta}>
+          Започваме
+        </Btn>
+      </section>
+
+      <div className={`${styles.secondary} anim-fade-up delay-2`}>
+        <button className={styles.secondaryBtn} onClick={() => router.push("/decide")}>
+          Имам нужда от идея сега
+        </button>
+      </div>
     </main>
   );
 }

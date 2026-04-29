@@ -3,23 +3,24 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: var(--bg-gradient);
 }
 .scrollBody {
   flex: 1;
   overflow-y: auto;
-  padding: 0 0 24px;
+  padding: 0 0 32px;
 }
 
 /* ── Header ──────────────────────────────────────────────────────────────────── */
 .header {
-  padding: 24px 24px 16px;
+  padding: 32px 24px 28px;
 }
 .headerTitle {
-  font-family: 'PT Serif', serif;
+  font-family: 'IBM Plex Serif', serif;
   font-size: 26px;
   font-weight: 400;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.28;
   letter-spacing: 0.01em;
   margin-bottom: 10px;
 }
@@ -44,24 +45,25 @@
 /* ── Primary card ────────────────────────────────────────────────────────────── */
 .primaryCard {
   background: var(--surface);
-  border-radius: 20px;
-  padding: 24px;
-  margin: 0 16px 16px;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0 24px 20px;
+  box-shadow: var(--shadow-soft);
 }
 
 .cardCategory {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 400;
-  color: var(--text-3);
-  margin-bottom: 6px;
+  color: #8E8782;
+  margin-bottom: 8px;
 }
 .cardTitle {
-  font-family: 'PT Serif', serif;
+  font-family: 'IBM Plex Serif', serif;
   font-size: 24px;
   font-weight: 400;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.28;
   letter-spacing: 0.01em;
   margin-bottom: 8px;
 }
@@ -69,9 +71,12 @@
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: var(--text-3);
+  color: #8E8782;
   line-height: 1.6;
   margin-bottom: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ── Steps ───────────────────────────────────────────────────────────────────── */
@@ -84,23 +89,22 @@
 }
 .step {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: flex-start;
 }
-.stepNum {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--text-3);
+.stepDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
   flex-shrink: 0;
-  padding-top: 2px;
-  min-width: 14px;
+  margin-top: 8px;
 }
 .stepText {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: var(--text-2);
+  color: #8E8782;
   line-height: 1.55;
 }
 
@@ -116,7 +120,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 400;
-  color: var(--text-3);
+  color: #8E8782;
 }
 .metaTag + .metaTag::before {
   content: '·';
@@ -127,58 +131,34 @@
 /* ── Card actions ────────────────────────────────────────────────────────────── */
 .cardActions {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 .btnDo {
   width: 100%;
-  height: 50px;
+  height: auto;
+  min-height: 48px;
   border-radius: 9999px;
-  background: var(--primary);
+  background: #F4A79D;
   color: #fff;
   border: none;
   font-family: 'Inter', sans-serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
+  padding: 12px 18px;
   cursor: pointer;
-  transition: opacity 0.15s;
+  box-shadow: 0 8px 18px rgba(244, 167, 157, 0.22);
+  transition: background 0.15s, opacity 0.15s;
 }
-.btnDo:hover  { background: var(--primary-hover); }
+.btnDo:hover  { background: #E89286; }
 .btnDo:active { opacity: 0.75; }
-
-.btnNext {
-  width: 100%;
-  height: 40px;
-  border-radius: 9999px;
-  background: transparent;
-  color: var(--text-3);
-  border: none;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  cursor: pointer;
-  transition: color 0.15s;
-}
-.btnNext:hover { color: var(--text-2); }
-
-.warmth {
-  text-align: center;
-  font-family: 'PT Serif', serif;
-  font-size: 13px;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--text-3);
-  margin-top: 18px;
-  line-height: 1.6;
-  opacity: 0.8;
-}
 
 /* ── Secondary card ──────────────────────────────────────────────────────────── */
 .secondaryCard {
-  background: transparent;
-  padding: 20px 24px 0;
-  margin: 0 0 16px;
-  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 0 24px 10px;
+  box-shadow: none;
 }
 .secondaryLabel {
   font-family: 'Inter', sans-serif;
@@ -188,21 +168,13 @@
   margin-bottom: 6px;
 }
 .secondaryTitle {
-  font-family: 'PT Serif', serif;
-  font-size: 18px;
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 17px;
   font-weight: 400;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.28;
   letter-spacing: 0.01em;
-  margin-bottom: 4px;
-}
-.secondaryDesc {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-3);
-  line-height: 1.55;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .secondaryFooter {
   display: flex;
@@ -217,7 +189,7 @@
 .secondaryBtn {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--primary);
   background: transparent;
   border: none;
@@ -228,9 +200,36 @@
 .secondaryBtn:hover  { opacity: 0.7; }
 .secondaryBtn:active { opacity: 0.5; }
 
+.shuffleCard {
+  width: calc(100% - 48px);
+  margin: 0 24px 18px;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: none;
+  cursor: pointer;
+  text-align: left;
+}
+.shuffleLabel {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-bottom: 5px;
+}
+.shuffleText {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+}
+
 /* ── Back row ────────────────────────────────────────────────────────────────── */
 .backRow {
-  padding: 6px 24px 10px;
+  padding: 6px 24px 0;
 }
 
 /* ── Empty state ─────────────────────────────────────────────────────────────── */
@@ -262,11 +261,11 @@
   opacity: 0.7;
 }
 .acceptedTitle {
-  font-family: 'PT Serif', serif;
+  font-family: 'IBM Plex Serif', serif;
   font-size: 26px;
   font-weight: 400;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.28;
   letter-spacing: 0.01em;
   margin-bottom: 12px;
 }

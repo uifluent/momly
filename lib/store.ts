@@ -2,15 +2,17 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Activity, Filters, Need, UserProfile, WeekFeel } from "./types";
+import type { Activity, ChildGender, ChildProfile, Filters, Need, UserProfile } from "./types";
 
 interface MomlyState {
   // ── Onboarding ─────────────────────────────────────────────────────────────
   profile: UserProfile;
   setNumChildren: (n: number) => void;
   setChildDob: (dob: string) => void;
+  setChildren: (children: ChildProfile[]) => void;
+  updateChild: (index: number, child: Partial<ChildProfile>) => void;
+  addChild: () => void;
   toggleNeed: (need: Need) => void;
-  setWeekFeel: (feel: WeekFeel) => void;
   completeOnboarding: () => void;
 
   // ── Decision filters ────────────────────────────────────────────────────────
@@ -31,10 +33,10 @@ interface MomlyState {
 
 const defaultProfile: UserProfile = {
   numChildren: null,
+  children: [],
   childDob: null,
   childAgeMonths: null,
   needs: [],
-  weekFeel: null,
   onboardingComplete: false,
 };
 
@@ -44,14 +46,41 @@ function calcAgeMonths(dob: string): number {
   return Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24 * 30.44));
 }
 
+function emptyChild(): ChildProfile {
+  return { birthDate: "", gender: "" };
+}
+
+function syncChildSummary(children: ChildProfile[]) {
+  const datedChildren = children.filter((child) => child.birthDate);
+  const childAgeMonths =
+    datedChildren.length > 0
+      ? Math.min(...datedChildren.map((child) => calcAgeMonths(child.birthDate)))
+      : null;
+  const youngest = datedChildren.reduce<ChildProfile | null>((current, child) => {
+    if (!current) return child;
+    return calcAgeMonths(child.birthDate) < calcAgeMonths(current.birthDate) ? child : current;
+  }, null);
+
+  return {
+    children,
+    numChildren: children.length || null,
+    childDob: youngest?.birthDate ?? null,
+    childAgeMonths,
+  };
+}
+
 export const useMomlyStore = create<MomlyState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // ── Profile ─────────────────────────────────────────────────────────────
       profile: defaultProfile,
 
       setNumChildren: (n) =>
-        set((s) => ({ profile: { ...s.profile, numChildren: n } })),
+        set((s) => {
+          const current = s.profile.children ?? [];
+          const children = Array.from({ length: n }, (_, index) => current[index] ?? emptyChild());
+          return { profile: { ...s.profile, ...syncChildSummary(children), numChildren: n } };
+        }),
 
       setChildDob: (dob) =>
         set((s) => ({
@@ -61,6 +90,26 @@ export const useMomlyStore = create<MomlyState>()(
             childAgeMonths: calcAgeMonths(dob),
           },
         })),
+
+      setChildren: (children) =>
+        set((s) => ({ profile: { ...s.profile, ...syncChildSummary(children) } })),
+
+      updateChild: (index, child) =>
+        set((s) => {
+          const children = [...(s.profile.children ?? [])];
+          children[index] = {
+            ...(children[index] ?? emptyChild()),
+            ...child,
+            gender: (child.gender ?? children[index]?.gender ?? "") as ChildGender,
+          };
+          return { profile: { ...s.profile, ...syncChildSummary(children) } };
+        }),
+
+      addChild: () =>
+        set((s) => {
+          const children = [...(s.profile.children ?? []), emptyChild()];
+          return { profile: { ...s.profile, ...syncChildSummary(children) } };
+        }),
 
       toggleNeed: (need) =>
         set((s) => {
@@ -73,9 +122,6 @@ export const useMomlyStore = create<MomlyState>()(
           const next = current.length >= 3 ? [...current.slice(1), need] : [...current, need];
           return { profile: { ...s.profile, needs: next } };
         }),
-
-      setWeekFeel: (feel) =>
-        set((s) => ({ profile: { ...s.profile, weekFeel: feel } })),
 
       completeOnboarding: () =>
         set((s) => ({ profile: { ...s.profile, onboardingComplete: true } })),

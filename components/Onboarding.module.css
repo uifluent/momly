@@ -6,33 +6,46 @@
 }
 .body {
   flex: 1;
-  padding: 28px 24px 36px;
+  padding: 28px 18px 38px;
   display: flex;
   flex-direction: column;
 }
+.header {
+  padding: 0 8px 22px;
+}
 .title {
-  font-family: 'PT Serif', serif;
-  font-size: 27px;
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 26px;
   font-weight: 400;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.28;
   letter-spacing: 0.01em;
-  margin: 16px 0 10px;
+  margin-bottom: 8px;
 }
-.sub {
+.meta {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   color: var(--text-3);
-  line-height: 1.6;
-  margin-bottom: 28px;
+}
+.card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 26px;
+  box-shadow: var(--shadow-soft);
+}
+.cardLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-bottom: 12px;
 }
 
 /* ── Number chips ───────────────────────────────────────────────────────────── */
 .chipRow {
   display: flex;
-  gap: 10px;
-  margin-bottom: 28px;
+  gap: 12px;
 }
 .numChip {
   flex: 1;
@@ -49,12 +62,43 @@
 }
 .numChip:active { opacity: 0.72; }
 .numChipSel { background: var(--primary-light); }
-.numChipMain { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 400; color: var(--text-2); }
+.numChipMain { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 400; color: var(--text); }
 .numChipSub  { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); }
 .numChipSel .numChipMain { color: var(--text); }
 
 /* ── DOB input ──────────────────────────────────────────────────────────────── */
-.dobWrap { margin-bottom: 28px; }
+.childrenList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 22px;
+}
+.childBlock {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 16px;
+}
+.childHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.childTitle {
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.2;
+}
+.childAge {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  white-space: nowrap;
+}
 .dobLabel {
   display: block;
   font-family: 'Inter', sans-serif;
@@ -79,22 +123,69 @@
 }
 .dobInput:focus { background: var(--primary-dim); }
 
+.genderWrap {
+  margin-top: 14px;
+}
+.genderRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.genderChip {
+  width: 100%;
+  min-height: 40px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.56);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  transition: background 0.15s;
+}
+.genderChipSel {
+  background: rgba(244, 167, 157, 0.18);
+  color: var(--text);
+}
+.genderCheck {
+  color: var(--primary);
+  font-size: 13px;
+  line-height: 1;
+}
+.addChildBtn {
+  width: 100%;
+  min-height: 44px;
+  border: none;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
 /* ── Needs grid ─────────────────────────────────────────────────────────────── */
 .needsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 28px;
+  gap: 10px;
 }
 .needChip {
   padding: 14px 10px;
-  border-radius: 16px;
+  border-radius: 12px;
   border: none;
   background: var(--surface-2);
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 400;
-  color: var(--text-3);
+  color: var(--text);
   cursor: pointer;
   transition: background 0.15s;
   text-align: center;
@@ -112,8 +203,7 @@
 .largeChips {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 28px;
+  gap: 10px;
 }
 
 /* ── CTA positioning ────────────────────────────────────────────────────────── */

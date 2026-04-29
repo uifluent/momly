@@ -69,13 +69,12 @@ export default function ResultScreen() {
       <div className={styles.wrap}>
         <div className={styles.acceptedWrap}>
           <div className={styles.acceptedIcon}>🌿</div>
-          <h2 className={styles.acceptedTitle}>Наслади се — заслужаваш го.</h2>
+          <h2 className={styles.acceptedTitle}>Добре. Това стига.</h2>
           <p className={styles.acceptedSub}>
-            Избра: <strong>{acceptedTitle}</strong>.<br />
-            Върни се когато си готова. Никакъв натиск.
+            Избра: <strong>{acceptedTitle}</strong>.
           </p>
           <Btn onClick={() => { setAccepted(false); router.push("/decide"); }}>
-            ← Назад
+            Върни ме
           </Btn>
         </div>
         <BottomNav
@@ -93,7 +92,7 @@ export default function ResultScreen() {
       <div className={styles.scrollBody}>
         {/* ── Header ──────────────────────────────────────────────────────── */}
         <div className={`${styles.header} anim-fade-up`}>
-          <h1 className={styles.headerTitle}>Хайде, имам нещо за теб ✨</h1>
+          <h1 className={styles.headerTitle}>Ето едно нещо за теб.</h1>
           <div className={styles.metaPills}>
             {filters.time   && <span className={styles.pill}>{TIME_LABEL[filters.time]}</span>}
             {filters.energy && <span className={styles.pill}>{ENERGY_LABEL[filters.energy]}</span>}
@@ -107,7 +106,6 @@ export default function ResultScreen() {
             activity={primary}
             filters={filters}
             onAccept={() => handleAccept(primary)}
-            onShuffle={handleShuffle}
           />
         ) : (
           <div className={styles.empty}>
@@ -123,9 +121,16 @@ export default function ResultScreen() {
           <SecondaryCard activity={secondary} filters={filters} onAccept={() => handleAccept(secondary)} />
         )}
 
+        {primary && (
+          <button className={`${styles.shuffleCard} anim-card-in delay-3`} onClick={handleShuffle}>
+            <span className={styles.shuffleLabel}>Още една идея</span>
+            <span className={styles.shuffleText}>Покажи нещо друго</span>
+          </button>
+        )}
+
         <div className={styles.backRow}>
           <Btn variant="ghost" onClick={() => router.push("/decide")}>
-            ← Промени отговорите
+            Промени отговорите
           </Btn>
         </div>
       </div>
@@ -146,12 +151,10 @@ function PrimaryCard({
   activity,
   filters,
   onAccept,
-  onShuffle,
 }: {
   activity: Activity;
   filters: Filters;
   onAccept: () => void;
-  onShuffle: () => void;
 }) {
   const ageMeta =
     activity.ageRange
@@ -170,9 +173,9 @@ function PrimaryCard({
       <p className={styles.cardDesc}>{activity.description}</p>
 
       <ol className={styles.stepsList}>
-        {activity.steps.map((step, i) => (
+        {activity.steps.slice(0, 3).map((step, i) => (
           <li key={i} className={styles.step}>
-            <span className={styles.stepNum}>{i + 1}</span>
+            <span className={styles.stepDot} />
             <span className={styles.stepText}>{step}</span>
           </li>
         ))}
@@ -185,11 +188,8 @@ function PrimaryCard({
       </div>
 
       <div className={styles.cardActions}>
-        <button className={styles.btnDo} onClick={onAccept}>✓ Да! Това правим.</button>
-        <button className={styles.btnNext} onClick={onShuffle}>Нещо друго →</button>
+        <button className={styles.btnDo} onClick={onAccept}>Да, това правим</button>
       </div>
-
-      <p className={styles.warmth}>Не е нужно да е идеално. Важното е, че се грижиш за себе си. 🤍</p>
     </div>
   );
 }
@@ -205,12 +205,11 @@ function SecondaryCard({
 }) {
   return (
     <div className={`${styles.secondaryCard} anim-card-in delay-2`}>
-      <p className={styles.secondaryLabel}>Или пък това...</p>
+      <p className={styles.secondaryLabel}>{TIME_LABEL[filters.time]} · {CATEGORY_LABEL[activity.category[0]] ?? activity.category[0]}</p>
       <h3 className={styles.secondaryTitle}>{activity.title}</h3>
-      <p className={styles.secondaryDesc}>{activity.description}</p>
       <div className={styles.secondaryFooter}>
-        <span className={styles.secondaryTime}>{TIME_LABEL[filters.time]} · {CATEGORY_LABEL[activity.category[0]] ?? activity.category[0]}</span>
-        <button className={styles.secondaryBtn} onClick={onAccept}>Тази!</button>
+        <span className={styles.secondaryTime}>алтернатива</span>
+        <button className={styles.secondaryBtn} onClick={onAccept}>Това</button>
       </div>
     </div>
   );

@@ -1,23 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400&family=Inter:wght@400&display=swap');
 
 /* ── Design tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --bg:            #fdf8f4;
-  --surface:       #ffffff;
-  --surface-2:     #f5ede5;
-  --border:        #ebe1d6;
+  --bg:            #FDFBFF;
+  --bg-gradient:   linear-gradient(180deg, #FFF6F4 0%, #FDFBFF 100%);
+  --surface:       #FFFFFF;
+  --surface-2:     rgba(255, 255, 255, 0.7);
+  --border:        rgba(255, 255, 255, 0.72);
 
-  --primary:       #c08878;
-  --primary-hover: #a87060;
-  --primary-light: #f0d4cc;
-  --primary-dim:   #fdf2f0;
+  --primary:       #F4A79D;
+  --primary-hover: #E89286;
+  --primary-light: rgba(244, 167, 157, 0.22);
+  --primary-dim:   #FFF5F3;
+  --shadow-soft:   0 10px 24px rgba(0, 0, 0, 0.05);
 
-  --text:   #2e2219;
-  --text-2: #6b5d54;
-  --text-3: #a89890;
+  --text:   #2C2A28;
+  --text-2: #8E8782;
+  --text-3: #8E8782;
 
-  --r:      16px;
-  --r-sm:   10px;
+  --r:      12px;
+  --r-sm:   8px;
   --r-full: 9999px;
 }
 
@@ -31,7 +33,7 @@
 
 html, body {
   height: 100%;
-  background: #ede5da;
+  background: #FDFBFF;
 }
 
 body {
@@ -48,7 +50,7 @@ body {
   max-width: 430px;
   min-height: 100dvh;
   margin: 0 auto;
-  background: var(--bg);
+  background: var(--bg-gradient);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -56,7 +58,7 @@ body {
 }
 
 /* ── Typography helpers ─────────────────────────────────────────────────────── */
-.serif { font-family: 'PT Serif', serif; }
+.serif { font-family: 'IBM Plex Serif', serif; }
 .label-caps {
   font-size: 12px;
   font-weight: 400;

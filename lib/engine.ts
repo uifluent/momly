@@ -1,5 +1,7 @@
 import type { Activity, Filters, UserProfile } from "./types";
 
+type ScoredActivity = { activity: Activity; score: number };
+
 /**
  * Filter activities based on hard constraints.
  */
@@ -34,7 +36,7 @@ export function scoreActivities(
   profile: UserProfile,
   recentIds: string[]
 ): Activity[] {
-  const scored = pool.map((a) => {
+  const scored: ScoredActivity[] = pool.map((a) => {
     let score = 0;
 
     if (a.energy[0] === filters.energy) score += 3;
@@ -63,12 +65,12 @@ export function scoreActivities(
     // Small jitter for freshness
     score += Math.random() * 1.5;
 
-    return { ...a, _score: score };
+    return { activity: a, score };
   });
 
   return scored
-    .sort((a, b) => (b as any)._score - (a as any)._score)
-    .map(({ _score, ...rest }: any) => rest);
+    .sort((a, b) => b.score - a.score)
+    .map(({ activity }) => activity);
 }
 
 /**

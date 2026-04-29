@@ -3,46 +3,86 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: var(--bg-gradient);
 }
 .body {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 8px;
+  padding-bottom: 24px;
   display: flex;
   flex-direction: column;
 }
-.question {
-  padding: 28px 24px 12px;
+.header {
+  padding: 34px 24px 32px;
 }
-.questionTitle {
-  font-family: 'PT Serif', serif;
+.title {
+  font-family: 'IBM Plex Serif', serif;
   font-size: 26px;
   font-weight: 400;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.28;
   letter-spacing: 0.01em;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
-.questionSub {
+.meta {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  font-weight: 400;
-  color: var(--text-3);
+  font-weight: 500;
+  color: #6F6762;
   line-height: 1.5;
 }
 
-.filterSection {
-  padding: 18px 24px 0;
+.card {
+  background: transparent;
+  border-radius: 0;
+  padding: 0 24px;
+  margin: 0;
+  box-shadow: none;
 }
-.filterLabel {
-  margin-bottom: 10px;
+.choiceGroup + .choiceGroup {
+  padding-top: 0;
+  margin-top: 28px;
+  border-top: none;
+}
+.choiceGroup {
+  margin-bottom: 28px;
+}
+.choiceGroup:last-child {
+  margin-bottom: 0;
+}
+.choiceLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #6F6762;
+  margin-bottom: 14px;
 }
 .chipRow {
   display: flex;
-  gap: 6px;
+  gap: 10px;
 }
 
 .ctaWrap {
-  padding: 28px 24px 0;
+  padding: 36px 24px 0;
   margin-top: auto;
+}
+.ctaMicro {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+  text-align: center;
+  margin-bottom: 12px;
+}
+.ctaWrap button {
+  min-height: 54px;
+  height: auto;
+  padding: 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #F4A79D 0%, #E89286 100%);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(244, 167, 157, 0.28);
+}
+.ctaWrap button:not(:disabled):hover {
+  background: linear-gradient(135deg, #F4A79D 0%, #E89286 100%);
 }
