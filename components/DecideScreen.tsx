@@ -18,9 +18,9 @@ const TIME_OPTIONS: { value: Duration; label: string; sub: string }[] = [
 ];
 
 const ENERGY_OPTIONS: { value: EnergyLevel; label: string; sub: string }[] = [
-  { value: "low", label: "Доста изморена 🥱", sub: "" },
-  { value: "medium", label: "Добре съм 👌", sub: "" },
-  { value: "high", label: "Изненадващо добре 🤩", sub: "" },
+  { value: "low", label: "Изтощена съм 🪫", sub: "" },
+  { value: "medium", label: "Окей съм 👌", sub: "" },
+  { value: "high", label: "Имам енергия ⚡", sub: "" },
 ];
 
 const CTX_OPTIONS = [
@@ -29,9 +29,9 @@ const CTX_OPTIONS = [
 ];
 
 const TIME_META: Record<Duration, string> = {
-  short: "20–40м",
-  medium: "40–90м",
-  long: "1.5–3ч",
+  short: "20 – 40мин",
+  medium: "40 – 90мин",
+  long: "1.5 – 3ч",
 };
 const ENERGY_META: Record<EnergyLevel, string> = {
   low: "уморена",
@@ -50,6 +50,7 @@ export default function DecideScreen() {
   const profile = store.profile;
 
   const ready = !!(filters.time && filters.energy && filters.ctx);
+  const hasResults = store.results.length > 0;
   const meta = [
     filters.time ? TIME_META[filters.time] : "време",
     filters.energy ? ENERGY_META[filters.energy] : "енергия",
@@ -63,6 +64,7 @@ export default function DecideScreen() {
       filters as Filters,
       profile,
       store.recentIds,
+      store.userPreferences,
     );
     store.setResults(results);
     if (results[0]) store.addRecentId(results[0].id);
@@ -127,13 +129,14 @@ export default function DecideScreen() {
         </section>
 
         <div className={`${styles.ctaWrap} anim-fade-up delay-2`}>
-          <p className={styles.ctaMicro}>Няма грешен избор 🤍</p>
+          {hasResults && (
+            <p className={styles.ctaMicro}>Можеш да промениш нещо</p>
+          )}
           <Btn onClick={handleDecide} disabled={!ready}>
             Дай ми идея
           </Btn>
         </div>
       </div>
-
     </div>
   );
 }

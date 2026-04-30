@@ -11,16 +11,21 @@ import styles from "./UI.module.css";
 interface TopbarProps {
   showBack?: boolean;
   backHref?: string;
+  onBack?: () => void;
 }
 
-export function Topbar({ showBack, backHref = "/" }: TopbarProps) {
+export function Topbar({ showBack, backHref = "/", onBack }: TopbarProps) {
   const router = useRouter();
   const hasSaved = useMomlyStore((s) => s.favorites.length > 0);
 
   return (
     <header className={styles.topbar}>
       {showBack ? (
-        <button className={styles.backBtn} onClick={() => router.push(backHref)} aria-label="Назад">
+        <button
+          className={styles.backBtn}
+          onClick={onBack ?? (() => router.push(backHref))}
+          aria-label="Назад"
+        >
           ←
         </button>
       ) : (

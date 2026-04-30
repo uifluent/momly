@@ -33,6 +33,18 @@ interface MomlyState {
   // ── Favorites ────────────────────────────────────────────────────────────────
   favorites: string[];
   toggleFavorite: (id: string) => void;
+
+  // ── Completed ideas ───────────────────────────────────────────────────────────
+  completedIds: string[];
+  markCompleted: (id: string) => void;
+
+  // ── Preferences (learning) ────────────────────────────────────────────────────
+  userPreferences: {
+    likedTags: Record<string, number>;
+    skippedTags: Record<string, number>;
+  };
+  likeIdea: (tags: string[]) => void;
+  skipIdea: (tags: string[]) => void;
 }
 
 const defaultProfile: UserProfile = {
@@ -160,10 +172,42 @@ export const useMomlyStore = create<MomlyState>()(
             ? s.favorites.filter((f) => f !== id)
             : [...s.favorites, id],
         })),
+
+      // ── Completed ideas ───────────────────────────────────────────────────────
+      completedIds: [],
+      markCompleted: (id) =>
+        set((s) => ({
+          completedIds: s.completedIds.includes(id)
+            ? s.completedIds
+            : [...s.completedIds, id],
+        })),
+
+      // ── Preferences (learning) ────────────────────────────────────────────────
+      userPreferences: { likedTags: {}, skippedTags: {} },
+
+      likeIdea: (tags) =>
+        set((s) => {
+          const liked = { ...s.userPreferences.likedTags };
+          for (const tag of tags) liked[tag] = (liked[tag] ?? 0) + 3;
+          return { userPreferences: { ...s.userPreferences, likedTags: liked } };
+        }),
+
+      skipIdea: (tags) =>
+        set((s) => {
+          const skipped = { ...s.userPreferences.skippedTags };
+          for (const tag of tags) skipped[tag] = (skipped[tag] ?? 0) + 1;
+          return { userPreferences: { ...s.userPreferences, skippedTags: skipped } };
+        }),
     }),
     {
       name: "momly-state",
-      partialize: (s) => ({ profile: s.profile, recentIds: s.recentIds, favorites: s.favorites }),
+      partialize: (s) => ({
+        profile: s.profile,
+        recentIds: s.recentIds,
+        favorites: s.favorites,
+        completedIds: s.completedIds,
+        userPreferences: s.userPreferences,
+      }),
     }
   )
 );

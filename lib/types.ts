@@ -17,12 +17,32 @@ export type Effort = "zero" | "low" | "medium";
 export type Interruptibility = "high" | "medium" | "low";
 export type MentalLoad = "light" | "medium" | "heavy";
 
+export interface ContextVariant {
+  solo?: string;
+  withChild?: string;
+}
+
+export interface EnergyVariants {
+  low?: ContextVariant;
+  medium?: ContextVariant;
+  high?: ContextVariant;
+}
+
+export interface StepsVariants {
+  low?: string[];
+  medium?: string[];
+  high?: string[];
+}
+
 export interface Activity {
   id: string;
   title: string;
+  emoji?: string;
   /** Dataset uses "description" (not "desc") */
   description: string;
+  energyVariants?: EnergyVariants;
   steps: string[];
+  stepsVariants?: StepsVariants;
   duration: Duration[];
   energy: EnergyLevel[];
   withChild: boolean;

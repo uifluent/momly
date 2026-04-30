@@ -2,11 +2,17 @@ import type { Activity, Filters, UserProfile } from "./types";
 
 type Scored = { idea: Activity; score: number };
 
+interface Preferences {
+  likedTags: Record<string, number>;
+  skippedTags: Record<string, number>;
+}
+
 export function getBestIdeas(
   ideas: Activity[],
   filters: Filters,
   profile: UserProfile,
   recentIds: string[],
+  preferences: Preferences = { likedTags: {}, skippedTags: {} },
 ): Activity[] {
   const withChild = filters.ctx === "child";
 
@@ -61,6 +67,12 @@ export function getBestIdeas(
 
     // Novelty: push recently shown ideas to the back
     if (recentIds.includes(a.id)) score -= 5;
+
+    // Preference learning: reward liked categories, penalise skipped ones
+    const preferenceScore = a.category.reduce((acc, tag) => {
+      return acc + (preferences.likedTags[tag] ?? 0) - (preferences.skippedTags[tag] ?? 0);
+    }, 0);
+    score += preferenceScore;
 
     return { idea: a, score };
   });

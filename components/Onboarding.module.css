@@ -14,16 +14,15 @@
   padding: 0 8px 22px;
 }
 .title {
-  font-family: 'IBM Plex Serif', serif;
-  font-size: 26px;
-  font-weight: 400;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
   color: var(--text);
   line-height: 1.28;
-  letter-spacing: 0.01em;
   margin-bottom: 8px;
 }
 .meta {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 12px;
   font-weight: 400;
   color: var(--text-3);
@@ -35,11 +34,11 @@
   box-shadow: var(--shadow-soft);
 }
 .cardLabel {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
   color: var(--text-3);
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 /* ── Number chips ───────────────────────────────────────────────────────────── */
@@ -62,8 +61,8 @@
 }
 .numChip:active { opacity: 0.72; }
 .numChipSel { background: var(--primary-light); }
-.numChipMain { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 400; color: var(--text); }
-.numChipSub  { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-3); }
+.numChipMain { font-family: 'Comfortaa', sans-serif; font-size: 20px; font-weight: 400; color: var(--text); }
+.numChipSub  { font-family: 'Comfortaa', sans-serif; font-size: 11px; color: var(--text-3); }
 .numChipSel .numChipMain { color: var(--text); }
 
 /* ── DOB input ──────────────────────────────────────────────────────────────── */
@@ -71,7 +70,6 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-top: 22px;
 }
 .childBlock {
   background: rgba(255, 255, 255, 0.7);
@@ -80,13 +78,19 @@
 }
 .childHeader {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 12px;
 }
+.childHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
 .childTitle {
-  font-family: 'IBM Plex Serif', serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: var(--text);
@@ -114,9 +118,9 @@
 .deleteBtn:active { transform: scale(0.95); }
 
 .nameInput {
-  font-family: 'IBM Plex Serif', serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--text);
   line-height: 1.2;
   background: transparent;
@@ -129,16 +133,16 @@
 }
 .nameInput::placeholder { color: var(--text-3); }
 .childAge {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
   font-weight: 400;
   color: var(--text-3);
   white-space: nowrap;
 }
 .dobLabel {
   display: block;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-3);
   margin-bottom: 8px;
@@ -150,7 +154,7 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: var(--surface-2);
   padding: 0 20px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 15px;
   font-weight: 400;
   color: var(--text);
@@ -161,7 +165,7 @@
 .dobInput:focus  { background: var(--primary-dim); border-color: rgba(0, 0, 0, 0.12); }
 
 .genderWrap {
-  margin-top: 14px;
+  margin-top: 24px;
 }
 .genderRow {
   display: flex;
@@ -175,8 +179,9 @@
   border-radius: var(--radius-chip);
   background: rgba(255, 255, 255, 0.56);
   color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  height: 50px;
   font-weight: 400;
   cursor: pointer;
   padding: 10px 12px;
@@ -192,7 +197,7 @@
 }
 .genderCheck {
   color: var(--primary);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1;
 }
 .addChildBtn {
@@ -202,9 +207,10 @@
   border-radius: var(--radius-md);
   background: transparent;
   color: var(--primary);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 700;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
@@ -215,12 +221,12 @@
   gap: 10px;
 }
 .needChip {
-  padding: 14px 10px;
+  padding: 14px 5px;
   border-radius: var(--radius-chip);
   border: none;
   background: var(--surface-2);
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text);
   cursor: pointer;
@@ -230,7 +236,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 5px;
+  min-height: 100px;
 }
 .needChip:active { opacity: 0.72; }
 .needChipSel { background: var(--primary-light); color: var(--text); }

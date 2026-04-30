@@ -10,11 +10,15 @@ import styles from "./Onboarding.module.css";
 
 const NEEDS: { value: Need; emoji: string; label: string }[] = [
   { value: "me-time", emoji: "🛁", label: "Време за мен" },
-  { value: "meals", emoji: "🍳", label: "Здравословни рецепти" },
-  { value: "child-activities", emoji: "🧸", label: "Занимания с детето" },
-  { value: "outside", emoji: "🌤️", label: "Активности на въздух" },
-  { value: "movement", emoji: "🧘‍♀️", label: "Да се раздвижа" },
-  { value: "calm", emoji: "🌙", label: "Спокойствие / почивка" },
+  { value: "meals", emoji: "🍳", label: "Бързи рецепти" },
+  {
+    value: "child-activities",
+    emoji: "🧸",
+    label: "Занимания с детето",
+  },
+  { value: "outside", emoji: "🌤️", label: "Активности навън" },
+  { value: "movement", emoji: "🧘‍♀️", label: "Движение" },
+  { value: "calm", emoji: "🌙", label: "Спокойствие" },
   { value: "creative", emoji: "🎨", label: "Нещо творческо" },
 ];
 
@@ -41,7 +45,7 @@ function formatAge(birthDate: string) {
 
   if (years === 0) return `${restMonths} м.`;
   if (restMonths === 0) return `${years} г.`;
-  return `${years} г. и ${restMonths} м.`;
+  return `${years}г. ${restMonths}м.`;
 }
 
 export default function Onboarding() {
@@ -96,14 +100,13 @@ export default function Onboarding() {
 
   return (
     <div className={styles.wrap}>
-      <Topbar showBack backHref={step === 1 ? "/" : undefined} />
+      <Topbar showBack={step === 2} onBack={back} />
 
       {/* STEP 1 */}
       {step === 1 && (
         <div className={styles.body}>
           <div className={`${styles.header} anim-fade-up`}>
             <h2 className={styles.title}>Добави децата си 🤍</h2>
-            <p className={styles.meta}>1 от 2 · децата</p>
           </div>
 
           <div className={`${styles.card} anim-card-in delay-1`}>
@@ -144,8 +147,20 @@ export default function Onboarding() {
                             type="button"
                             aria-label="Изтрий дете"
                           >
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                              <path d="M1 3.5h12M5 3.5V2.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M5.5 6.5v4M8.5 6.5v4M2.5 3.5l.75 7.5A1 1 0 0 0 4.24 12h5.52a1 1 0 0 0 .99-.9l.75-7.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 14 14"
+                              fill="none"
+                              aria-hidden="true"
+                            >
+                              <path
+                                d="M1 3.5h12M5 3.5V2.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1M5.5 6.5v4M8.5 6.5v4M2.5 3.5l.75 7.5A1 1 0 0 0 4.24 12h5.52a1 1 0 0 0 .99-.9l.75-7.6"
+                                stroke="currentColor"
+                                strokeWidth="1.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
                             </svg>
                           </button>
                         )}
@@ -228,9 +243,7 @@ export default function Onboarding() {
         <div className={styles.body}>
           <div className={`${styles.header} anim-fade-up`}>
             <h2 className={styles.title}>От какво най-вече имаш нужда?</h2>
-            <p className={styles.meta}>
-              2 от 2 · {profile.needs.length}/3 избрани
-            </p>
+            <p className={styles.meta}>{profile.needs.length}/3 избрани</p>
           </div>
 
           <div className={`${styles.card} anim-card-in delay-1`}>
@@ -258,11 +271,7 @@ export default function Onboarding() {
             disabled={profile.needs.length < 2}
             className={styles.ctaBtn}
           >
-            Готово
-          </Btn>
-
-          <Btn variant="ghost" onClick={back} className={styles.ghostBtn}>
-            Назад
+            Напред
           </Btn>
         </div>
       )}

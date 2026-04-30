@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400&family=Inter:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&display=swap');
 
 /* ── Design tokens ─────────────────────────────────────────────────────────── */
 :root {
   --bg:            #FDFBFF;
-  --bg-gradient:   linear-gradient(180deg, #FFF6F4 0%, #FDFBFF 100%);
+  --bg-gradient:   #FDFBFF;
   --surface:       #FFFFFF;
   --surface-2:     rgba(255, 255, 255, 0.7);
   --border:        rgba(255, 255, 255, 0.72);
@@ -14,18 +14,18 @@
   --primary-dim:   #FFF5F3;
   --shadow-soft:   0 10px 24px rgba(0, 0, 0, 0.05);
 
-  --text:   #2C2A28;
+  --text:   #4d3730;
   --text-2: #8E8782;
-  --text-3: #8E8782;
+  --text-3: #4d3730;
 
   --r:      16px;
   --r-sm:   10px;
   --r-full: 9999px;
 
-  --radius-sm:   10px;   /* inputs, small interactive elements */
-  --radius-md:   16px;   /* cards, containers, large chips */
-  --radius-lg:   20px;   /* primary CTA buttons */
-  --radius-chip: 12px;   /* chips, tags, selectable options */
+  --radius-sm:   6px;   /* inputs, small interactive elements */
+  --radius-md:   10px;   /* cards, containers, large chips */
+  --radius-lg:   10px;   /* primary CTA buttons */
+  --radius-chip: 6px;   /* chips, tags, selectable options */
 }
 
 /* ── Reset ──────────────────────────────────────────────────────────────────── */
@@ -42,7 +42,7 @@ html, body {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   color: var(--text);
   font-size: 16px;
   line-height: 1.55;
@@ -63,7 +63,7 @@ body {
 }
 
 /* ── Typography helpers ─────────────────────────────────────────────────────── */
-.serif { font-family: 'IBM Plex Serif', serif; }
+.serif { font-family: 'Comfortaa', sans-serif; }
 .label-caps {
   font-size: 12px;
   font-weight: 400;

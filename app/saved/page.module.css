@@ -17,15 +17,14 @@
   padding: 32px 24px 20px;
 }
 .title {
-  font-family: 'IBM Plex Serif', serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 26px;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--text);
   line-height: 1.28;
-  letter-spacing: 0.01em;
 }
 .count {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
   font-weight: 400;
   color: var(--text-3);
@@ -47,14 +46,14 @@
   opacity: 0.5;
 }
 .emptyTitle {
-  font-family: 'IBM Plex Serif', serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--text);
   margin-bottom: 10px;
 }
 .emptySub {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 14px;
   font-weight: 400;
   color: var(--text-3);
@@ -63,7 +62,7 @@
   margin-bottom: 28px;
 }
 .emptyBtn {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 15px;
   font-weight: 400;
   color: #fff;
@@ -98,24 +97,23 @@
 }
 
 .category {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 11px;
   font-weight: 400;
   color: var(--text-3);
   margin-bottom: 6px;
 }
 .cardTitle {
-  font-family: 'IBM Plex Serif', serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--text);
   line-height: 1.28;
-  letter-spacing: 0.01em;
   margin-bottom: 6px;
   padding-right: 32px;
 }
 .cardDesc {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
   font-weight: 400;
   color: var(--text-3);
@@ -136,7 +134,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
   font-weight: 400;
   color: var(--text-2);

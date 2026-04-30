@@ -3,504 +3,1143 @@
     "id": "1",
     "title": "Мини пикник на пода",
     "description": "Лесно, спокойно и без подготовка",
-    "steps": ["Разстели нещо на пода", "Добави малка закуска", "Пусни тиха музика"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Разстели нещо на пода",
+      "Добави малка закуска",
+      "Пусни тиха музика"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [12, 48],
-    "category": ["calm"],
+    "ageRange": [
+      12,
+      48
+    ],
+    "category": [
+      "calm"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🧺",
+    "energyVariants": {
+      "low": {
+        "withChild": "Само за двамата, без подготовка."
+      },
+      "medium": {
+        "withChild": "Малко пространство заедно на пода."
+      },
+      "high": {
+        "withChild": "Хубав начин да се насладите заедно."
+      }
+    }
   },
   {
     "id": "2",
     "title": "Оцветяване + избор на цвят",
     "description": "Креативно и спокойно време",
-    "steps": ["Дай му лист и моливи", "Нека избира цветовете", "Оцветявайте заедно"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Дай му лист и моливи",
+      "Нека избира цветовете",
+      "Оцветявайте заедно"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [18, 48],
-    "category": ["creative"],
+    "ageRange": [
+      18,
+      48
+    ],
+    "category": [
+      "creative"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🎨",
+    "energyVariants": {
+      "low": {
+        "withChild": "Детето цвети — ти почиваш до него."
+      },
+      "medium": {
+        "withChild": "Спокойно творческо време заедно."
+      },
+      "high": {
+        "withChild": "Оцветявайте и се забавлявайте заедно."
+      }
+    }
   },
   {
     "id": "3",
     "title": "Пъзел + намиране на детайли",
     "description": "Спокойна игра с малко мислене",
-    "steps": ["Нареждайте пъзел", "Питай къде е нещо", "Назовавайте цветовете"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Нареждайте пъзел",
+      "Питай къде е нещо",
+      "Назовавайте цветовете"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [24, 60],
-    "category": ["calm"],
+    "ageRange": [
+      24,
+      60
+    ],
+    "category": [
+      "calm"
+    ],
     "effort": "zero",
     "interruptibility": "medium",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🧩",
+    "energyVariants": {
+      "low": {
+        "withChild": "Просто седете и нареждайте заедно."
+      },
+      "medium": {
+        "withChild": "Спокойна игра с малко мислене."
+      },
+      "high": {
+        "withChild": "Предизвикателство и забавление заедно."
+      }
+    }
   },
   {
     "id": "4",
     "title": "Помощник вкъщи",
     "description": "Малка задача за детето",
-    "steps": ["Дай му нещо лесно", "Да подреди или носи", "Похвали го"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Дай му нещо лесно",
+      "Да подреди или носи",
+      "Похвали го"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [18, 48],
-    "category": ["real-life"],
+    "ageRange": [
+      18,
+      48
+    ],
+    "category": [
+      "real-life"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🧹"
   },
   {
     "id": "5",
     "title": "2 мин тишина + дишане",
     "description": "Малка пауза за теб",
-    "steps": ["Затвори очи", "Дишай бавно", "Фокус върху тялото"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Затвори очи",
+      "Дишай бавно",
+      "Фокус върху тялото"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["self-care"],
+    "category": [
+      "self-care"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🌬️",
+    "energyVariants": {
+      "low": {
+        "solo": "Не ти трябва нищо. Просто дишай."
+      },
+      "medium": {
+        "solo": "Малка пауза само за себе си."
+      },
+      "high": {
+        "solo": "Добро начало преди да продължиш."
+      }
+    },
+    "stepsVariants": {
+      "low": [
+        "Легни или седни",
+        "Затвори очи",
+        "Дишай бавно и без усилие"
+      ],
+      "medium": [
+        "Затвори очи",
+        "Дишай дълбоко",
+        "Фокус върху тялото"
+      ],
+      "high": [
+        "Застани изправена",
+        "Поеми 5 дълбоки вдишки",
+        "Продължи заредена"
+      ]
+    }
   },
   {
     "id": "6",
     "title": "Кафе + 5 мин на терасата",
     "description": "Малък reset",
-    "steps": ["Направи си кафе", "Излез навън", "Без телефон"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Направи си кафе",
+      "Излез навън",
+      "Без телефон"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["self-care"],
+    "category": [
+      "self-care"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "☕",
+    "energyVariants": {
+      "low": {
+        "solo": "Само кафе и тишина. Нищо повече."
+      },
+      "medium": {
+        "solo": "Малка пауза с любимото кафе навън."
+      },
+      "high": {
+        "solo": "Зареди се преди следващото нещо."
+      }
+    }
   },
   {
     "id": "7",
     "title": "Разходка навън",
     "description": "Свеж въздух и движение",
-    "steps": ["Излез навън", "Без цел", "Движи се спокойно"],
-    "duration": ["medium", "long"],
-    "energy": ["medium"],
+    "steps": [
+      "Излез навън",
+      "Без цел",
+      "Движи се спокойно"
+    ],
+    "duration": [
+      "medium",
+      "long"
+    ],
+    "energy": [
+      "medium"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["reset"],
+    "category": [
+      "reset"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🚶‍♀️"
   },
   {
     "id": "8",
     "title": "Разтягане или бавна медитация",
     "description": "Леко раздвижване",
-    "steps": ["Разтегни се", "Дишай бавно", "Без напрежение"],
-    "duration": ["short", "medium"],
-    "energy": ["low", "medium"],
+    "steps": [
+      "Разтегни се",
+      "Дишай бавно",
+      "Без напрежение"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "low",
+      "medium"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["self-care"],
+    "category": [
+      "self-care"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🧘‍♀️",
+    "energyVariants": {
+      "low": {
+        "solo": "Бавно и меко. Само дишане и разтягане."
+      },
+      "medium": {
+        "solo": "Леко раздвижване за тялото и ума."
+      },
+      "high": {
+        "solo": "Разтегни тялото добре — ще се почувстваш по-добре."
+      }
+    },
+    "stepsVariants": {
+      "low": [
+        "Легни на пода",
+        "Разтегни се бавно",
+        "Само дишай"
+      ],
+      "medium": [
+        "Застани удобно",
+        "Разтегни шията и гърба",
+        "Дишай дълбоко"
+      ],
+      "high": [
+        "Загрей леко",
+        "Разтегни добре",
+        "Добави малко движение ако искаш"
+      ]
+    }
   },
   {
     "id": "9",
     "title": "Подкаст + почивка",
     "description": "Просто слушай",
-    "steps": ["Пусни нещо приятно", "Седни или легни", "Без екран"],
-    "duration": ["short", "medium"],
-    "energy": ["low"],
+    "steps": [
+      "Пусни нещо приятно",
+      "Седни или легни",
+      "Без екран"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["calm"],
+    "category": [
+      "calm"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🎧"
   },
   {
     "id": "10",
     "title": "Разчистване на гардероба",
     "description": "Само малка част",
-    "steps": ["Избери 1 зона", "Изхвърли излишното", "Спри навреме"],
-    "duration": ["medium"],
-    "energy": ["medium"],
+    "steps": [
+      "Избери 1 зона",
+      "Изхвърли излишното",
+      "Спри навреме"
+    ],
+    "duration": [
+      "medium"
+    ],
+    "energy": [
+      "medium"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["real-life"],
+    "category": [
+      "real-life"
+    ],
     "effort": "medium",
     "interruptibility": "medium",
-    "mentalLoad": "medium"
+    "mentalLoad": "medium",
+    "emoji": "👗"
   },
   {
     "id": "11",
     "title": "Почивка или кратък сън",
     "description": "Нищо друго не е нужно",
-    "steps": ["Легни", "Затвори очи", "Дори 10 мин са ок"],
-    "duration": ["short", "medium"],
-    "energy": ["low"],
+    "steps": [
+      "Легни",
+      "Затвори очи",
+      "Дори 10 мин са ок"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["survival"],
+    "category": [
+      "survival"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "😴",
+    "energyVariants": {
+      "low": {
+        "solo": "Легни. Не ти трябва причина."
+      },
+      "medium": {
+        "solo": "Малка почивка прави чудеса."
+      },
+      "high": {
+        "solo": "Дори 15 минути те зареждат."
+      }
+    },
+    "stepsVariants": {
+      "low": [
+        "Легни",
+        "Затвори очи",
+        "Дори 10 мин са достатъчни"
+      ],
+      "medium": [
+        "Намери тихо място",
+        "Легни за малко",
+        "Стани когато си готова"
+      ],
+      "high": [
+        "Легни за 15 мин",
+        "Постави алармата",
+        "Стани заредена"
+      ]
+    }
   },
   {
     "id": "12",
     "title": "Детско + пауза за теб",
     "description": "Малко време за почивка",
-    "steps": ["Пусни нещо спокойно", "Седни", "Поеми въздух"],
-    "duration": ["short", "medium"],
-    "energy": ["low"],
+    "steps": [
+      "Пусни нещо спокойно",
+      "Седни",
+      "Поеми въздух"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [18, 72],
-    "category": ["survival"],
+    "ageRange": [
+      18,
+      72
+    ],
+    "category": [
+      "survival"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "📺"
   },
   {
     "id": "13",
     "title": "Площадка + малко предизвикателство",
     "description": "Движение и игра",
-    "steps": ["Отидете на площадка", "Дай мисия", "Играйте заедно"],
-    "duration": ["medium", "long"],
-    "energy": ["medium"],
+    "steps": [
+      "Отидете на площадка",
+      "Дай мисия",
+      "Играйте заедно"
+    ],
+    "duration": [
+      "medium",
+      "long"
+    ],
+    "energy": [
+      "medium"
+    ],
     "withChild": true,
-    "ageRange": [18, 72],
-    "category": ["movement"],
+    "ageRange": [
+      18,
+      72
+    ],
+    "category": [
+      "movement"
+    ],
     "effort": "low",
     "interruptibility": "medium",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🛝"
   },
   {
     "id": "14",
     "title": "Каране + малка цел",
     "description": "Колело или тротинетка",
-    "steps": ["Излезте навън", "Изберете цел", "Движете се заедно"],
-    "duration": ["medium"],
-    "energy": ["medium"],
+    "steps": [
+      "Излезте навън",
+      "Изберете цел",
+      "Движете се заедно"
+    ],
+    "duration": [
+      "medium"
+    ],
+    "energy": [
+      "medium"
+    ],
     "withChild": true,
-    "ageRange": [24, 72],
-    "category": ["movement"],
+    "ageRange": [
+      24,
+      72
+    ],
+    "category": [
+      "movement"
+    ],
     "effort": "low",
     "interruptibility": "medium",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🚲"
   },
   {
     "id": "15",
     "title": "Топка + проста игра",
     "description": "Бърза активност",
-    "steps": ["Вземете топка", "Подаване", "Гонене или цел"],
-    "duration": ["short", "medium"],
-    "energy": ["medium"],
+    "steps": [
+      "Вземете топка",
+      "Подаване",
+      "Гонене или цел"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "medium"
+    ],
     "withChild": true,
-    "ageRange": [18, 60],
-    "category": ["movement"],
+    "ageRange": [
+      18,
+      60
+    ],
+    "category": [
+      "movement"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "⚽"
   },
   {
     "id": "16",
     "title": "Зоопарк или голяма разходка",
     "description": "По-дълго излизане",
-    "steps": ["Планирайте излизане", "Разходка", "Наблюдавайте"],
-    "duration": ["long"],
-    "energy": ["medium", "high"],
+    "steps": [
+      "Планирайте излизане",
+      "Разходка",
+      "Наблюдавайте"
+    ],
+    "duration": [
+      "long"
+    ],
+    "energy": [
+      "medium",
+      "high"
+    ],
     "withChild": true,
-    "ageRange": [24, 120],
-    "category": ["explore"],
+    "ageRange": [
+      24,
+      120
+    ],
+    "category": [
+      "explore"
+    ],
     "effort": "medium",
     "interruptibility": "low",
-    "mentalLoad": "medium"
+    "mentalLoad": "medium",
+    "emoji": "🌍"
   },
   {
     "id": "17",
     "title": "Среща с приятелка",
     "description": "Малко социално време",
-    "steps": ["Пишете или се обадете", "Уговорете среща", "Отидете"],
-    "duration": ["medium", "long"],
-    "energy": ["medium"],
+    "steps": [
+      "Пишете или се обадете",
+      "Уговорете среща",
+      "Отидете"
+    ],
+    "duration": [
+      "medium",
+      "long"
+    ],
+    "energy": [
+      "medium"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["social"],
+    "category": [
+      "social"
+    ],
     "effort": "low",
     "interruptibility": "medium",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "👭"
   },
   {
     "id": "18",
     "title": "Тренировка",
     "description": "Движение за теб",
-    "steps": ["Избери тренировка", "Започни леко", "Довърши според силите"],
-    "duration": ["medium", "long"],
-    "energy": ["high"],
+    "steps": [
+      "Избери тренировка",
+      "Започни леко",
+      "Довърши според силите"
+    ],
+    "duration": [
+      "medium",
+      "long"
+    ],
+    "energy": [
+      "high"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["movement"],
+    "category": [
+      "movement"
+    ],
     "effort": "medium",
     "interruptibility": "low",
-    "mentalLoad": "medium"
+    "mentalLoad": "medium",
+    "emoji": "💪"
   },
   {
     "id": "19",
     "title": "Обади се на близък човек",
     "description": "Кратка връзка",
-    "steps": ["Избери човек", "Обади се", "Кажи нещо мило"],
-    "duration": ["short"],
-    "energy": ["low", "medium"],
+    "steps": [
+      "Избери човек",
+      "Обади се",
+      "Кажи нещо мило"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low",
+      "medium"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["social"],
+    "category": [
+      "social"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "📞"
   },
   {
     "id": "20",
     "title": "Маска за лице + пауза",
     "description": "Малко грижа",
-    "steps": ["Сложи маска", "Седни", "Почини"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Сложи маска",
+      "Седни",
+      "Почини"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["self-care"],
+    "category": [
+      "self-care"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "💆‍♀️"
   },
   {
     "id": "21",
     "title": "Запази си час за масаж",
     "description": "Направи малка стъпка",
-    "steps": ["Отвори телефон", "Избери място", "Запази час"],
-    "duration": ["short"],
-    "energy": ["low", "medium"],
+    "steps": [
+      "Отвори телефон",
+      "Избери място",
+      "Запази час"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low",
+      "medium"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["life-admin"],
+    "category": [
+      "life-admin"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "📅"
   },
   {
     "id": "22",
     "title": "Бърза закуска за себе си",
     "description": "Нещо вкусно без много мислене.",
-    "steps": ["Провери хладилника", "Сглоби нещо просто", "Яж бавно"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Провери хладилника",
+      "Сглоби нещо просто",
+      "Яж бавно"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["survival"],
+    "category": [
+      "survival"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🥗"
   },
   {
     "id": "23",
     "title": "Паста или яйца за 15 минути",
     "description": "Бързо, засищащо, без стрес.",
-    "steps": ["Сложи вода да ври", "Приготви нещо просто", "Яж без да бързаш"],
-    "duration": ["short"],
-    "energy": ["low", "medium"],
+    "steps": [
+      "Сложи вода да ври",
+      "Приготви нещо просто",
+      "Яж без да бързаш"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low",
+      "medium"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["real-life"],
+    "category": [
+      "real-life"
+    ],
     "effort": "low",
     "interruptibility": "medium",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🍝"
   },
   {
     "id": "24",
     "title": "Пусни любима песен",
     "description": "Само слушай — нищо друго.",
-    "steps": ["Избери любима песен", "Затвори очи", "Просто усещай"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Избери любима песен",
+      "Затвори очи",
+      "Просто усещай"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["self-care"],
+    "category": [
+      "self-care"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🎵",
+    "energyVariants": {
+      "low": {
+        "solo": "Само слушай. Нищо не трябва да правиш."
+      },
+      "medium": {
+        "solo": "Пусни нещо, което обичаш."
+      },
+      "high": {
+        "solo": "Хубавата музика те зарежда."
+      }
+    }
   },
   {
     "id": "25",
     "title": "Рисуване с пръсти",
     "description": "Хаотично и забавно — за двамата.",
-    "steps": ["Постели нещо на масата", "Дай бои и хартия", "Рисувайте без правила"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Постели нещо на масата",
+      "Дай бои и хартия",
+      "Рисувайте без правила"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [12, 48],
-    "category": ["creative"],
+    "ageRange": [
+      12,
+      48
+    ],
+    "category": [
+      "creative"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🖐️"
   },
   {
     "id": "26",
     "title": "Четене на книжка заедно",
     "description": "Легнете и четете — без бързане.",
-    "steps": ["Изберете книжка заедно", "Намерете удобна позиция", "Четете бавно"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Изберете книжка заедно",
+      "Намерете удобна позиция",
+      "Четете бавно"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [12, 72],
-    "category": ["calm"],
+    "ageRange": [
+      12,
+      72
+    ],
+    "category": [
+      "calm"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "📚",
+    "energyVariants": {
+      "low": {
+        "withChild": "Легнете заедно и просто четете."
+      },
+      "medium": {
+        "withChild": "Хубав момент да четете заедно."
+      },
+      "high": {
+        "withChild": "Изберете книжка и се потопете заедно."
+      }
+    }
   },
   {
     "id": "27",
     "title": "Мини танцово парти в хола",
     "description": "Пусни музика и се раздвижете заедно.",
-    "steps": ["Пусни весела музика", "Покани детето", "Танцувайте как искате"],
-    "duration": ["short"],
-    "energy": ["medium"],
+    "steps": [
+      "Пусни весела музика",
+      "Покани детето",
+      "Танцувайте как искате"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "medium"
+    ],
     "withChild": true,
-    "ageRange": [12, 72],
-    "category": ["movement"],
+    "ageRange": [
+      12,
+      72
+    ],
+    "category": [
+      "movement"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "💃",
+    "energyVariants": {
+      "low": {
+        "withChild": "Дори малко движение помага. Без правила."
+      },
+      "medium": {
+        "withChild": "Пусни музика и се раздвижете заедно."
+      },
+      "high": {
+        "withChild": "Танцувайте от сърце — детето ще се радва!"
+      }
+    }
   },
   {
     "id": "28",
     "title": "Бърза разходка зад блока",
     "description": "Само за да излезеш навън за малко.",
-    "steps": ["Обуй се", "Излез навън", "Върни се когато искаш"],
-    "duration": ["short"],
-    "energy": ["low", "medium"],
+    "steps": [
+      "Обуй се",
+      "Излез навън",
+      "Върни се когато искаш"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low",
+      "medium"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["reset"],
+    "category": [
+      "reset"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🚶‍♀️"
   },
   {
     "id": "29",
     "title": "Душ с любима музика",
     "description": "Малко топлина и пространство само за теб.",
-    "steps": ["Пусни музика", "Влез в душа", "Не бързай"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Пусни музика",
+      "Влез в душа",
+      "Не бързай"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["self-care"],
+    "category": [
+      "self-care"
+    ],
     "effort": "zero",
     "interruptibility": "medium",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🚿",
+    "energyVariants": {
+      "low": {
+        "solo": "Топлата вода е достатъчна. Просто стой."
+      },
+      "medium": {
+        "solo": "Душ с любима музика — малко за теб."
+      },
+      "high": {
+        "solo": "Зареди се с топла вода и добра музика."
+      }
+    }
   },
   {
     "id": "30",
     "title": "Подреди само едно нещо",
     "description": "Малка победа, голямо облекчение.",
-    "steps": ["Избери 1 чекмедже или кът", "Подреди само него", "Спри след това"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Избери 1 чекмедже или кът",
+      "Подреди само него",
+      "Спри след това"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["real-life"],
+    "category": [
+      "real-life"
+    ],
     "effort": "low",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "📦"
   },
   {
     "id": "31",
     "title": "Снимай нещо красиво вкъщи",
     "description": "Огледай се с нови очи.",
-    "steps": ["Вземи телефона", "Намери нещо хубаво наоколо", "Снимай го"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Вземи телефона",
+      "Намери нещо хубаво наоколо",
+      "Снимай го"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["creative"],
+    "category": [
+      "creative"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "📸"
   },
   {
     "id": "32",
     "title": "Легнете и гледайте тавана",
     "description": "Нищо специално — просто заедно.",
-    "steps": ["Легнете на пода или леглото", "Гледайте тавана", "Говорете или мълчете"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Легнете на пода или леглото",
+      "Гледайте тавана",
+      "Говорете или мълчете"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [6, 48],
-    "category": ["calm"],
+    "ageRange": [
+      6,
+      48
+    ],
+    "category": [
+      "calm"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "⭐"
   },
   {
     "id": "33",
     "title": "Чаша чай без телефон",
     "description": "Пет минути само за себе си.",
-    "steps": ["Свари вода", "Сипи любим чай", "Остави телефона настрана"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Свари вода",
+      "Сипи любим чай",
+      "Остави телефона настрана"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["calm"],
+    "category": [
+      "calm"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🍵",
+    "energyVariants": {
+      "low": {
+        "solo": "Седни, пий бавно. Нищо друго."
+      },
+      "medium": {
+        "solo": "Пет минути само за теб — без разсейване."
+      },
+      "high": {
+        "solo": "Добра пауза преди да продължиш."
+      }
+    }
   },
   {
     "id": "34",
     "title": "Сапунени мехури навън",
     "description": "Просто и вълшебно за малките.",
-    "steps": ["Вземете сапун за мехури", "Излезте навън", "Надухвайте и гонете"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Вземете сапун за мехури",
+      "Излезте навън",
+      "Надухвайте и гонете"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [12, 60],
-    "category": ["movement"],
+    "ageRange": [
+      12,
+      60
+    ],
+    "category": [
+      "movement"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🫧"
   },
   {
     "id": "35",
     "title": "Запиши 3 хубави неща от деня",
     "description": "Само 3 — малко, но помага.",
-    "steps": ["Вземи тетрадка или телефон", "Запиши 3 неща", "Прочети ги веднъж"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Вземи тетрадка или телефон",
+      "Запиши 3 неща",
+      "Прочети ги веднъж"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": false,
     "ageRange": null,
-    "category": ["self-care"],
+    "category": [
+      "self-care"
+    ],
     "effort": "zero",
     "interruptibility": "high",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "📝"
   },
   {
     "id": "36",
     "title": "Сглобете нещо от кухнята заедно",
     "description": "Бърза, лесна закуска с детето.",
-    "steps": ["Отвори хладилника", "Нека детето избира", "Сглобете заедно"],
-    "duration": ["short"],
-    "energy": ["low"],
+    "steps": [
+      "Отвори хладилника",
+      "Нека детето избира",
+      "Сглобете заедно"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
     "withChild": true,
-    "ageRange": [24, 96],
-    "category": ["real-life"],
+    "ageRange": [
+      24,
+      96
+    ],
+    "category": [
+      "real-life"
+    ],
     "effort": "low",
     "interruptibility": "medium",
-    "mentalLoad": "light"
+    "mentalLoad": "light",
+    "emoji": "🍳"
   }
 ]
