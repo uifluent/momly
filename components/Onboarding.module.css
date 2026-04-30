@@ -212,6 +212,7 @@
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 /* ── Needs grid ─────────────────────────────────────────────────────────────── */

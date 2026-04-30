@@ -40,6 +40,8 @@ export interface Activity {
   emoji?: string;
   /** Dataset uses "description" (not "desc") */
   description: string;
+  feelsLike?: string;
+  repeatable?: boolean;
   energyVariants?: EnergyVariants;
   steps: string[];
   stepsVariants?: StepsVariants;
@@ -88,6 +90,7 @@ export interface UserProfile {
   childDob: string | null; // ISO date string "YYYY-MM-DD"
   childAgeMonths: number | null;
   needs: Need[];
+  displayName?: string;
   onboardingComplete: boolean;
 }
 

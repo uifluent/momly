@@ -57,6 +57,8 @@ export default function ResultScreen() {
   const profile = store.profile;
 
   const [isSwitching, setIsSwitching] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [shownIds, setShownIds] = useState<string[]>([]);
 
   const primary = results[0];
 
@@ -64,11 +66,18 @@ export default function ResultScreen() {
     store.likeIdea(activity.category);
     store.markCompleted(activity.id);
     store.addRecentId(activity.id);
-    router.push("/decide");
+    setShowToast(true);
+    setTimeout(() => router.push("/"), 1500);
   }
 
   function handleShuffle() {
-    if (primary) store.skipIdea(primary.category);
+    if (!primary) return;
+    store.skipIdea(primary.category);
+
+    // Remember what the user just saw (keep last 3)
+    const nextShown = [...shownIds, primary.id].slice(-3);
+    setShownIds(nextShown);
+
     setIsSwitching(true);
     setTimeout(() => {
       const fresh = getBestIdeas(
@@ -78,8 +87,18 @@ export default function ResultScreen() {
         store.recentIds,
         store.userPreferences,
       );
-      store.setResults(fresh);
-      if (fresh[0]) store.addRecentId(fresh[0].id);
+
+      // Exclude recently shown ideas
+      let candidates = fresh.filter((a) => !nextShown.includes(a.id));
+
+      // Fallback: all filtered out → reset history and use the full ranked list
+      if (candidates.length === 0) {
+        setShownIds([]);
+        candidates = fresh;
+      }
+
+      store.setResults(candidates);
+      if (candidates[0]) store.addRecentId(candidates[0].id);
       setIsSwitching(false);
     }, 200);
   }
@@ -87,6 +106,11 @@ export default function ResultScreen() {
   return (
     <div className={styles.wrap}>
       <Topbar showBack backHref="/decide" />
+      {showToast && (
+        <div className={styles.toast} role="status" aria-live="polite">
+          ✨ Малка победа за днес
+        </div>
+      )}
       <div className={styles.scrollBody}>
         {/* ── Header ──────────────────────────────────────────────────────── */}
         <div className={`${styles.header} anim-fade-up`}>
@@ -117,7 +141,7 @@ export default function ResultScreen() {
               onAccept={() => handleAccept(primary)}
               isFavorite={store.favorites.includes(primary.id)}
               onToggleFavorite={() => store.toggleFavorite(primary.id)}
-              isCompleted={store.completedIds.includes(primary.id)}
+              isCompleted={primary.id in store.completedIds}
             />
           </div>
         ) : (
@@ -180,7 +204,13 @@ function PrimaryCard({
   const steps = getSteps(activity, filters.energy);
 
   return (
-    <div className={[styles.primaryCard, isCompleted ? styles.primaryCardCompleted : "", "anim-card-in"].join(" ")}>
+    <div
+      className={[
+        styles.primaryCard,
+        isCompleted ? styles.primaryCardCompleted : "",
+        "anim-card-in",
+      ].join(" ")}
+    >
       <button
         className={[styles.heartBtn, isPopping ? styles.heartBtnPop : ""].join(
           " ",
@@ -229,13 +259,11 @@ function PrimaryCard({
 
       <div className={styles.cardActions}>
         {!expanded ? (
-          <button className={styles.btnDo} onClick={() => setExpanded(true)}>
-            Научи повече
-          </button>
+          <Btn onClick={() => setExpanded(true)}>Научи повече</Btn>
         ) : (
-          <button className={styles.btnDo} onClick={onAccept}>
-            {isCompleted ? "Пак" : "Ще го направя"}
-          </button>
+          <Btn onClick={onAccept}>
+            {isCompleted ? "Ще го направя пак" : "Ще го направя"}
+          </Btn>
         )}
       </div>
     </div>

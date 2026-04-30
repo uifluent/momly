@@ -76,8 +76,9 @@
   border-radius: var(--radius-lg);
   font-family: 'Comfortaa', sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
   cursor: pointer;
   border: none;
   transition: background 0.15s, opacity 0.15s, color 0.15s;
@@ -86,6 +87,7 @@
 .btn:disabled {
   background: #a3a3a35c !important;
   color: #a8a8a8c2 !important;
+  box-shadow: none !important;
   cursor: not-allowed;
   opacity: 1;
 }
@@ -93,8 +95,10 @@
 .btnPrimary {
   background: var(--primary);
   color: #fff;
+  box-shadow: 0 4px 16px rgba(232, 175, 163, 0.28);
 }
-.btnPrimary:not(:disabled):hover { background: var(--primary-hover); }
+.btnPrimary:not(:disabled):hover  { background: var(--primary-hover); }
+.btnPrimary:not(:disabled):active { opacity: 0.75; }
 
 .btnGhost {
   background: transparent;
@@ -104,19 +108,22 @@
   height: 40px;
   font-size: 14px;
   font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
 }
 .btnGhost:hover { color: var(--text-2); }
 
 .btnOutline {
   background: var(--surface-2);
-  color: var(--text);
+  color: var(--primary);
   border: none;
-  border-radius: var(--radius-md);
-  height: 44px;
+  border-radius: var(--radius-lg);
+  height: 52px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
 }
-.btnOutline:hover { background: var(--border); }
+.btnOutline:not(:disabled):hover  { background: var(--primary-light); }
+.btnOutline:not(:disabled):active { opacity: 0.75; }
 
 /* ── Chip (pill) ────────────────────────────────────────────────────────────── */
 .chip {

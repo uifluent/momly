@@ -1,0 +1,154 @@
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-gradient);
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px 36px;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────────── */
+.header {
+  margin-bottom: 16px;
+}
+.greetingText {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+.mainMessage {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.mainSub {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+/* ── Illustration ────────────────────────────────────────────────────────────── */
+.illus {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 20px;
+}
+.illus :global(.illus-svg) {
+  width: 174px;
+  height: auto;
+}
+
+/* ── Progress section (wins + completed) ─────────────────────────────────────── */
+.progress {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Today's wins ────────────────────────────────────────────────────────────── */
+.wins {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+/* ── Today's completed list ──────────────────────────────────────────────────── */
+.todayDoneLabel {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+.todayDoneList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.todayDoneItem {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.todayDoneDot {
+  font-size: 11px;
+  color: var(--primary);
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+.todayDoneTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.todayDoneMore {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+/* ── Primary CTA ─────────────────────────────────────────────────────────────── */
+.ctaWrap {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* ── Inline stats ────────────────────────────────────────────────────────────── */
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+.statBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.statBtn:hover { color: var(--text); }
+.statSep {
+  font-size: 12px;
+  color: var(--text-3);
+  opacity: 0.4;
+}

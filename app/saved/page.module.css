@@ -31,6 +31,61 @@
   margin-top: 4px;
 }
 
+/* ── Tabs ────────────────────────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 24px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: color 0.15s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.tab:hover { color: var(--text-2); }
+.tabActive {
+  color: var(--text);
+  font-weight: 600;
+  border-bottom-color: var(--primary);
+}
+
+/* ── Weekly wins ─────────────────────────────────────────────────────────────── */
+.winsLabel {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-2);
+  padding: 16px 24px 8px;
+}
+
+/* ── Completed card header ───────────────────────────────────────────────────── */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.cardDate {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-3);
+  opacity: 0.7;
+  white-space: nowrap;
+  padding-left: 8px;
+}
+
 /* ── Empty state ─────────────────────────────────────────────────────────────── */
 .empty {
   display: flex;
@@ -61,20 +116,6 @@
   max-width: 240px;
   margin-bottom: 28px;
 }
-.emptyBtn {
-  font-family: 'Comfortaa', sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  color: #fff;
-  background: var(--primary);
-  border: none;
-  border-radius: var(--radius-lg);
-  padding: 14px 28px;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-.emptyBtn:hover  { opacity: 0.85; }
-.emptyBtn:active { opacity: 0.7;  }
 
 /* ── List ────────────────────────────────────────────────────────────────────── */
 .list {
@@ -94,6 +135,8 @@
   padding: 20px;
   margin: 0 24px 16px;
   box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
 }
 
 .category {
@@ -111,6 +154,10 @@
   line-height: 1.28;
   margin-bottom: 6px;
   padding-right: 32px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .cardDesc {
   font-family: 'Comfortaa', sans-serif;
@@ -129,6 +176,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 10px;
 }
 .step {
   display: flex;
@@ -175,3 +223,23 @@
   100% { transform: scale(1);    }
 }
 .heartBtnPop { animation: heartPop 0.2s ease-out; }
+
+/* ── Saved card actions ──────────────────────────────────────────────────────── */
+.savedCardActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.expandBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.15s;
+}
+.expandBtn:hover { color: var(--text-2); }

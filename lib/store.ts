@@ -13,6 +13,7 @@ interface MomlyState {
   updateChild: (index: number, child: Partial<ChildProfile>) => void;
   addChild: () => void;
   toggleNeed: (need: Need) => void;
+  setDisplayName: (name: string) => void;
   completeOnboarding: () => void;
 
   // ── Decision filters ────────────────────────────────────────────────────────
@@ -35,7 +36,7 @@ interface MomlyState {
   toggleFavorite: (id: string) => void;
 
   // ── Completed ideas ───────────────────────────────────────────────────────────
-  completedIds: string[];
+  completedIds: Record<string, string>; // id → ISO completedAt date
   markCompleted: (id: string) => void;
 
   // ── Preferences (learning) ────────────────────────────────────────────────────
@@ -139,6 +140,9 @@ export const useMomlyStore = create<MomlyState>()(
           return { profile: { ...s.profile, needs: next } };
         }),
 
+      setDisplayName: (name) =>
+        set((s) => ({ profile: { ...s.profile, displayName: name } })),
+
       completeOnboarding: () =>
         set((s) => ({ profile: { ...s.profile, onboardingComplete: true } })),
 
@@ -157,7 +161,7 @@ export const useMomlyStore = create<MomlyState>()(
       recentIds: [],
       addRecentId: (id) =>
         set((s) => ({
-          recentIds: [...s.recentIds.slice(-8), id],
+          recentIds: [...s.recentIds.slice(-9), id],
         })),
 
       // ── Accepted ─────────────────────────────────────────────────────────────
@@ -174,12 +178,12 @@ export const useMomlyStore = create<MomlyState>()(
         })),
 
       // ── Completed ideas ───────────────────────────────────────────────────────
-      completedIds: [],
+      completedIds: {},
       markCompleted: (id) =>
         set((s) => ({
-          completedIds: s.completedIds.includes(id)
+          completedIds: id in s.completedIds
             ? s.completedIds
-            : [...s.completedIds, id],
+            : { ...s.completedIds, [id]: new Date().toISOString() },
         })),
 
       // ── Preferences (learning) ────────────────────────────────────────────────

@@ -73,14 +73,3 @@
   text-align: center;
   margin-bottom: 12px;
 }
-.ctaWrap button {
-  min-height: 54px;
-  height: auto;
-  padding: 16px;
-  border-radius: var(--radius-lg);
-  background: var(--primary);
-  color: #fff;
-}
-.ctaWrap button:not(:disabled):hover {
-  background: var(--primary-hover);
-}

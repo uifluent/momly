@@ -1,18 +1,36 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
-import Welcome from "@/components/Welcome";
+import Home from "@/components/Home";
 
-export default function Home() {
+export default function Page() {
   const router = useRouter();
-  const onboardingComplete = useMomlyStore((s) => s.profile.onboardingComplete);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    if (onboardingComplete) router.replace("/decide");
-  }, [onboardingComplete, router]);
+    if (!localStorage.getItem("userName")) {
+      router.replace("/login");
+      return;
+    }
 
-  if (onboardingComplete) return null;
-  return <Welcome />;
+    const check = () => {
+      const { profile } = useMomlyStore.getState();
+      if (!profile.onboardingComplete) {
+        router.replace("/onboarding");
+      } else {
+        setChecked(true);
+      }
+    };
+
+    if (useMomlyStore.persist.hasHydrated()) {
+      check();
+    } else {
+      return useMomlyStore.persist.onFinishHydration(check);
+    }
+  }, [router]);
+
+  if (!checked) return null;
+  return <Home />;
 }

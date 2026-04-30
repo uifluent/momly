@@ -36,7 +36,7 @@ const TIME_META: Record<Duration, string> = {
 const ENERGY_META: Record<EnergyLevel, string> = {
   low: "уморена",
   medium: "добре",
-  high: "на вълна",
+  high: "енергия",
 };
 const CTX_META: Record<Filters["ctx"], string> = {
   alone: "сама",
@@ -65,6 +65,7 @@ export default function DecideScreen() {
       profile,
       store.recentIds,
       store.userPreferences,
+      { favorites: store.favorites, completedIds: store.completedIds },
     );
     store.setResults(results);
     if (results[0]) store.addRecentId(results[0].id);
@@ -73,7 +74,7 @@ export default function DecideScreen() {
 
   return (
     <div className={styles.wrap}>
-      <Topbar />
+      <Topbar showBack onBack={() => router.push("/")} />
 
       <div className={styles.body}>
         <div className={`${styles.header} anim-fade-up`}>
@@ -133,7 +134,7 @@ export default function DecideScreen() {
             <p className={styles.ctaMicro}>Можеш да промениш нещо</p>
           )}
           <Btn onClick={handleDecide} disabled={!ready}>
-            Дай ми идея
+            ✨ Дай ми идея
           </Btn>
         </div>
       </div>
