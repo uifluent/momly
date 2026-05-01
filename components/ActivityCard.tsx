@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CirclePlus, CircleMinus, Heart } from "lucide-react";
 import { Btn } from "./UI";
 import type { Activity, Duration, Filters } from "@/lib/types";
 import { getDescription, getSteps } from "@/lib/getDescription";
@@ -56,19 +57,18 @@ export function ActivityCard({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div
-      className={[
-        styles.card,
-        isAnimating ? styles.cardHidden : styles.cardVisible,
-      ].join(" ")}
-    >
+    <div className={[styles.card, isAnimating ? styles.cardExiting : ""].join(" ")}>
       {/* Save / heart */}
       <button
         className={styles.heartBtn}
         onClick={onToggleFavorite}
         aria-label={isFavorite ? "Премахни от любими" : "Запази"}
       >
-        {isFavorite ? "❤️" : "🤍"}
+        <Heart
+          size={18}
+          strokeWidth={1.75}
+          fill={isFavorite ? "currentColor" : "none"}
+        />
       </button>
 
       {isCompleted && (
@@ -96,25 +96,10 @@ export function ActivityCard({
             aria-expanded={isExpanded}
           >
             <span>Как да започна</span>
-            <svg
-              className={[
-                styles.chevron,
-                isExpanded ? styles.chevronOpen : "",
-              ].join(" ")}
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M4 6l4 4 4-4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {isExpanded
+              ? <CircleMinus size={16} strokeWidth={1.5} aria-hidden="true" />
+              : <CirclePlus  size={16} strokeWidth={1.5} aria-hidden="true" />
+            }
           </button>
 
           <div

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
 import { Topbar, Btn } from "@/components/UI";
+import { Heart, CirclePlus, CircleMinus, CheckCheck } from "lucide-react";
 import activitiesData from "@/data/activities.json";
 import type { Activity } from "@/lib/types";
 import styles from "./page.module.css";
@@ -80,34 +81,27 @@ export default function SavedPage() {
 
   return (
     <div className={styles.wrap}>
-      <Topbar showBack onBack={() => router.back()} />
 
       <div className={styles.scrollBody}>
         <div className={styles.header}>
-          <h1 className={styles.title}>
-            {activeTab === "favorites" ? "Идеи" : "Изпълнени"}
-          </h1>
+          <h1 className={styles.title}>Идеи</h1>
         </div>
 
         {/* ── Tabs ─────────────────────────────────────────────────────────── */}
         <div className={styles.tabs}>
           <button
-            className={[
-              styles.tab,
-              activeTab === "favorites" ? styles.tabActive : "",
-            ].join(" ")}
+            className={[styles.tab, activeTab === "favorites" ? styles.tabActive : ""].join(" ")}
             onClick={() => setActiveTab("favorites")}
           >
-            💛 Любими
+            <Heart size={14} strokeWidth={2} className={styles.tabIcon} />
+            Любими
           </button>
           <button
-            className={[
-              styles.tab,
-              activeTab === "completed" ? styles.tabActive : "",
-            ].join(" ")}
+            className={[styles.tab, activeTab === "completed" ? styles.tabActive : ""].join(" ")}
             onClick={() => setActiveTab("completed")}
           >
-            ✔ Изпълнени
+            <CheckCheck size={14} strokeWidth={2} className={styles.tabIcon} />
+            Изпълнени
           </button>
         </div>
 
@@ -197,7 +191,7 @@ function SavedCard({
         onClick={onRemove}
         aria-label="Премахни от любими"
       >
-        ❤️
+        <Heart size={18} strokeWidth={1.75} fill="currentColor" />
       </button>
 
       <p className={styles.category}>
@@ -209,30 +203,35 @@ function SavedCard({
       <h2 className={styles.cardTitle}>{activity.title}</h2>
       <p className={styles.cardDesc}>{activity.description}</p>
 
-      {expanded && activity.steps.length > 0 && (
-        <ul className={styles.steps}>
-          {activity.steps.slice(0, 3).map((step, i) => (
-            <li key={i} className={styles.step}>
-              <span className={styles.stepDot} />
-              <span>{step}</span>
-            </li>
-          ))}
-        </ul>
+      {activity.steps.length > 0 && (
+        <div className={styles.howTo}>
+          <button
+            className={styles.howToToggle}
+            onClick={() => setExpanded((v) => !v)}
+            aria-expanded={expanded}
+          >
+            <span>Как да започна</span>
+            {expanded
+              ? <CircleMinus size={16} strokeWidth={1.5} aria-hidden="true" />
+              : <CirclePlus  size={16} strokeWidth={1.5} aria-hidden="true" />
+            }
+          </button>
+          <div className={[styles.howToBody, expanded ? styles.howToBodyOpen : ""].join(" ")}>
+            <ul className={styles.howToSteps}>
+              {activity.steps.slice(0, 4).map((step, i) => (
+                <li key={i} className={styles.howToStep}>
+                  <span className={styles.stepDot} />
+                  <span className={styles.stepText}>{step}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       )}
 
-      <div className={styles.savedCardActions}>
-        {activity.steps.length > 0 && (
-          <button
-            className={styles.expandBtn}
-            onClick={() => setExpanded((v) => !v)}
-          >
-            {expanded ? "Скрий стъпките ↑" : "Как да започна →"}
-          </button>
-        )}
-        <Btn onClick={handleDo} disabled={done}>
-          {done ? "✔ Направено" : "Ще го направя"}
-        </Btn>
-      </div>
+      <Btn onClick={handleDo} disabled={done}>
+        {done ? "✔ Направено" : "Ще го направя"}
+      </Btn>
     </li>
   );
 }

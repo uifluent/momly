@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { BottomNavWrapper } from "@/components/BottomNavWrapper";
 
 export const metadata: Metadata = {
   title: "Momly — your calm next step",
@@ -18,7 +19,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        <div id="app-shell">{children}</div>
+        <div id="app-shell">
+          {children}
+          <BottomNavWrapper />
+        </div>
       </body>
     </html>
   );

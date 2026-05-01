@@ -22,6 +22,7 @@
   font-weight: 600;
   color: var(--text);
   line-height: 1.28;
+  text-align: center;
 }
 .count {
   font-family: 'Comfortaa', sans-serif;
@@ -227,22 +228,54 @@
 }
 .heartBtnPop { animation: heartPop 0.2s ease-out; }
 
-/* ── Saved card actions ──────────────────────────────────────────────────────── */
-.savedCardActions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* ── "Как да започна" collapsible (matches ActivityCard) ─────────────────────── */
+.howTo {
+  margin-bottom: 14px;
 }
-.expandBtn {
-  font-family: 'Comfortaa', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-3);
+.howToToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  text-align: left;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
   transition: color 0.15s;
 }
-.expandBtn:hover { color: var(--text-2); }
+.howToToggle:hover { color: var(--text-2); }
+
+.howToBody {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.22s ease-out, opacity 0.22s ease-out;
+}
+.howToBodyOpen {
+  max-height: 280px;
+  opacity: 1;
+}
+.howToSteps {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.howToStep {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.stepText {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-2);
+  line-height: 1.55;
+}

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
 import { Topbar, Btn } from "./UI";
+import { X, RefreshCcw } from "lucide-react";
 import { ActivityCard } from "./ActivityCard";
 import { getBestIdeas } from "@/lib/getBestIdeas";
 import activitiesData from "@/data/activities.json";
@@ -15,10 +16,10 @@ const allActivities = activitiesData as Activity[];
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const HEADLINES = [
-  "Днес не е нужно да мислиш 💛",
-  "Нещо малко за теб 🤍",
-  "Ето нещо леко за момента",
-  "Имаш малко свободно? Ето нещо",
+  "Днес не е нужно да мислиш 👇",
+  "Имаш малко време? Ето идея 👇",
+  "Нещо малко, което може да ти дойде добре 🤍",
+  "За теб, точно сега 👇",
 ];
 
 const TIME_OPTS: { value: Duration; label: string }[] = [
@@ -38,7 +39,7 @@ const CTX_OPTS: { value: Filters["ctx"]; label: string }[] = [
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function getDailyHeadline(): string {
+function dailyHeadline(): string {
   return HEADLINES[new Date().getDate() % HEADLINES.length];
 }
 
@@ -143,114 +144,31 @@ export default function Home() {
   }
 
   function handleRefineApply() {
-    store.setFilter("time", filters.time);
+    store.setFilter("time",   filters.time);
     store.setFilter("energy", filters.energy);
-    store.setFilter("ctx", filters.ctx);
-    const s = useMomlyStore.getState();
-    const results = getBestIdeas(
-      allActivities,
-      filters,
-      s.profile,
-      s.recentIds,
-      s.userPreferences,
-      { favorites: s.favorites, completedIds: s.completedIds },
-    );
-    store.setResults(results);
-    if (results[0]) store.addRecentId(results[0].id);
-    router.push("/result");
-  }
-
-  // ── Refine panel ──────────────────────────────────────────────────────────
-  if (showRefine) {
-    return (
-      <div className={styles.wrap}>
-        <Topbar showBack onBack={() => setShowRefine(false)} hideFav />
-        <div className={styles.body}>
-          <div className={`${styles.header} anim-fade-up`}>
-            <h2 className={styles.refineTitle}>Да го нагласим за теб</h2>
-            <p className={styles.mainSub}>Избери само това, което важи сега</p>
-          </div>
-
-          <div className={`${styles.refineSection} anim-card-in delay-1`}>
-            <div className={styles.refineGroup}>
-              <p className={styles.refineLabel}>С колко време разполагаш?</p>
-              <div className={styles.chipRow}>
-                {TIME_OPTS.map((o) => (
-                  <button
-                    key={o.value}
-                    className={[
-                      styles.chip,
-                      filters.time === o.value ? styles.chipSel : "",
-                    ].join(" ")}
-                    onClick={() => setFilters((f) => ({ ...f, time: o.value }))}
-                  >
-                    {o.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.refineGroup}>
-              <p className={styles.refineLabel}>Как се чувстваш?</p>
-              <div className={styles.chipRow}>
-                {ENERGY_OPTS.map((o) => (
-                  <button
-                    key={o.value}
-                    className={[
-                      styles.chip,
-                      filters.energy === o.value ? styles.chipSel : "",
-                    ].join(" ")}
-                    onClick={() =>
-                      setFilters((f) => ({ ...f, energy: o.value }))
-                    }
-                  >
-                    {o.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className={styles.refineGroup}>
-              <p className={styles.refineLabel}>Сама ли си или с детето?</p>
-              <div className={styles.chipRow}>
-                {CTX_OPTS.map((o) => (
-                  <button
-                    key={o.value}
-                    className={[
-                      styles.chip,
-                      filters.ctx === o.value ? styles.chipSel : "",
-                    ].join(" ")}
-                    onClick={() => setFilters((f) => ({ ...f, ctx: o.value }))}
-                  >
-                    {o.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className={`${styles.ctaWrap} anim-fade-up delay-2`}>
-            <Btn onClick={handleRefineApply}>✨ Покажи ми идеи</Btn>
-          </div>
-        </div>
-      </div>
-    );
+    store.setFilter("ctx",    filters.ctx);
+    setShownIds([]);
+    setShuffleCount(0);
+    const next = pickIdea(filters, []);
+    if (next) swapIdea(next);
+    setShowRefine(false);
   }
 
   // ── Main home ─────────────────────────────────────────────────────────────
   return (
     <div className={styles.wrap}>
-      <Topbar />
+      <Topbar hideFav />
       <div className={styles.body}>
         <div className={`${styles.header} anim-fade-up`}>
           <p className={styles.greetingText}>
             {displayName ? `Здравей, ${displayName} 💛` : "Здравей 💛"}
           </p>
-          <h1 className={styles.mainMessage}>{getDailyHeadline()}</h1>
+          <h1 className={styles.mainMessage}>{dailyHeadline()}</h1>
         </div>
 
         {idea && (
           <ActivityCard
+            key={idea.id}
             activity={idea}
             filters={filters}
             isFavorite={favorites.includes(idea.id)}
@@ -264,17 +182,16 @@ export default function Home() {
           />
         )}
 
-        {/* "Дай друга" — below the card, opens the refine panel */}
         {idea && (
           <button
             className={`${styles.shuffleBtn} anim-fade-up delay-2`}
             onClick={() => setShowRefine(true)}
           >
-            🔄 Дай ми друга идея
+            <RefreshCcw size={15} strokeWidth={2} />
+            Покажи друга идея
           </button>
         )}
 
-        {/* ── Today's wins ───────────────────────────────────────────────── */}
         {todayDone.length > 0 && (
           <div className={`${styles.wins} anim-fade-up delay-2`}>
             <p className={styles.winsLabel}>
@@ -292,31 +209,84 @@ export default function Home() {
             </ul>
           </div>
         )}
-
-        {(favorites.length > 0 || totalDone > 0) && (
-          <div className={`${styles.stats} anim-fade-up delay-2`}>
-            {favorites.length > 0 && (
-              <button
-                className={styles.statBtn}
-                onClick={() => router.push("/saved")}
-              >
-                💛 {favorites.length} любими
-              </button>
-            )}
-            {favorites.length > 0 && totalDone > 0 && (
-              <span className={styles.statSep}>·</span>
-            )}
-            {totalDone > 0 && (
-              <button
-                className={styles.statBtn}
-                onClick={() => router.push("/saved")}
-              >
-                ✔ {totalDone} изпълнени
-              </button>
-            )}
-          </div>
-        )}
       </div>
+
+      {/* ── Refine modal (bottom sheet) ───────────────────────────────────── */}
+      {showRefine && (
+        <div
+          className={styles.modalBackdrop}
+          onClick={() => setShowRefine(false)}
+        >
+          <div
+            className={styles.modalSheet}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.sheetHandle} />
+            <div className={styles.sheetHeader}>
+              <h2 className={styles.refineTitle}>Да го нагласим за теб</h2>
+              <button
+                className={styles.closeBtn}
+                onClick={() => setShowRefine(false)}
+                aria-label="Затвори"
+              >
+                <X size={20} strokeWidth={2} />
+              </button>
+            </div>
+            <p className={styles.mainSub}>Избери само това, което важи сега</p>
+
+            <div className={styles.refineSection}>
+              <div className={styles.refineGroup}>
+                <p className={styles.refineLabel}>С колко време разполагаш?</p>
+                <div className={styles.chipRow}>
+                  {TIME_OPTS.map((o) => (
+                    <button
+                      key={o.value}
+                      className={[styles.chip, filters.time === o.value ? styles.chipSel : ""].join(" ")}
+                      onClick={() => setFilters((f) => ({ ...f, time: o.value }))}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.refineGroup}>
+                <p className={styles.refineLabel}>Как се чувстваш?</p>
+                <div className={styles.chipRow}>
+                  {ENERGY_OPTS.map((o) => (
+                    <button
+                      key={o.value}
+                      className={[styles.chip, filters.energy === o.value ? styles.chipSel : ""].join(" ")}
+                      onClick={() => setFilters((f) => ({ ...f, energy: o.value }))}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.refineGroup}>
+                <p className={styles.refineLabel}>Сама ли си или с детето?</p>
+                <div className={styles.chipRow}>
+                  {CTX_OPTS.map((o) => (
+                    <button
+                      key={o.value}
+                      className={[styles.chip, filters.ctx === o.value ? styles.chipSel : ""].join(" ")}
+                      onClick={() => setFilters((f) => ({ ...f, ctx: o.value }))}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.refineCta}>
+              <Btn onClick={handleRefineApply}>✨ Покажи ми идеи</Btn>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

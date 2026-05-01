@@ -77,7 +77,8 @@ export default function Onboarding() {
     try {
       localStorage.setItem("momly_children", JSON.stringify(children));
     } catch { /* quota / SSR */ }
-    setStep((s) => s + 1);
+    store.completeOnboarding();
+    router.push("/");
   }
 
   function back() {

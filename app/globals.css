@@ -60,6 +60,7 @@ body {
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  padding-bottom: 96px;
 }
 
 /* ── Typography helpers ─────────────────────────────────────────────────────── */
