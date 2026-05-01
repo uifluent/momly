@@ -93,14 +93,12 @@ export default function SavedPage() {
             className={[styles.tab, activeTab === "favorites" ? styles.tabActive : ""].join(" ")}
             onClick={() => setActiveTab("favorites")}
           >
-            <Heart size={14} strokeWidth={2} className={styles.tabIcon} />
             Любими
           </button>
           <button
             className={[styles.tab, activeTab === "completed" ? styles.tabActive : ""].join(" ")}
             onClick={() => setActiveTab("completed")}
           >
-            <CheckCheck size={14} strokeWidth={2} className={styles.tabIcon} />
             Изпълнени
           </button>
         </div>

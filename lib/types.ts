@@ -91,6 +91,7 @@ export interface UserProfile {
   childAgeMonths: number | null;
   needs: Need[];
   displayName?: string;
+  city?: string;
   onboardingComplete: boolean;
 }
 

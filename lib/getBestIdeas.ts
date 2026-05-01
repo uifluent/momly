@@ -1,4 +1,6 @@
 import type { Activity, Filters, UserProfile } from "./types";
+import { isWeekend, getPreferredCats } from "./sessionPrefs";
+import { getLocalPlacesAsActivities } from "./localPlaces";
 
 type Scored = { idea: Activity; score: number };
 
@@ -10,6 +12,7 @@ interface Preferences {
 interface SelectionContext {
   favorites: string[];
   completedIds: Record<string, string>;
+  city?: string;
 }
 
 function shuffle<T>(arr: T[]): T[] {
@@ -19,6 +22,76 @@ function shuffle<T>(arr: T[]): T[] {
     [out[i], out[j]] = [out[j], out[i]];
   }
   return out;
+}
+
+function calcAgeMonths(birthDate: string): number {
+  const d = new Date(birthDate);
+  const now = new Date();
+  return Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24 * 30.44));
+}
+
+// Derive a "milestone" from a child's age in months
+function milestone(ageMonths: number): "sensory" | "exploration" | "play" | "learning" {
+  if (ageMonths < 24)  return "sensory";
+  if (ageMonths < 36)  return "exploration";
+  if (ageMonths < 60)  return "play";
+  return "learning";
+}
+
+// Which activity categories fit each milestone
+const MILESTONE_CATS: Record<string, string[]> = {
+  sensory:     ["calm", "self-care"],
+  exploration: ["movement", "reset", "explore"],
+  play:        ["creative", "movement", "social"],
+  learning:    ["explore", "social", "real-life"],
+};
+
+// Which categories suit solo (1 child) vs group (2+ children) context
+const SOLO_CATS  = ["calm", "self-care", "creative", "survival"];
+const GROUP_CATS = ["social", "movement", "creative", "explore"];
+
+function ageScore(a: Activity, profile: UserProfile): number {
+  if (!a.withChild) return 0;  // not a child activity — skip
+
+  const ages = (profile.children ?? [])
+    .filter((c) => c.birthDate)
+    .map((c) => calcAgeMonths(c.birthDate));
+
+  if (ages.length === 0) return 0;
+
+  const youngest   = Math.min(...ages);
+  const oldest     = Math.max(...ages);
+  const childCount = ages.length;
+  let score        = 0;
+
+  // ── Age range matching ────────────────────────────────────────────────────
+  if (a.ageRange) {
+    const [min, max] = a.ageRange;
+    const allMatch  = ages.every((age) => age >= min && age <= max);
+    const someMatch = ages.some((age)  => age >= min && age <= max);
+    if (allMatch)        score += 3;  // every child fits
+    else if (someMatch)  score += 1;  // at least one child fits
+    else                 score -= 2;  // no child fits
+  }
+
+  // ── Solo vs multiple children ─────────────────────────────────────────────
+  if (childCount === 1) {
+    if (a.category.some((c) => SOLO_CATS.includes(c)))  score += 1;
+  } else {
+    if (a.category.some((c) => GROUP_CATS.includes(c))) score += 2;
+    // Penalise ideas with a very narrow age window when ages span wide
+    if (a.ageRange && (oldest - youngest) > 24) {
+      const [min, max] = a.ageRange;
+      if (max - min < 18) score -= 1;  // narrow window, wide age spread
+    }
+  }
+
+  // ── Milestone matching ────────────────────────────────────────────────────
+  const primaryMilestone = milestone(youngest);
+  const fitsCats         = MILESTONE_CATS[primaryMilestone];
+  if (a.category.some((c) => fitsCats.includes(c))) score += 2;
+
+  return score;
 }
 
 function daysSinceCompleted(completedIds: Record<string, string>, id: string): number | null {
@@ -41,6 +114,7 @@ function scoreIdea(
   favorites: string[],
   completedIds: Record<string, string>,
   preferences: Preferences,
+  preferredCats: Set<string>,
 ): number {
   const withChild = filters.ctx === "child";
   let score = 0;
@@ -49,6 +123,9 @@ function scoreIdea(
   if (a.energy.includes(filters.energy))  score += 3;
   if (a.duration.includes(filters.time))  score += 2;
   if (a.withChild === withChild)           score += 3;
+
+  // ── Age relevance ────────────────────────────────────────────────────────────
+  score += ageScore(a, profile);
 
   // ── Novelty ─────────────────────────────────────────────────────────────────
   if (!recentIds.includes(a.id))                                score += 3;
@@ -84,10 +161,20 @@ function scoreIdea(
     if (need === "movement"         && cats.includes("movement"))                             score += 1;
   }
 
-  // ── Preference learning ──────────────────────────────────────────────────────
+  // ── Weekend boost ─────────────────────────────────────────────────────────────
+  if (isWeekend()) {
+    const outdoor = cats.some((c) => ["movement", "reset", "explore"].includes(c));
+    if (outdoor)                       score += 2;
+    if (a.duration.includes("long"))   score += 1;
+  }
+
+  // ── Preference learning (explicit signals) ────────────────────────────────────
   score += a.category.reduce((acc, tag) => {
     return acc + (preferences.likedTags[tag] ?? 0) - (preferences.skippedTags[tag] ?? 0);
   }, 0);
+
+  // ── Preference learning (from favorited activities) ───────────────────────────
+  score += a.category.filter((c) => preferredCats.has(c)).length;
 
   return score;
 }
@@ -100,12 +187,18 @@ export function getBestIdeas(
   preferences: Preferences = { likedTags: {}, skippedTags: {} },
   context: SelectionContext = { favorites: [], completedIds: {} },
 ): Activity[] {
-  const { favorites, completedIds } = context;
+  const { favorites, completedIds, city } = context;
+
+  // Merge local places into the idea pool so they compete equally
+  const allIdeas = city
+    ? [...ideas, ...getLocalPlacesAsActivities(city)]
+    : ideas;
   const withChild = filters.ctx === "child";
 
-  const recentCats = new Set(
-    recentIds.flatMap((id) => ideas.find((a) => a.id === id)?.category ?? [])
+  const recentCats    = new Set(
+    recentIds.flatMap((id) => allIdeas.find((a) => a.id === id)?.category ?? [])
   );
+  const preferredCats = getPreferredCats(favorites, allIdeas);
 
   // Persist cross-session
   try {
@@ -115,7 +208,7 @@ export function getBestIdeas(
   } catch { /* SSR / quota — safe to ignore */ }
 
   // ── Hard filters ─────────────────────────────────────────────────────────────
-  let pool = ideas.filter((a) => {
+  let pool = allIdeas.filter((a) => {
     if (!a.duration.includes(filters.time)) return false;
     if (
       filters.energy === "low" &&
@@ -133,7 +226,7 @@ export function getBestIdeas(
   });
 
   if (pool.length === 0) {
-    pool = ideas.filter((a) => a.duration.includes(filters.time));
+    pool = allIdeas.filter((a) => a.duration.includes(filters.time));
   }
 
   // ── 80 / 20: 20% chance to lead with a random favorite ───────────────────────
@@ -148,7 +241,7 @@ export function getBestIdeas(
     .filter((a) => !forcedFav || a.id !== forcedFav.id)
     .map((a) => ({
       idea: a,
-      score: scoreIdea(a, filters, profile, recentIds, recentCats, favorites, completedIds, preferences),
+      score: scoreIdea(a, filters, profile, recentIds, recentCats, favorites, completedIds, preferences, preferredCats),
     }))
     .sort((a, b) => b.score - a.score);
 

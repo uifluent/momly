@@ -1,14 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { PlaceThumbnail } from "./PlaceThumbnail";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
 import { Topbar, Btn } from "./UI";
-import { X, RefreshCcw } from "lucide-react";
+import { X, RefreshCcw, Heart } from "lucide-react";
 import { ActivityCard } from "./ActivityCard";
 import { getBestIdeas } from "@/lib/getBestIdeas";
 import activitiesData from "@/data/activities.json";
 import type { Activity, Duration, EnergyLevel, Filters } from "@/lib/types";
+import { getLocalIdea } from "@/lib/localIdeas";
+import { getBestUpcomingEvent } from "@/lib/upcomingEvents";
+import { getBestLocalEvent } from "@/lib/localEvents";
+import { getBestLocalPlace, getBestNearbyPlace, toggleSavedTrip, getSavedTrips } from "@/lib/localPlaces";
+import { addToLocalHistory, getFavoriteLocalItems, toggleFavoriteLocalItem } from "@/lib/sessionPrefs";
 import styles from "./Home.module.css";
 
 const allActivities = activitiesData as Activity[];
@@ -68,7 +74,7 @@ function pickIdea(filters: Filters, excludeIds: string[]): Activity | null {
     s.profile,
     s.recentIds,
     s.userPreferences,
-    { favorites: s.favorites, completedIds: s.completedIds },
+    { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city },
   );
   return results.find((a) => !excludeIds.includes(a.id)) ?? results[0] ?? null;
 }
@@ -79,7 +85,7 @@ export default function Home() {
   const router = useRouter();
   const store = useMomlyStore();
   const displayName = store.profile.displayName;
-  const favorites = store.favorites;
+  const favorites   = store.favorites;
   const completedIds = store.completedIds;
   const totalDone    = Object.keys(completedIds).length;
   const todayDone    = getTodayCompleted(completedIds);
@@ -87,6 +93,22 @@ export default function Home() {
   const [filters, setFilters] = useState<Filters>(() =>
     resolveFilters(store.filters),
   );
+
+  const city           = store.profile.city;
+  const childAge       = store.profile.childAgeMonths;
+  const upcomingEvent  = getBestUpcomingEvent(city, childAge ?? null);
+  const nearbyPlace    = getBestNearbyPlace(city, childAge ?? null);
+  const localEvent  = getBestLocalEvent(filters, city);
+  const localPlace  = getBestLocalPlace(filters, city, childAge ?? null);
+  const localIdea   = getLocalIdea(filters, city);
+
+  const candidates  = [
+    localEvent && { id: localEvent.id, title: localEvent.title, description: localEvent.description, link: (localEvent as { link?: string }).link, image: (localEvent as { image?: string }).image, score: localEvent.score },
+    localPlace && { id: localPlace.id, title: localPlace.title, description: localPlace.description, link: localPlace.link,                        image: localPlace.image,                          score: localPlace.score },
+    localIdea  && { id: localIdea.id,  title: localIdea.title,  description: localIdea.description,  link: undefined,                              image: undefined,                                 score: localIdea.score  },
+  ].filter(Boolean) as { id: string; title: string; description: string; link?: string; image?: string; score: number }[];
+
+  const localItem = candidates.sort((a, b) => b.score - a.score)[0] ?? null;
   const [idea, setIdea] = useState<Activity | null>(null);
   const [shownIds, setShownIds] = useState<string[]>([]);
   const [shuffleCount, setShuffleCount] = useState(0);
@@ -94,6 +116,20 @@ export default function Home() {
   const [showDetail, setShowDetail] = useState(false);
   const [done, setDone] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [tripSaved,      setTripSaved]      = useState(() =>
+    nearbyPlace ? getSavedTrips().includes(nearbyPlace.id) : false
+  );
+  const [localFav,       setLocalFav]       = useState(() =>
+    localItem ? getFavoriteLocalItems().includes(localItem.id) : false
+  );
+  const [eventFav,       setEventFav]       = useState(() =>
+    upcomingEvent ? getFavoriteLocalItems().includes(upcomingEvent.id) : false
+  );
+
+  // Track which local item was shown for anti-repeat
+  useEffect(() => {
+    if (localItem) addToLocalHistory(localItem.id);
+  }, [localItem?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Auto-pick on mount — store is guaranteed hydrated by page.tsx
   useEffect(() => {
@@ -176,6 +212,7 @@ export default function Home() {
             showDetail={showDetail}
             done={done}
             isAnimating={isAnimating}
+            isLocalPlace={idea.id.startsWith("place-")}
             onStart={() => setShowDetail(true)}
             onDone={handleDone}
             onToggleFavorite={() => store.toggleFavorite(idea.id)}
@@ -190,6 +227,98 @@ export default function Home() {
             <RefreshCcw size={15} strokeWidth={2} />
             Покажи друга идея
           </button>
+        )}
+
+        {/* ── Upcoming event ─────────────────────────────────────────────── */}
+        {upcomingEvent && (
+          <div className={`${styles.eventCard} anim-fade-up delay-2`}>
+            <div className={styles.cardLabelRow}>
+              <p className={styles.eventLabel}>
+                {upcomingEvent.source ? `🎭 ${upcomingEvent.source}` : "🎭 Нещо интересно скоро"}
+              </p>
+              <button
+                className={styles.miniHeart}
+                onClick={() => setEventFav(toggleFavoriteLocalItem(upcomingEvent.id))}
+                aria-label={eventFav ? "Премахни от любими" : "Запази"}
+              >
+                <Heart size={15} strokeWidth={2} fill={eventFav ? "currentColor" : "none"} />
+              </button>
+            </div>
+            <p className={styles.eventTitle}>{upcomingEvent.title}</p>
+            <p className={styles.eventDesc}>{upcomingEvent.description}</p>
+            {upcomingEvent.dateLabel && (
+              <p className={styles.eventDate}>📅 {upcomingEvent.dateLabel}</p>
+            )}
+            <a
+              href={upcomingEvent.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.eventLink}
+            >
+              Виж повече →
+            </a>
+          </div>
+        )}
+
+        {/* ── Weekend nearby suggestion ──────────────────────────────────── */}
+        {nearbyPlace && (
+          <div className={`${styles.weekendCard} anim-fade-up delay-2`}>
+            <p className={styles.weekendLabel}>🌤 Уикенд идея</p>
+            <div className={styles.cardRow}>
+              <PlaceThumbnail
+                link={nearbyPlace.link}
+                staticImage={nearbyPlace.image}
+                alt={nearbyPlace.title}
+              />
+              <div className={styles.cardRowText}>
+                <p className={styles.weekendTitle}>{nearbyPlace.title}</p>
+                <p className={styles.weekendDesc}>{nearbyPlace.description}</p>
+                <div className={styles.weekendFooter}>
+                  <p className={styles.weekendDist}>🕐 На {nearbyPlace.travelTime} от теб</p>
+                  <button
+                    className={styles.weekendSaveBtn}
+                    onClick={() => { const saved = toggleSavedTrip(nearbyPlace.id); setTripSaved(saved); }}
+                  >
+                    {tripSaved ? "✔ Запазено" : "💾 Запази"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Local idea / event ─────────────────────────────────────────── */}
+        {localItem && (
+          <div className={`${styles.localCard} anim-fade-up delay-2`}>
+            <div className={styles.cardLabelRow}>
+              <p className={styles.localLabel}>
+                {localItem.link ? "Днес около теб" : "Нещо близо до теб"}
+              </p>
+              <button
+                className={styles.miniHeart}
+                onClick={() => setLocalFav(toggleFavoriteLocalItem(localItem.id))}
+                aria-label={localFav ? "Премахни от любими" : "Запази"}
+              >
+                <Heart size={15} strokeWidth={2} fill={localFav ? "currentColor" : "none"} />
+              </button>
+            </div>
+            <div className={styles.cardRow}>
+              <PlaceThumbnail
+                link={localItem.link}
+                staticImage={localItem.image}
+                alt={localItem.title}
+              />
+              <div className={styles.cardRowText}>
+                <p className={styles.localTitle}>{localItem.title}</p>
+                <p className={styles.localDesc}>{localItem.description}</p>
+                {localItem.link && (
+                  <a href={localItem.link} target="_blank" rel="noopener noreferrer" className={styles.localLink}>
+                    Виж повече →
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
         )}
 
         {todayDone.length > 0 && (

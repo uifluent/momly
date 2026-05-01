@@ -10,7 +10,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 32px 24px 36px;
+  padding: 22px 24px 36px;
   overflow-y: auto;
 }
 
@@ -40,6 +40,181 @@
   color: var(--text-3);
   line-height: 1.5;
 }
+
+/* ── Upcoming event card ─────────────────────────────────────────────────────── */
+.eventCard {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 12px;
+  box-shadow: var(--shadow-soft);
+  border-left: 3px solid var(--primary);
+}
+.eventLabel {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+.eventTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.eventDesc {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.eventDate {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+.eventLink {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.eventLink:hover { opacity: 0.75; }
+
+/* ── Weekend nearby card ─────────────────────────────────────────────────────── */
+.weekendCard {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 12px;
+  box-shadow: var(--shadow-soft);
+}
+.weekendLabel {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.weekendTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.weekendDesc {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.weekendFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.weekendDist {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+.weekendSaveBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.15s;
+}
+.weekendSaveBtn:hover { opacity: 0.75; }
+
+/* ── Label row with heart (shared by local + event cards) ───────────────────── */
+.cardLabelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.miniHeart {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary);
+  padding: 0;
+  flex-shrink: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.miniHeart:hover  { opacity: 0.7; }
+.miniHeart:active { transform: scale(0.88); }
+
+/* ── Thumbnail row (shared by local + weekend cards) ────────────────────────── */
+.cardRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.cardRowText {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Local idea card ─────────────────────────────────────────────────────────── */
+.localCard {
+  background: var(--primary-dim);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 12px;
+}
+.localLabel {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+.localTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.localDesc {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+.localLink {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.localLink:hover { opacity: 0.75; }
 
 /* ── Today's wins ────────────────────────────────────────────────────────────── */
 .wins {

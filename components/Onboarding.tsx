@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMomlyStore } from "@/lib/store";
 import type { ChildGender, Need } from "@/lib/types";
@@ -49,8 +49,10 @@ function formatAge(birthDate: string) {
 }
 
 export default function Onboarding() {
-  const router = useRouter();
-  const store = useMomlyStore();
+  const router       = useRouter();
+  const searchParams = useSearchParams();
+  const fromSettings = searchParams.get("from") === "settings";
+  const store        = useMomlyStore();
 
   const [step, setStep] = useState(1);
 
@@ -78,7 +80,7 @@ export default function Onboarding() {
       localStorage.setItem("momly_children", JSON.stringify(children));
     } catch { /* quota / SSR */ }
     store.completeOnboarding();
-    router.push("/");
+    router.push(fromSettings ? "/settings" : "/");
   }
 
   function back() {
@@ -86,7 +88,7 @@ export default function Onboarding() {
       setStep((s) => s - 1);
       return;
     }
-    router.push("/");
+    router.push(fromSettings ? "/settings" : "/");
   }
 
   function finishOnboarding() {
@@ -104,13 +106,20 @@ export default function Onboarding() {
 
   return (
     <div className={styles.wrap}>
-      <Topbar showBack={step === 2} onBack={back} hideFav />
+      {!fromSettings && <Topbar showBack={step === 2} onBack={back} hideFav />}
 
       {/* STEP 1 */}
       {step === 1 && (
         <div className={styles.body}>
           <div className={`${styles.header} anim-fade-up`}>
-            <h2 className={styles.title}>Добави децата си 🤍</h2>
+            {fromSettings ? (
+              <div className={styles.headerRow}>
+                <button className={styles.backBtn} onClick={back} aria-label="Назад">←</button>
+                <h2 className={styles.title}>Деца</h2>
+              </div>
+            ) : (
+              <h2 className={styles.title}>Добави децата си 🤍</h2>
+            )}
           </div>
 
           {/* One card per child */}
@@ -230,7 +239,7 @@ export default function Onboarding() {
             disabled={!childrenReady}
             className={styles.ctaBtn}
           >
-            Продължи
+            {fromSettings ? "Запази" : "Продължи"}
           </Btn>
         </div>
       )}

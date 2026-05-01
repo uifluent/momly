@@ -13,13 +13,32 @@
 .header {
   padding: 0 8px 22px;
 }
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.backBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--text-3);
+  transition: color 0.15s;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.backBtn:hover { color: var(--text-2); }
 .title {
   font-family: 'Comfortaa', sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: var(--text);
   line-height: 1.28;
-  margin-bottom: 8px;
+  margin: 0px 0 -5px 10px;
+  
 }
 .meta {
   font-family: 'Comfortaa', sans-serif;

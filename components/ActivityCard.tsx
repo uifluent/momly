@@ -34,6 +34,7 @@ export interface ActivityCardProps {
   showDetail: boolean;
   done: boolean;
   isAnimating: boolean;
+  isLocalPlace?: boolean;
   onStart: () => void;
   onDone: () => void;
   onToggleFavorite: () => void;
@@ -47,6 +48,7 @@ export function ActivityCard({
   showDetail,
   done,
   isAnimating,
+  isLocalPlace,
   onStart,
   onDone,
   onToggleFavorite,
@@ -71,6 +73,9 @@ export function ActivityCard({
         />
       </button>
 
+      {isLocalPlace && (
+        <p className={styles.localBadge}>📍 Близо до теб</p>
+      )}
       {isCompleted && (
         <p className={styles.completedBadge}>✨ Вече го направи</p>
       )}

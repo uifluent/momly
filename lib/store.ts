@@ -14,6 +14,7 @@ interface MomlyState {
   addChild: () => void;
   toggleNeed: (need: Need) => void;
   setDisplayName: (name: string) => void;
+  setCity: (city: string) => void;
   completeOnboarding: () => void;
 
   // ── Decision filters ────────────────────────────────────────────────────────
@@ -142,6 +143,9 @@ export const useMomlyStore = create<MomlyState>()(
 
       setDisplayName: (name) =>
         set((s) => ({ profile: { ...s.profile, displayName: name } })),
+
+      setCity: (city) =>
+        set((s) => ({ profile: { ...s.profile, city } })),
 
       completeOnboarding: () =>
         set((s) => ({ profile: { ...s.profile, onboardingComplete: true } })),

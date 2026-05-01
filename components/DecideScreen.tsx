@@ -65,7 +65,7 @@ export default function DecideScreen() {
       profile,
       store.recentIds,
       store.userPreferences,
-      { favorites: store.favorites, completedIds: store.completedIds },
+      { favorites: store.favorites, completedIds: store.completedIds, city: profile.city },
     );
     store.setResults(results);
     if (results[0]) store.addRecentId(results[0].id);

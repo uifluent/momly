@@ -9,6 +9,7 @@ import styles from "./page.module.css";
 export default function SettingsPage() {
   const router = useRouter();
   const store  = useMomlyStore();
+  const city   = store.profile.city;
 
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -56,11 +57,18 @@ export default function SettingsPage() {
           </button>
         </div>
 
-        {/* ── Children ────────────────────────────────────────────────────── */}
+        {/* ── Children + City ─────────────────────────────────────────────── */}
         <div className={styles.section}>
-          <button className={styles.row} onClick={() => router.push("/onboarding")}>
+          <button className={styles.row} onClick={() => router.push("/onboarding?from=settings")}>
             <span className={styles.rowLabel}>Деца</span>
             <span className={styles.rowArrow}>›</span>
+          </button>
+          <button className={styles.row} onClick={() => router.push("/settings/city")}>
+            <span className={styles.rowLabel}>Град</span>
+            <span className={styles.rowRight}>
+              {city && <span className={styles.rowHint}>{city}</span>}
+              <span className={styles.rowArrow}>›</span>
+            </span>
           </button>
         </div>
 

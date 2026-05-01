@@ -93,6 +93,16 @@
   font-weight: 400;
   color: var(--text);
 }
+.rowRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rowHint {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  color: var(--text-3);
+}
 .rowArrow {
   font-size: 18px;
   color: var(--text-3);

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
-import { Topbar, Btn } from "@/components/UI";
+import { Btn } from "@/components/UI";
 import type { Need } from "@/lib/types";
 import styles from "@/components/Onboarding.module.css";
 
@@ -23,11 +23,18 @@ export default function NeedsSettingsPage() {
 
   return (
     <div className={styles.wrap}>
-      <Topbar showBack onBack={() => router.push("/settings")} hideFav />
-
       <div className={styles.body}>
         <div className={`${styles.header} anim-fade-up`}>
-          <h2 className={styles.title}>От какво най-вече имаш нужда?</h2>
+          <div className={styles.headerRow}>
+            <button
+              className={styles.backBtn}
+              onClick={() => router.push("/settings")}
+              aria-label="Назад"
+            >
+              ←
+            </button>
+            <h2 className={styles.title}>От какво имаш нужда?</h2>
+          </div>
           <p className={styles.meta}>{needs.length}/3 избрани</p>
         </div>
 
