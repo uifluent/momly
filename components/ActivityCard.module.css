@@ -1,0 +1,177 @@
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.cardVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cardHidden {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+.heartBtn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.15s, opacity 0.15s;
+}
+.heartBtn:hover  { opacity: 0.7; }
+.heartBtn:active { transform: scale(0.88); }
+
+.completedBadge {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.category {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.emoji { font-size: 13px; line-height: 1; }
+
+.title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.28;
+  margin-bottom: 8px;
+  padding-right: 32px;
+}
+
+.desc {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-3);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+/* ── "Как да започна" collapsible ────────────────────────────────────────────── */
+.howTo {
+  margin-bottom: 14px;
+}
+.howToToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+  transition: color 0.15s;
+}
+.howToToggle:hover { color: var(--text-2); }
+
+.chevron {
+  color: var(--text-3);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.chevronOpen { transform: rotate(180deg); }
+
+.howToBody {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.22s ease-out, opacity 0.22s ease-out;
+}
+.howToBodyOpen {
+  max-height: 280px;
+  opacity: 1;
+}
+
+.howToSteps {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.howToStep {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-bottom: 20px;
+}
+.metaDot { margin: 0 6px; opacity: 0.4; }
+
+/* ── Steps ───────────────────────────────────────────────────────────────────── */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.stepDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.stepText {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+/* ── Actions ─────────────────────────────────────────────────────────────────── */
+.actions { display: flex; flex-direction: column; }
+

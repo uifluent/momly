@@ -230,11 +230,7 @@ function SavedCard({
           </button>
         )}
         <Btn onClick={handleDo} disabled={done}>
-          {done
-            ? "✔ Направено"
-            : isCompleted
-              ? "Направи го пак"
-              : "Ще го направя"}
+          {done ? "✔ Направено" : "Ще го направя"}
         </Btn>
       </div>
     </li>
@@ -248,8 +244,21 @@ function CompletedCard({
   activity: Activity;
   completedAt: string;
 }) {
+  const router = useRouter();
+  const markCompleted = useMomlyStore((s) => s.markCompleted);
+  const likeIdea = useMomlyStore((s) => s.likeIdea);
+
+  const [done, setDone] = useState(false);
+
   const date = parseSafeDate(completedAt);
   const dateLabel = date ? formatRelative(date) : null;
+
+  function handleDoAgain() {
+    markCompleted(activity.id);
+    likeIdea(activity.category);
+    setDone(true);
+    setTimeout(() => router.push("/"), 1200);
+  }
 
   return (
     <li className={styles.card}>
@@ -264,6 +273,9 @@ function CompletedCard({
       </div>
       <h2 className={styles.cardTitle}>{activity.title}</h2>
       <p className={styles.cardDesc}>{activity.description}</p>
+      <Btn onClick={handleDoAgain} disabled={done}>
+        {done ? "✔ Направено" : "Ще го направя пак"}
+      </Btn>
     </li>
   );
 }

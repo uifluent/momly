@@ -11,26 +11,25 @@
   display: flex;
   flex-direction: column;
   padding: 32px 24px 36px;
+  overflow-y: auto;
 }
 
 /* ── Header ──────────────────────────────────────────────────────────────────── */
-.header {
-  margin-bottom: 16px;
-}
+.header { margin-bottom: 20px; }
+
 .greetingText {
   font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
   font-weight: 400;
   color: var(--text-3);
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 .mainMessage {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 600;
   color: var(--text);
-  line-height: 1.25;
-  margin-bottom: 8px;
+  line-height: 1.3;
 }
 .mainSub {
   font-family: 'Comfortaa', sans-serif;
@@ -40,91 +39,42 @@
   line-height: 1.5;
 }
 
-/* ── Illustration ────────────────────────────────────────────────────────────── */
-.illus {
-  display: flex;
-  justify-content: center;
-  padding: 8px 0 20px;
-}
-.illus :global(.illus-svg) {
-  width: 174px;
-  height: auto;
-}
-
-/* ── Progress section (wins + completed) ─────────────────────────────────────── */
-.progress {
-  margin-top: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
 /* ── Today's wins ────────────────────────────────────────────────────────────── */
 .wins {
+  margin-top: 20px;
+}
+.winsLabel {
   font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 600;
   color: var(--primary);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
-
-/* ── Today's completed list ──────────────────────────────────────────────────── */
-.todayDoneLabel {
-  font-family: 'Comfortaa', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--text-3);
-  margin-bottom: 6px;
-}
-.todayDoneList {
+.winsList {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 7px;
 }
-.todayDoneItem {
+.winsItem {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 8px;
 }
-.todayDoneDot {
+.winsCheck {
   font-size: 11px;
   color: var(--primary);
   flex-shrink: 0;
   line-height: 1.5;
 }
-.todayDoneTitle {
+.winsTitle {
   font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
   font-weight: 400;
   color: var(--text);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  text-align: left;
   line-height: 1.4;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-.todayDoneMore {
-  font-family: 'Comfortaa', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--text-3);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  margin-top: 4px;
-}
-
-/* ── Primary CTA ─────────────────────────────────────────────────────────────── */
-.ctaWrap {
-  margin-top: auto;
-  padding-top: 24px;
 }
 
 /* ── Inline stats ────────────────────────────────────────────────────────────── */
@@ -133,7 +83,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: auto;
+  padding-top: 16px;
 }
 .statBtn {
   font-family: 'Comfortaa', sans-serif;
@@ -151,4 +102,84 @@
   font-size: 12px;
   color: var(--text-3);
   opacity: 0.4;
+}
+
+/* ── "Дай друга" button (below card) ─────────────────────────────────────────── */
+.shuffleBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  background: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  padding: 0 24px;
+  height: 52px;
+  width: 100%;
+  transition: opacity 0.15s;
+}
+.shuffleBtn:hover  { opacity: 0.8; }
+.shuffleBtn:active { opacity: 0.65; }
+
+/* ── CTA wrap (refine panel) ─────────────────────────────────────────────────── */
+.ctaWrap {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* ── Refine panel ────────────────────────────────────────────────────────────── */
+.refineTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.refineSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+}
+.refineGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.refineLabel {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  flex: 1;
+  min-width: 80px;
+  padding: 12px 8px;
+  border-radius: var(--radius-chip);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--surface-2);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.chip:active { opacity: 0.72; }
+.chipSel {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
 }
