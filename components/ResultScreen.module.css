@@ -107,21 +107,21 @@
 }
 .heartBtn {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 32px;
-  height: 32px;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: none;
+  color: var(--primary);
   cursor: pointer;
-  font-size: 18px;
-  line-height: 1;
-  transition: transform 0.15s;
+  transition: background 0.15s, transform 0.15s;
 }
-.heartBtn:hover  { opacity: 0.8; }
+.heartBtn:hover  { background: var(--primary-dim); }
 .heartBtn:active { transform: scale(0.88); }
 .heartBtnPop { animation: heartPop 0.25s ease-out; }
 

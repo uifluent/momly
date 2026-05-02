@@ -17,7 +17,7 @@ export interface LocalFilters {
   ctx?: "alone" | "child";
 }
 
-const LOCAL_IDEAS: LocalIdea[] = [
+export const LOCAL_IDEAS: LocalIdea[] = [
   // ── София ──────────────────────────────────────────────────────────────────
   {
     id: "sof-1",

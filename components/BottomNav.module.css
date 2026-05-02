@@ -26,12 +26,12 @@
   gap: 2px;
   min-width: 60px;
   text-decoration: none;
-  color: rgba(77, 55, 48, 0.4);
+  color: rgba(58, 46, 42, 0.35);
   transition: color 0.2s ease-out, transform 0.2s ease-out;
 }
 .tab:active { transform: scale(0.92); }
 
-.tabActive { color: var(--text); }
+.tabActive { color: var(--primary); }
 
 
 .label {

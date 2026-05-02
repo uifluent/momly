@@ -37,7 +37,6 @@
   display: flex;
   gap: 0;
   padding: 0 24px 20px;
-  border-bottom: 1px solid var(--border);
   margin-bottom: 4px;
 }
 .tab {
@@ -60,6 +59,47 @@
   font-weight: 600;
   border-bottom-color: var(--primary);
 }
+
+/* ── Type filter pills ───────────────────────────────────────────────────────── */
+.typeFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 24px 16px;
+}
+.typeChip {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--surface);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.typeChip:hover { background: var(--primary-dim); }
+.typeChipSel {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ── Local item link ─────────────────────────────────────────────────────────── */
+.localLink {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.localLink:hover { opacity: 0.75; }
 
 /* ── Weekly wins ─────────────────────────────────────────────────────────────── */
 .winsLabel {
@@ -202,24 +242,53 @@
   margin-top: 7px;
 }
 
+/* ── Completed card ──────────────────────────────────────────────────────────── */
+.cardDone { opacity: 0.45; }
+
+/* ── Do button ───────────────────────────────────────────────────────────────── */
+.doBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #E89B8C;
+  background: none;
+  border: none;
+  padding: 8px 0 0;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  transition: opacity 0.15s;
+}
+.doBtn:hover { opacity: 0.75; }
+
+/* ── Done badge ──────────────────────────────────────────────────────────────── */
+.doneBadge {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-align: center;
+  padding: 10px 0 0;
+}
+
 /* ── Heart button ────────────────────────────────────────────────────────────── */
 .heartBtn {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 32px;
-  height: 32px;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: none;
+  color: var(--primary);
   cursor: pointer;
-  font-size: 18px;
-  line-height: 1;
-  transition: transform 0.15s, opacity 0.15s;
+  transition: background 0.15s, transform 0.15s;
 }
-.heartBtn:hover  { opacity: 0.7; }
+.heartBtn:hover  { background: var(--primary-dim); }
 .heartBtn:active { transform: scale(0.88); }
 
 @keyframes heartPop {
@@ -229,32 +298,36 @@
 }
 .heartBtnPop { animation: heartPop 0.2s ease-out; }
 
-/* ── "Как да започна" collapsible (matches ActivityCard) ─────────────────────── */
+/* ── "Как да започна" collapsible ────────────────────────────────────────────── */
 .howTo {
   margin-bottom: 14px;
+  background: #f6f4f3;
+  border-radius: var(--radius-chip);
+  overflow: hidden;
 }
 .howToToggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background: none;
+  background: transparent;
   border: none;
-  padding: 0;
+  padding: 8px 12px;
   cursor: pointer;
   font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
-  font-weight: 400;
-  color: var(--text-3);
-  transition: color 0.15s;
+  font-weight: 600;
+  color: #3a2e2a;
+  transition: opacity 0.15s;
 }
-.howToToggle:hover { color: var(--text-2); }
+.howToToggle:hover { opacity: 0.75; }
 
 .howToBody {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
   transition: max-height 0.22s ease-out, opacity 0.22s ease-out;
+  padding: 0 12px;
 }
 .howToBodyOpen {
   max-height: 280px;
@@ -263,7 +336,7 @@
 .howToSteps {
   list-style: none;
   padding: 0;
-  margin: 10px 0 0;
+  margin: 4px 0 10px;
   display: flex;
   flex-direction: column;
   gap: 8px;

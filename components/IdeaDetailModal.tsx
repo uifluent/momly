@@ -93,10 +93,7 @@ export function IdeaDetailModal({ idea, isFavorite, onClose, onConfirm, onToggle
           >
             <Heart size={18} strokeWidth={2} fill={isFavorite ? "currentColor" : "none"} />
           </button>
-          <button className={styles.closeSecondaryBtn} onClick={onClose}>
-            Затвори
-          </button>
-          <button className={styles.confirmBtn} onClick={onConfirm}>
+<button className={styles.confirmBtn} onClick={onConfirm}>
             Ще го направя →
           </button>
         </div>

@@ -59,7 +59,9 @@ export function ActivityCard({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className={[styles.card, isAnimating ? styles.cardExiting : ""].join(" ")}>
+    <div
+      className={[styles.card, isAnimating ? styles.cardExiting : ""].join(" ")}
+    >
       {/* Save / heart */}
       <button
         className={styles.heartBtn}
@@ -73,9 +75,7 @@ export function ActivityCard({
         />
       </button>
 
-      {isLocalPlace && (
-        <p className={styles.localBadge}>📍 Близо до теб</p>
-      )}
+      {isLocalPlace && <p className={styles.localBadge}>📍 Близо до теб</p>}
       {isCompleted && (
         <p className={styles.completedBadge}>✨ Вече го направи</p>
       )}
@@ -93,7 +93,7 @@ export function ActivityCard({
       <p className={styles.desc}>{desc}</p>
 
       {/* Collapsible "Как да започна" */}
-      {steps.length > 0 && !showDetail && (
+      {steps.length > 0 && (
         <div className={styles.howTo}>
           <button
             className={styles.howToToggle}
@@ -101,10 +101,11 @@ export function ActivityCard({
             aria-expanded={isExpanded}
           >
             <span>Как да започна</span>
-            {isExpanded
-              ? <CircleMinus size={16} strokeWidth={1.5} aria-hidden="true" />
-              : <CirclePlus  size={16} strokeWidth={1.5} aria-hidden="true" />
-            }
+            {isExpanded ? (
+              <CircleMinus size={16} strokeWidth={1.5} aria-hidden="true" />
+            ) : (
+              <CirclePlus size={16} strokeWidth={1.5} aria-hidden="true" />
+            )}
           </button>
 
           <div
@@ -125,33 +126,12 @@ export function ActivityCard({
         </div>
       )}
 
-      {/* Meta: time · context */}
-      <div className={styles.meta}>
-        <span>⏱ {DURATION_LABEL[activity.duration[0]]}</span>
-        <span className={styles.metaDot}>·</span>
-        <span>{filters.ctx === "child" ? "🐥 с детето" : "🙍‍♀️ сама"}</span>
-      </div>
-
-      {/* Steps — revealed after Започни */}
-      {showDetail && steps.length > 0 && (
-        <ul className={styles.steps}>
-          {steps.slice(0, 4).map((step, i) => (
-            <li key={i} className={styles.step}>
-              <span className={styles.stepDot} />
-              <span className={styles.stepText}>{step}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-
       {/* Primary action */}
       <div className={styles.actions}>
-        {!showDetail ? (
-          <Btn onClick={onStart}>Ще го направя</Btn>
+        {done || isCompleted ? (
+          <p className={styles.doneBadge}>✔ Направено</p>
         ) : (
-          <Btn onClick={onDone} disabled={done}>
-            {done ? "✔ Готово!" : isCompleted ? "Направи пак" : "Готово"}
-          </Btn>
+          <Btn onClick={onDone}>Ще го направя</Btn>
         )}
       </div>
     </div>

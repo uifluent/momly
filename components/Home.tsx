@@ -1,20 +1,36 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { PlaceThumbnail } from "./PlaceThumbnail";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
-import { Topbar, Btn } from "./UI";
+import { Btn } from "./UI";
+import Image from "next/image";
 import { X, Heart, Dice6, SlidersHorizontal } from "lucide-react";
 import { ActivityCard } from "./ActivityCard";
 import { getBestIdeas } from "@/lib/getBestIdeas";
 import activitiesData from "@/data/activities.json";
-import type { Activity, Duration, EnergyLevel, Filters } from "@/lib/types";
+import type {
+  Activity,
+  Duration,
+  EnergyLevel,
+  Filters,
+  Need,
+} from "@/lib/types";
 import { getLocalIdea } from "@/lib/localIdeas";
 import { getBestUpcomingEvent } from "@/lib/upcomingEvents";
 import { getBestLocalEvent } from "@/lib/localEvents";
-import { getBestLocalPlace, getBestNearbyPlace, toggleSavedTrip, getSavedTrips } from "@/lib/localPlaces";
-import { addToLocalHistory, getFavoriteLocalItems, toggleFavoriteLocalItem } from "@/lib/sessionPrefs";
+import {
+  getBestLocalPlace,
+  getBestNearbyPlace,
+  toggleSavedTrip,
+  getSavedTrips,
+} from "@/lib/localPlaces";
+import {
+  addToLocalHistory,
+  getFavoriteLocalItems,
+  toggleFavoriteLocalItem,
+} from "@/lib/sessionPrefs";
 import { useSurpriseIdea } from "@/hooks/useSurpriseIdea";
 import { IdeaDetailModal } from "./IdeaDetailModal";
 import styles from "./Home.module.css";
@@ -23,11 +39,11 @@ const allActivities = activitiesData as Activity[];
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const HEADLINES = [
-  "Днес не е нужно да мислиш 👇",
-  "Имаш малко време? Ето идея 👇",
-  "Нещо малко, което може да ти дойде добре 🤍",
-  "За теб, точно сега 👇",
+const HEADLINES: { text: string; highlight: string }[] = [
+  { text: "Днес не е нужно да мислиш 👇", highlight: "мислиш" },
+  { text: "Имаш малко време? Ето идея 👇", highlight: "идея" },
+  { text: "Нещо малко, което може да ти дойде добре 🤍", highlight: "добре" },
+  { text: "За теб, точно сега 👇", highlight: "теб" },
 ];
 
 const TIME_OPTS: { value: Duration; label: string }[] = [
@@ -35,19 +51,29 @@ const TIME_OPTS: { value: Duration; label: string }[] = [
   { value: "medium", label: "40 – 90мин" },
   { value: "long", label: "1.5 – 3ч" },
 ];
-const ENERGY_OPTS: { value: EnergyLevel; label: string }[] = [
-  { value: "low", label: "Изтощена съм 🪫" },
-  { value: "medium", label: "Окей съм 👌" },
-  { value: "high", label: "Имам енергия ⚡" },
+const ENERGY_OPTS: { value: EnergyLevel; label: string; emoji: string }[] = [
+  { value: "low", label: "Изморена", emoji: "🪫" },
+  { value: "medium", label: "Окей", emoji: "👌" },
+  { value: "high", label: "Енергична", emoji: "⚡" },
 ];
-const CTX_OPTS: { value: Filters["ctx"]; label: string }[] = [
-  { value: "alone", label: "Сама 🙍‍♀️" },
-  { value: "child", label: "С детето 🐥" },
+const CTX_OPTS: { value: Filters["ctx"]; label: string; emoji: string }[] = [
+  { value: "alone", label: "Сама", emoji: "🙍‍♀️" },
+  { value: "child", label: "С детето", emoji: "🐥" },
+];
+
+const NEED_OPTS: { value: Need; icon: string; label: string }[] = [
+  { value: "me-time", icon: "🙍‍♀️", label: "Време за мен" },
+  { value: "meals", icon: "🍳", label: "Бързи рецепти" },
+  { value: "outside", icon: "🌿", label: "Активности навън" },
+  { value: "movement", icon: "🏃‍♀️", label: "Движение" },
+  { value: "calm", icon: "🧘", label: "Спокойствие" },
+  { value: "creative", icon: "🎨", label: "Нещо творческо" },
+  { value: "child-activities", icon: "🐥", label: "Занимания с детето" },
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function dailyHeadline(): string {
+function dailyHeadline(): { text: string; highlight: string } {
   return HEADLINES[new Date().getDate() % HEADLINES.length];
 }
 
@@ -76,7 +102,11 @@ function pickIdea(filters: Filters, excludeIds: string[]): Activity | null {
     s.profile,
     s.recentIds,
     s.userPreferences,
-    { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city },
+    {
+      favorites: s.favorites,
+      completedIds: s.completedIds,
+      city: s.profile.city,
+    },
   );
   return results.find((a) => !excludeIds.includes(a.id)) ?? results[0] ?? null;
 }
@@ -87,52 +117,99 @@ export default function Home() {
   const router = useRouter();
   const store = useMomlyStore();
   const displayName = store.profile.displayName;
-  const favorites   = store.favorites;
+  const favorites = store.favorites;
   const completedIds = store.completedIds;
-  const totalDone    = Object.keys(completedIds).length;
-  const todayDone    = getTodayCompleted(completedIds);
+  const totalDone = Object.keys(completedIds).length;
+  const todayDone = getTodayCompleted(completedIds);
 
   const [filters, setFilters] = useState<Filters>(() =>
     resolveFilters(store.filters),
   );
 
-  const city           = store.profile.city;
-  const childAge       = store.profile.childAgeMonths;
-  const upcomingEvent  = getBestUpcomingEvent(city, childAge ?? null);
-  const nearbyPlace    = getBestNearbyPlace(city, childAge ?? null);
-  const localEvent  = getBestLocalEvent(filters, city);
-  const localPlace  = getBestLocalPlace(filters, city, childAge ?? null);
-  const localIdea   = getLocalIdea(filters, city);
+  const city = store.profile.city;
+  const childAge = store.profile.childAgeMonths;
 
-  const candidates  = [
-    localEvent && { id: localEvent.id, title: localEvent.title, description: localEvent.description, link: (localEvent as { link?: string }).link, image: (localEvent as { image?: string }).image, score: localEvent.score },
-    localPlace && { id: localPlace.id, title: localPlace.title, description: localPlace.description, link: localPlace.link,                        image: localPlace.image,                          score: localPlace.score },
-    localIdea  && { id: localIdea.id,  title: localIdea.title,  description: localIdea.description,  link: undefined,                              image: undefined,                                 score: localIdea.score  },
-  ].filter(Boolean) as { id: string; title: string; description: string; link?: string; image?: string; score: number }[];
+  const upcomingEvent = useMemo(
+    () => getBestUpcomingEvent(city, childAge ?? null),
+    [city, childAge],
+  );
 
-  const localItem = candidates.sort((a, b) => b.score - a.score)[0] ?? null;
+  const nearbyPlace = useMemo(
+    () => getBestNearbyPlace(city, childAge ?? null),
+    [city, childAge],
+  );
+
+  // localItem is memoised so toggling a heart (or any unrelated state change)
+  // doesn't re-roll the random tie-breaking inside getBestLocalPlace.
+  const localItem = useMemo(() => {
+    const localEvent = getBestLocalEvent(filters, city);
+    const localPlace = getBestLocalPlace(filters, city, childAge ?? null);
+    const localIdea = getLocalIdea(filters, city);
+
+    const candidates = [
+      localEvent && {
+        id: localEvent.id,
+        title: localEvent.title,
+        description: localEvent.description,
+        link: (localEvent as { link?: string }).link,
+        image: (localEvent as { image?: string }).image,
+        score: localEvent.score,
+      },
+      localPlace && {
+        id: localPlace.id,
+        title: localPlace.title,
+        description: localPlace.description,
+        link: localPlace.link,
+        image: localPlace.image,
+        score: localPlace.score,
+      },
+      localIdea && {
+        id: localIdea.id,
+        title: localIdea.title,
+        description: localIdea.description,
+        link: undefined,
+        image: undefined,
+        score: localIdea.score,
+      },
+    ].filter(Boolean) as {
+      id: string;
+      title: string;
+      description: string;
+      link?: string;
+      image?: string;
+      score: number;
+    }[];
+
+    return candidates.sort((a, b) => b.score - a.score)[0] ?? null;
+  }, [filters.time, filters.energy, filters.ctx, city, childAge]); // eslint-disable-line react-hooks/exhaustive-deps
   const surprise = useSurpriseIdea(filters);
 
-  const [idea,        setIdea]        = useState<Activity | null>(null);
+  const [idea, setIdea] = useState<Activity | null>(null);
   const [backupIdeas, setBackupIdeas] = useState<Activity[]>([]);
-  const [shownIds,    setShownIds]    = useState<string[]>([]);
+  const [shownIds, setShownIds] = useState<string[]>([]);
   const [shuffleCount, setShuffleCount] = useState(0);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [showDetail,    setShowDetail]    = useState(false);
-  const [done,          setDone]          = useState(false);
-  const [isAnimating,   setIsAnimating]   = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
+  const [done, setDone] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [surpriseLoading, setSurpriseLoading] = useState(false);
-  const [isSurprise,      setIsSurprise]      = useState(false);
-  const [selectedIdea,    setSelectedIdea]    = useState<Activity | null>(null);
-  const [tripSaved,      setTripSaved]      = useState(() =>
-    nearbyPlace ? getSavedTrips().includes(nearbyPlace.id) : false
+  const [isSurprise, setIsSurprise] = useState(false);
+  const [selectedIdea, setSelectedIdea] = useState<Activity | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const [tripSaved, setTripSaved] = useState(() =>
+    nearbyPlace ? getFavoriteLocalItems().includes(nearbyPlace.id) : false,
   );
-  const [localFav,       setLocalFav]       = useState(() =>
-    localItem ? getFavoriteLocalItems().includes(localItem.id) : false
+  const [localFav, setLocalFav] = useState(() =>
+    localItem ? getFavoriteLocalItems().includes(localItem.id) : false,
   );
-  const [eventFav,       setEventFav]       = useState(() =>
-    upcomingEvent ? getFavoriteLocalItems().includes(upcomingEvent.id) : false
+  const [eventFav, setEventFav] = useState(() =>
+    upcomingEvent ? getFavoriteLocalItems().includes(upcomingEvent.id) : false,
   );
+
+  function showToast(msg: string) {
+    setToast(msg);
+    setTimeout(() => setToast(null), 1800);
+  }
 
   // Track which local item was shown for anti-repeat
   useEffect(() => {
@@ -144,8 +221,18 @@ export default function Home() {
     const resolved = resolveFilters(useMomlyStore.getState().filters);
     setFilters(resolved);
     const s = useMomlyStore.getState();
-    const results = getBestIdeas(allActivities, resolved, s.profile, s.recentIds, s.userPreferences,
-      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city });
+    const results = getBestIdeas(
+      allActivities,
+      resolved,
+      s.profile,
+      s.recentIds,
+      s.userPreferences,
+      {
+        favorites: s.favorites,
+        completedIds: s.completedIds,
+        city: s.profile.city,
+      },
+    );
     const [first, ...rest] = results;
     if (first) {
       setIdea(first);
@@ -167,7 +254,7 @@ export default function Home() {
     }, 180);
   }
 
-function handleDone() {
+  function handleDone() {
     if (!idea) return;
     store.likeIdea(idea.category);
     store.markCompleted(idea.id);
@@ -182,36 +269,32 @@ function handleDone() {
   }
 
   function handleRefineApply() {
-    store.setFilter("time",   filters.time);
+    store.setFilter("time", filters.time);
     store.setFilter("energy", filters.energy);
-    store.setFilter("ctx",    filters.ctx);
+    store.setFilter("ctx", filters.ctx);
     setShownIds([]);
     setShuffleCount(0);
     setIsSurprise(false);
     surprise.reset();
     const s = useMomlyStore.getState();
-    const results = getBestIdeas(allActivities, filters, s.profile, s.recentIds, s.userPreferences,
-      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city });
+    const results = getBestIdeas(
+      allActivities,
+      filters,
+      s.profile,
+      s.recentIds,
+      s.userPreferences,
+      {
+        favorites: s.favorites,
+        completedIds: s.completedIds,
+        city: s.profile.city,
+      },
+    );
     const [first, ...rest] = results;
-    if (first) { swapIdea(first); setBackupIdeas(rest.slice(0, 2)); }
+    if (first) {
+      swapIdea(first);
+      setBackupIdeas(rest.slice(0, 2));
+    }
     setIsFilterModalOpen(false);
-  }
-
-  // Cycle a single filter value and refresh ideas
-  function cycleFilter<K extends keyof Filters>(key: K, options: Filters[K][]) {
-    const idx  = options.indexOf(filters[key]);
-    const next = options[(idx + 1) % options.length];
-    const newF = { ...filters, [key]: next };
-    setFilters(newF);
-    store.setFilter(key, next);
-    setShownIds([]);
-    setIsSurprise(false);
-    surprise.reset();
-    const s = useMomlyStore.getState();
-    const results = getBestIdeas(allActivities, newF, s.profile, s.recentIds, s.userPreferences,
-      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city });
-    const [first, ...rest] = results;
-    if (first) { swapIdea(first); setBackupIdeas(rest.slice(0, 2)); }
   }
 
   function handleConfirmBackup(b: Activity) {
@@ -219,8 +302,16 @@ function handleDone() {
     const exclude = [b.id, ...shownIds];
     swapIdea(b);
     const fresh = getBestIdeas(
-      allActivities, filters, s.profile, s.recentIds, s.userPreferences,
-      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city },
+      allActivities,
+      filters,
+      s.profile,
+      s.recentIds,
+      s.userPreferences,
+      {
+        favorites: s.favorites,
+        completedIds: s.completedIds,
+        city: s.profile.city,
+      },
     ).filter((a) => !exclude.includes(a.id));
     setBackupIdeas(fresh.slice(0, 2));
     setSelectedIdea(null);
@@ -242,38 +333,58 @@ function handleDone() {
   }
 
   // ── Main home ─────────────────────────────────────────────────────────────
+  const headline = dailyHeadline();
+  const hlIdx = headline.text.indexOf(headline.highlight);
+
   return (
     <div className={styles.wrap}>
-      <Topbar hideFav />
       <div className={styles.body}>
         <div className={`${styles.header} anim-fade-up`}>
-          <p className={styles.greetingText}>
-            {displayName ? `Здравей, ${displayName} 💛` : "Здравей 💛"}
-          </p>
-          <h1 className={styles.mainMessage}>{dailyHeadline()}</h1>
+          <div className={styles.headerRow}>
+            <Image
+              src="/momly-logotype.png"
+              alt="Momly"
+              width={32}
+              height={32}
+              className={styles.headerLogo}
+              priority
+            />
+            <p className={styles.greetingText}>
+              {displayName ? `Здравей, ${displayName} 💛` : "Здравей 💛"}
+            </p>
+          </div>
+          <h1 className={styles.mainMessage}>
+            {hlIdx >= 0 ? (
+              <>
+                {headline.text.slice(0, hlIdx)}
+                <span className={styles.headlineAccent}>
+                  {headline.highlight}
+                </span>
+                {headline.text.slice(hlIdx + headline.highlight.length)}
+              </>
+            ) : (
+              headline.text
+            )}
+          </h1>
         </div>
 
         {/* ── Context pills ─────────────────────────────────────────────── */}
         <div className={`${styles.pillsOuter} anim-fade-up`}>
           <div className={styles.pillsRow}>
-            <button
-              className={styles.pill}
-              onClick={() => cycleFilter("energy", ["low", "medium", "high"])}
-            >
-              {ENERGY_OPTS.find((o) => o.value === filters.energy)?.label ?? filters.energy}
-            </button>
-            <button
-              className={styles.pill}
-              onClick={() => cycleFilter("time", ["short", "medium", "long"])}
-            >
-              {TIME_OPTS.find((o) => o.value === filters.time)?.label ?? filters.time}
-            </button>
-            <button
-              className={styles.pill}
-              onClick={() => cycleFilter("ctx", ["alone", "child"])}
-            >
-              {CTX_OPTS.find((o) => o.value === filters.ctx)?.label ?? filters.ctx}
-            </button>
+            <span className={styles.pill}>
+              {ENERGY_OPTS.find((o) => o.value === filters.energy)?.emoji}{" "}
+              {ENERGY_OPTS.find((o) => o.value === filters.energy)?.label ??
+                filters.energy}
+            </span>
+            <span className={styles.pill}>
+              {TIME_OPTS.find((o) => o.value === filters.time)?.label ??
+                filters.time}
+            </span>
+            <span className={styles.pill}>
+              {CTX_OPTS.find((o) => o.value === filters.ctx)?.emoji}{" "}
+              {CTX_OPTS.find((o) => o.value === filters.ctx)?.label ??
+                filters.ctx}
+            </span>
           </div>
           <button
             className={styles.pillsFilterBtn}
@@ -340,20 +451,29 @@ function handleDone() {
           </button>
         )}
 
-
         {/* ── Upcoming event ─────────────────────────────────────────────── */}
         {upcomingEvent && (
           <div className={`${styles.eventCard} anim-fade-up delay-2`}>
             <div className={styles.cardLabelRow}>
               <p className={styles.eventLabel}>
-                {upcomingEvent.source ? `🎭 ${upcomingEvent.source}` : "🎭 Нещо интересно скоро"}
+                {upcomingEvent.source
+                  ? `🎭 ${upcomingEvent.source}`
+                  : "🎭 Нещо интересно скоро"}
               </p>
               <button
-                className={styles.miniHeart}
-                onClick={() => setEventFav(toggleFavoriteLocalItem(upcomingEvent.id))}
+                className={`${styles.miniHeart} ${styles.miniHeartEvent}`}
+                onClick={() => {
+                  const saved = toggleFavoriteLocalItem(upcomingEvent.id);
+                  setEventFav(saved);
+                  if (saved) showToast("Запазено 💛");
+                }}
                 aria-label={eventFav ? "Премахни от любими" : "Запази"}
               >
-                <Heart size={15} strokeWidth={2} fill={eventFav ? "currentColor" : "none"} />
+                <Heart
+                  size={15}
+                  strokeWidth={2}
+                  fill={eventFav ? "currentColor" : "none"}
+                />
               </button>
             </div>
             <p className={styles.eventTitle}>{upcomingEvent.title}</p>
@@ -386,10 +506,15 @@ function handleDone() {
                 <p className={styles.weekendTitle}>{nearbyPlace.title}</p>
                 <p className={styles.weekendDesc}>{nearbyPlace.description}</p>
                 <div className={styles.weekendFooter}>
-                  <p className={styles.weekendDist}>🕐 На {nearbyPlace.travelTime} от теб</p>
+                  <p className={styles.weekendDist}>
+                    🕐 На {nearbyPlace.travelTime} от теб
+                  </p>
                   <button
                     className={styles.weekendSaveBtn}
-                    onClick={() => { const saved = toggleSavedTrip(nearbyPlace.id); setTripSaved(saved); }}
+                    onClick={() => {
+                      const saved = toggleSavedTrip(nearbyPlace.id);
+                      setTripSaved(saved);
+                    }}
                   >
                     {tripSaved ? "✔ Запазено" : "💾 Запази"}
                   </button>
@@ -407,11 +532,19 @@ function handleDone() {
                 {localItem.link ? "Днес около теб" : "Нещо близо до теб"}
               </p>
               <button
-                className={styles.miniHeart}
-                onClick={() => setLocalFav(toggleFavoriteLocalItem(localItem.id))}
+                className={`${styles.miniHeart} ${styles.miniHeartPlace}`}
+                onClick={() => {
+                  const saved = toggleFavoriteLocalItem(localItem.id);
+                  setLocalFav(saved);
+                  if (saved) showToast("Запазено 💛");
+                }}
                 aria-label={localFav ? "Премахни от любими" : "Запази"}
               >
-                <Heart size={15} strokeWidth={2} fill={localFav ? "currentColor" : "none"} />
+                <Heart
+                  size={15}
+                  strokeWidth={2}
+                  fill={localFav ? "currentColor" : "none"}
+                />
               </button>
             </div>
             <div className={styles.cardRow}>
@@ -424,7 +557,12 @@ function handleDone() {
                 <p className={styles.localTitle}>{localItem.title}</p>
                 <p className={styles.localDesc}>{localItem.description}</p>
                 {localItem.link && (
-                  <a href={localItem.link} target="_blank" rel="noopener noreferrer" className={styles.localLink}>
+                  <a
+                    href={localItem.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.localLink}
+                  >
                     Виж повече →
                   </a>
                 )}
@@ -451,6 +589,9 @@ function handleDone() {
           </div>
         )}
       </div>
+
+      {/* ── Toast ────────────────────────────────────────────────────────── */}
+      {toast && <div className={styles.toast}>{toast}</div>}
 
       {/* ── Idea detail modal ────────────────────────────────────────────── */}
       {selectedIdea && (
@@ -484,7 +625,6 @@ function handleDone() {
                 <X size={20} strokeWidth={2} />
               </button>
             </div>
-            <p className={styles.mainSub}>Избери само това, което важи сега</p>
 
             <div className={styles.refineSection}>
               <div className={styles.refineGroup}>
@@ -493,8 +633,13 @@ function handleDone() {
                   {TIME_OPTS.map((o) => (
                     <button
                       key={o.value}
-                      className={[styles.chip, filters.time === o.value ? styles.chipSel : ""].join(" ")}
-                      onClick={() => setFilters((f) => ({ ...f, time: o.value }))}
+                      className={[
+                        styles.chip,
+                        filters.time === o.value ? styles.chipSel : "",
+                      ].join(" ")}
+                      onClick={() =>
+                        setFilters((f) => ({ ...f, time: o.value }))
+                      }
                     >
                       {o.label}
                     </button>
@@ -508,10 +653,16 @@ function handleDone() {
                   {ENERGY_OPTS.map((o) => (
                     <button
                       key={o.value}
-                      className={[styles.chip, filters.energy === o.value ? styles.chipSel : ""].join(" ")}
-                      onClick={() => setFilters((f) => ({ ...f, energy: o.value }))}
+                      className={[
+                        styles.chip,
+                        filters.energy === o.value ? styles.chipSel : "",
+                      ].join(" ")}
+                      onClick={() =>
+                        setFilters((f) => ({ ...f, energy: o.value }))
+                      }
                     >
-                      {o.label}
+                      <span className={styles.chipEmoji}>{o.emoji}</span>
+                      <span className={styles.chipText}>{o.label}</span>
                     </button>
                   ))}
                 </div>
@@ -523,18 +674,60 @@ function handleDone() {
                   {CTX_OPTS.map((o) => (
                     <button
                       key={o.value}
-                      className={[styles.chip, filters.ctx === o.value ? styles.chipSel : ""].join(" ")}
-                      onClick={() => setFilters((f) => ({ ...f, ctx: o.value }))}
+                      className={[
+                        styles.chip,
+                        filters.ctx === o.value ? styles.chipSel : "",
+                      ].join(" ")}
+                      onClick={() =>
+                        setFilters((f) => ({ ...f, ctx: o.value }))
+                      }
                     >
-                      {o.label}
+                      <span className={styles.chipEmoji}>{o.emoji}</span>
+                      <span className={styles.chipText}>{o.label}</span>
                     </button>
                   ))}
                 </div>
               </div>
             </div>
 
+            {/* ── Needs grid ──────────────────────────────────────────── */}
+            <div className={styles.needsSection}>
+              <div className={styles.needsHeader}>
+                <p className={styles.refineLabel}>От какво имаш нужда</p>
+                <p
+                  className={[
+                    styles.needsHint,
+                    store.profile.needs.length >= 3 ? styles.needsHintFull : "",
+                  ].join(" ")}
+                >
+                  {store.profile.needs.length} / 3 избрани
+                </p>
+              </div>
+              <div className={styles.needsGrid}>
+                {NEED_OPTS.map((o) => {
+                  const selected = store.profile.needs.includes(o.value);
+                  const disabled = !selected && store.profile.needs.length >= 3;
+                  return (
+                    <button
+                      key={o.value}
+                      className={[
+                        styles.needTile,
+                        selected ? styles.needTileSel : "",
+                        disabled ? styles.needTileDisabled : "",
+                      ].join(" ")}
+                      onClick={() => store.toggleNeed(o.value)}
+                      disabled={disabled}
+                    >
+                      <span className={styles.needIcon}>{o.icon}</span>
+                      <span className={styles.needLabel}>{o.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className={styles.refineCta}>
-              <Btn onClick={handleRefineApply}>✨ Покажи ми идеи</Btn>
+              <Btn onClick={handleRefineApply}>Запази</Btn>
             </div>
           </div>
         </div>

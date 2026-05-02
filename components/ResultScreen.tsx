@@ -7,6 +7,7 @@ import { getBestIdeas } from "@/lib/getBestIdeas";
 import type { Activity, Filters } from "@/lib/types";
 import activitiesData from "@/data/activities.json";
 import { Btn, Topbar } from "./UI";
+import { Heart } from "lucide-react";
 import { getDescription, getSteps } from "@/lib/getDescription";
 import styles from "./ResultScreen.module.css";
 
@@ -18,9 +19,9 @@ const TIME_LABEL: Record<string, string> = {
   long: "⏱ 1.5 – 3ч",
 };
 const ENERGY_LABEL: Record<string, string> = {
-  low: "🪫 Изтощена",
+  low: "🪫 Изморена",
   medium: "👌 Окей",
-  high: "⚡ Енергия",
+  high: "⚡ Енергична",
 };
 const CTX_LABEL: Record<string, string> = {
   alone: "🙍‍♀️ Сама",
@@ -218,7 +219,11 @@ function PrimaryCard({
         onClick={handleHeartClick}
         aria-label={isFavorite ? "Премахни от любими" : "Запази идеята"}
       >
-        {isFavorite ? "❤️" : "🤍"}
+        <Heart
+          size={18}
+          strokeWidth={1.75}
+          fill={isFavorite ? "currentColor" : "none"}
+        />
       </button>
 
       {isCompleted && (

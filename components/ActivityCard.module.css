@@ -6,12 +6,12 @@
 .card {
   background: var(--surface);
   border-radius: var(--radius-md);
-  padding: 24px;
-  box-shadow: var(--shadow-soft);
+  padding: 24px 24px 24px 20px;
+  border-left: 4px solid var(--primary);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.09);
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
   animation: cardEnter 0.22s ease-out both;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
@@ -23,21 +23,21 @@
 
 .heartBtn {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 32px;
-  height: 32px;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: none;
+  color: var(--primary);
   cursor: pointer;
-  font-size: 18px;
-  line-height: 1;
-  transition: transform 0.15s, opacity 0.15s;
+  transition: background 0.15s, transform 0.15s;
 }
-.heartBtn:hover  { opacity: 0.7; }
+.heartBtn:hover  { background: var(--primary-dim); }
 .heartBtn:active { transform: scale(0.88); }
 
 .localBadge {
@@ -59,14 +59,17 @@
 .category {
   font-family: 'Comfortaa', sans-serif;
   font-size: 11px;
-  font-weight: 400;
-  color: var(--text-3);
-  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--primary-hover);
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap: 4px;
 }
-.emoji { font-size: 13px; line-height: 1; }
+.emoji {
+  font-size: 13px;
+  line-height: 1;
+}
 
 .title {
   font-family: 'Comfortaa', sans-serif;
@@ -90,30 +93,33 @@
 /* ── "Как да започна" collapsible ────────────────────────────────────────────── */
 .howTo {
   margin-bottom: 14px;
+  background: #f6f4f3;
+  border-radius: var(--radius-chip);
+  overflow: hidden;
 }
 .howToToggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background: none;
+  background: transparent;
   border: none;
-  padding: 0;
+  padding: 8px 12px;
   cursor: pointer;
   font-family: 'Comfortaa', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-3);
-  transition: color 0.15s;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a2e2a;
+  transition: opacity 0.15s;
 }
-.howToToggle:hover { color: var(--text-2); }
-
+.howToToggle:hover { opacity: 0.75; }
 
 .howToBody {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
   transition: max-height 0.22s ease-out, opacity 0.22s ease-out;
+  padding: 0 12px;
 }
 .howToBodyOpen {
   max-height: 280px;
@@ -123,7 +129,7 @@
 .howToSteps {
   list-style: none;
   padding: 0;
-  margin: 10px 0 0;
+  margin: 4px 0 10px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -141,10 +147,10 @@
   font-family: 'Comfortaa', sans-serif;
   font-size: 12px;
   font-weight: 400;
-  color: var(--text-3);
+  color: var(--primary-hover);
   margin-bottom: 20px;
 }
-.metaDot { margin: 0 6px; opacity: 0.4; }
+.metaDot { margin: 0 6px; opacity: 0.35; }
 
 /* ── Steps ───────────────────────────────────────────────────────────────────── */
 .steps {

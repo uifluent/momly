@@ -93,11 +93,11 @@
 }
 
 .btnPrimary {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   color: #fff;
-  box-shadow: 0 4px 16px rgba(232, 175, 163, 0.28);
+  box-shadow: 0 4px 16px rgba(217, 115, 101, 0.32);
 }
-.btnPrimary:not(:disabled):hover  { background: var(--primary-hover); }
+.btnPrimary:not(:disabled):hover  { opacity: 0.9; }
 .btnPrimary:not(:disabled):active { opacity: 0.75; }
 
 .btnGhost {

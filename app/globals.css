@@ -2,30 +2,38 @@
 
 /* ── Design tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --bg:            #FDFBFF;
-  --bg-gradient:   #FDFBFF;
+  --bg:            #F6F4F3;
+  --bg-gradient:   #F6F4F3;
   --surface:       #FFFFFF;
   --surface-2:     rgba(255, 255, 255, 0.7);
-  --border:        rgba(255, 255, 255, 0.72);
+  --border:        rgba(0, 0, 0, 0.06);
 
-  --primary:       #F4A79D;
-  --primary-hover: #E89286;
-  --primary-light: rgba(244, 167, 157, 0.22);
-  --primary-dim:   #FFF5F3;
-  --shadow-soft:   0 10px 24px rgba(0, 0, 0, 0.05);
+  --primary:       #E89B8C;
+  --primary-hover: #D97365;
+  --primary-light: rgba(232, 155, 140, 0.22);
+  --primary-dim:   #F3D6D1;
+  --shadow-soft:   0 2px 12px rgba(0, 0, 0, 0.08);
 
-  --text:   #4d3730;
-  --text-2: #8E8782;
-  --text-3: #4d3730;
+  --secondary:       #7ED6A7;
+  --secondary-dark:  #4F9F7A;
+  --secondary-light: #EAF7F0;
+
+  --place:       #A8C7FF;
+  --place-dark:  #4A7ED4;
+  --place-light: #EEF4FF;
+
+  --text:   #3A2E2A;
+  --text-2: #8C7F7A;
+  --text-3: #8C7F7A;
 
   --r:      16px;
   --r-sm:   10px;
   --r-full: 9999px;
 
-  --radius-sm:   6px;   /* inputs, small interactive elements */
-  --radius-md:   10px;   /* cards, containers, large chips */
-  --radius-lg:   10px;   /* primary CTA buttons */
-  --radius-chip: 6px;   /* chips, tags, selectable options */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   12px;
+  --radius-chip: 8px;
 }
 
 /* ── Reset ──────────────────────────────────────────────────────────────────── */
@@ -38,7 +46,7 @@
 
 html, body {
   height: 100%;
-  background: #FDFBFF;
+  background: #F6F4F3;
 }
 
 body {

@@ -3,13 +3,20 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
-import { Topbar, Btn } from "@/components/UI";
-import { Heart, CirclePlus, CircleMinus, CheckCheck } from "lucide-react";
+import { Btn } from "@/components/UI";
+import { Heart, CirclePlus, CircleMinus } from "lucide-react";
 import activitiesData from "@/data/activities.json";
 import type { Activity } from "@/lib/types";
+import { getFavoriteLocalItems, toggleFavoriteLocalItem } from "@/lib/sessionPrefs";
+import { LOCAL_PLACES } from "@/lib/localPlaces";
+import { LOCAL_EVENTS } from "@/lib/localEvents";
+import { LOCAL_IDEAS } from "@/lib/localIdeas";
+import { UPCOMING_EVENTS } from "@/lib/upcomingEvents";
 import styles from "./page.module.css";
 
 const allActivities = activitiesData as Activity[];
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 const CATEGORY_LABEL: Record<string, string> = {
   "self-care": "Грижа",
@@ -36,10 +43,7 @@ function formatRelative(date: Date): string {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const diffDays = Math.floor(
-    (today.getTime() - target.getTime()) / (1000 * 60 * 60 * 24),
-  );
-
+  const diffDays = Math.floor((today.getTime() - target.getTime()) / (1000 * 60 * 60 * 24));
   if (diffDays === 0) return "Днес";
   if (diffDays === 1) return "Вчера";
   if (diffDays < 7) return `преди ${diffDays} дни`;
@@ -53,41 +57,100 @@ function parseSafeDate(iso: string): Date | null {
   return isNaN(d.getTime()) ? null : d;
 }
 
-type Tab = "favorites" | "completed";
+// ── Unified local-item lookup ─────────────────────────────────────────────────
+
+type LocalFavType = "event" | "place" | "idea";
+interface LocalFavItem {
+  id:          string;
+  type:        LocalFavType;
+  title:       string;
+  description: string;
+  link?:       string;
+}
+
+function buildLocalFavItems(ids: string[]): LocalFavItem[] {
+  const result: LocalFavItem[] = [];
+  for (const id of ids) {
+    const upEv = UPCOMING_EVENTS.find((e) => e.id === id);
+    if (upEv) { result.push({ id, type: "event", title: upEv.title, description: upEv.description, link: upEv.link }); continue; }
+
+    const locEv = LOCAL_EVENTS.find((e) => e.id === id);
+    if (locEv) { result.push({ id, type: "event", title: locEv.title, description: locEv.description, link: locEv.link }); continue; }
+
+    const pl = LOCAL_PLACES.find((p) => p.id === id);
+    if (pl) { result.push({ id, type: "place", title: pl.title, description: pl.description, link: pl.link }); continue; }
+
+    const li = LOCAL_IDEAS.find((i) => i.id === id);
+    if (li) { result.push({ id, type: "idea", title: li.title, description: li.description }); continue; }
+  }
+  return result;
+}
+
+const TYPE_LABEL: Record<LocalFavType, string> = {
+  event: "Събитие",
+  place: "Място",
+  idea:  "Идея",
+};
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+
+type MainTab   = "favorites" | "completed";
+type TypeFilter = "all" | "ideas" | "events" | "places";
 
 export default function SavedPage() {
-  const router = useRouter();
-  const favorites = useMomlyStore((s) => s.favorites);
-  const completedIds = useMomlyStore((s) => s.completedIds);
+  const router         = useRouter();
+  const favorites      = useMomlyStore((s) => s.favorites);
+  const completedIds   = useMomlyStore((s) => s.completedIds);
   const toggleFavorite = useMomlyStore((s) => s.toggleFavorite);
 
-  const [activeTab, setActiveTab] = useState<Tab>("favorites");
+  const [activeTab,   setActiveTab]   = useState<MainTab>("favorites");
+  const [typeFilter,  setTypeFilter]  = useState<TypeFilter>("all");
+  const [localFavIds, setLocalFavIds] = useState<string[]>(() => getFavoriteLocalItems());
 
-  const savedActivities = allActivities.filter((a) => favorites.includes(a.id));
+  const savedActivities    = allActivities.filter((a) => favorites.includes(a.id));
+  const localFavItems      = buildLocalFavItems(localFavIds);
+  const localEvents        = localFavItems.filter((i) => i.type === "event");
+  const localPlaces        = localFavItems.filter((i) => i.type === "place");
+
   const completedActivities = allActivities.filter((a) => a.id in completedIds);
-
   const weeklyWins = completedActivities.filter((a) => {
     const date = parseSafeDate(completedIds[a.id]);
     return date ? isThisWeek(date) : false;
   });
 
-  function weeklyWinsLabel(): string | null {
+  function winsLabel(): string | null {
     if (weeklyWins.length === 0) return null;
     if (weeklyWins.length === 1) return "Първата малка победа ✨";
     return `Тази седмица: ${weeklyWins.length} малки победи 💛`;
   }
 
-  const winsLabel = weeklyWinsLabel();
+  // Filtered lists based on typeFilter
+  const showActivities = typeFilter === "all" || typeFilter === "ideas";
+  const showEvents     = typeFilter === "all" || typeFilter === "events";
+  const showPlaces     = typeFilter === "all" || typeFilter === "places";
+
+  const filteredActivities = showActivities ? savedActivities : [];
+  const filteredEvents     = showEvents     ? localEvents     : [];
+  const filteredPlaces     = showPlaces     ? localPlaces     : [];
+
+  const totalFiltered = filteredActivities.length + filteredEvents.length + filteredPlaces.length;
+  const totalFavs     = savedActivities.length + localFavItems.length;
+
+  function handleRemoveLocal(id: string) {
+    toggleFavoriteLocalItem(id);
+    setLocalFavIds((prev) => prev.filter((i) => i !== id));
+  }
+
+  const label = winsLabel();
 
   return (
     <div className={styles.wrap}>
-
       <div className={styles.scrollBody}>
         <div className={styles.header}>
           <h1 className={styles.title}>Идеи</h1>
         </div>
 
-        {/* ── Tabs ─────────────────────────────────────────────────────────── */}
+        {/* ── Main tabs ──────────────────────────────────────────────────────── */}
         <div className={styles.tabs}>
           <button
             className={[styles.tab, activeTab === "favorites" ? styles.tabActive : ""].join(" ")}
@@ -103,43 +166,76 @@ export default function SavedPage() {
           </button>
         </div>
 
-        {/* ── Favorites tab ────────────────────────────────────────────────── */}
-        {activeTab === "favorites" &&
-          (savedActivities.length === 0 ? (
-            <div className={styles.empty}>
-              <span className={styles.emptyIcon}>🤍</span>
-              <p className={styles.emptyTitle}>Нямаш запазени идеи</p>
-              <p className={styles.emptySub}>
-                Запази идеи, за да ги намериш по-лесно
-              </p>
-              <Btn onClick={() => router.push("/decide")}>Намери идея</Btn>
-            </div>
-          ) : (
-            <ul className={styles.list}>
-              {savedActivities.map((activity) => (
-                <SavedCard
-                  key={activity.id}
-                  activity={activity}
-                  onRemove={() => toggleFavorite(activity.id)}
-                />
-              ))}
-            </ul>
-          ))}
+        {/* ── Favorites tab ──────────────────────────────────────────────────── */}
+        {activeTab === "favorites" && (
+          <>
+            {/* Type filter pills */}
+            {totalFavs > 0 && (
+              <div className={styles.typeFilter}>
+                {(["all", "ideas", "events", "places"] as TypeFilter[]).map((f) => (
+                  <button
+                    key={f}
+                    className={[styles.typeChip, typeFilter === f ? styles.typeChipSel : ""].join(" ")}
+                    onClick={() => setTypeFilter(f)}
+                  >
+                    {{ all: "Всички", ideas: "Идеи", events: "Събития", places: "Места" }[f]}
+                  </button>
+                ))}
+              </div>
+            )}
 
-        {/* ── Completed tab ─────────────────────────────────────────────────── */}
+            {totalFiltered === 0 ? (
+              <div className={styles.empty}>
+                <span className={styles.emptyIcon}>🤍</span>
+                <p className={styles.emptyTitle}>
+                  {typeFilter === "all"    ? "Нямаш запазени идеи"    :
+                   typeFilter === "ideas"  ? "Нямаш запазени идеи"    :
+                   typeFilter === "events" ? "Нямаш запазени събития" :
+                                            "Нямаш запазени места"}
+                </p>
+                <p className={styles.emptySub}>Запази идеи, за да ги намериш по-лесно</p>
+                <Btn onClick={() => router.push("/")}>Намери идея</Btn>
+              </div>
+            ) : (
+              <ul className={styles.list}>
+                {filteredActivities.map((activity) => (
+                  <SavedCard
+                    key={activity.id}
+                    activity={activity}
+                    onRemove={() => toggleFavorite(activity.id)}
+                  />
+                ))}
+                {filteredEvents.map((item) => (
+                  <LocalFavCard
+                    key={item.id}
+                    item={item}
+                    onRemove={() => handleRemoveLocal(item.id)}
+                  />
+                ))}
+                {filteredPlaces.map((item) => (
+                  <LocalFavCard
+                    key={item.id}
+                    item={item}
+                    onRemove={() => handleRemoveLocal(item.id)}
+                  />
+                ))}
+              </ul>
+            )}
+          </>
+        )}
+
+        {/* ── Completed tab ──────────────────────────────────────────────────── */}
         {activeTab === "completed" &&
           (completedActivities.length === 0 ? (
             <div className={styles.empty}>
               <span className={styles.emptyIcon}>✨</span>
               <p className={styles.emptyTitle}>Все още няма нищо тук</p>
-              <p className={styles.emptySub}>
-                Тук ще виждаш нещата, които си направила 💛
-              </p>
-              <Btn onClick={() => router.push("/decide")}>Намери идея</Btn>
+              <p className={styles.emptySub}>Тук ще виждаш нещата, които си направила 💛</p>
+              <Btn onClick={() => router.push("/")}>Намери идея</Btn>
             </div>
           ) : (
             <>
-              {winsLabel && <p className={styles.winsLabel}>{winsLabel}</p>}
+              {label && <p className={styles.winsLabel}>{label}</p>}
               <ul className={styles.list}>
                 {completedActivities.map((activity) => (
                   <CompletedCard
@@ -156,24 +252,16 @@ export default function SavedPage() {
   );
 }
 
-// ── Sub-components ────────────────────────────────────────────────────────────
+// ── SavedCard (activity) ──────────────────────────────────────────────────────
 
-function SavedCard({
-  activity,
-  onRemove,
-}: {
-  activity: Activity;
-  onRemove: () => void;
-}) {
-  const router = useRouter();
+function SavedCard({ activity, onRemove }: { activity: Activity; onRemove: () => void }) {
+  const router       = useRouter();
   const markCompleted = useMomlyStore((s) => s.markCompleted);
-  const likeIdea = useMomlyStore((s) => s.likeIdea);
+  const likeIdea     = useMomlyStore((s) => s.likeIdea);
   const completedIds = useMomlyStore((s) => s.completedIds);
 
   const [expanded, setExpanded] = useState(false);
-  const [done, setDone] = useState(false);
-
-  const isCompleted = activity.id in completedIds;
+  const [done, setDone]         = useState(false);
 
   function handleDo() {
     markCompleted(activity.id);
@@ -182,26 +270,22 @@ function SavedCard({
     setTimeout(() => router.push("/"), 1200);
   }
 
+  const isCompleted = done || activity.id in completedIds;
+
   return (
-    <li className={styles.card}>
-      <button
-        className={styles.heartBtn}
-        onClick={onRemove}
-        aria-label="Премахни от любими"
-      >
+    <li className={[styles.card, isCompleted ? styles.cardDone : ""].join(" ")}>
+      <button className={styles.heartBtn} onClick={onRemove} aria-label="Премахни от любими">
         <Heart size={18} strokeWidth={1.75} fill="currentColor" />
       </button>
 
       <p className={styles.category}>
-        {activity.emoji && (
-          <span style={{ marginRight: 4 }}>{activity.emoji}</span>
-        )}
+        {activity.emoji && <span style={{ marginRight: 4 }}>{activity.emoji}</span>}
         {CATEGORY_LABEL[activity.category[0]] ?? activity.category[0]}
       </p>
       <h2 className={styles.cardTitle}>{activity.title}</h2>
       <p className={styles.cardDesc}>{activity.description}</p>
 
-      {activity.steps.length > 0 && (
+      {!isCompleted && activity.steps.length > 0 && (
         <div className={styles.howTo}>
           <button
             className={styles.howToToggle}
@@ -227,27 +311,52 @@ function SavedCard({
         </div>
       )}
 
-      <Btn onClick={handleDo} disabled={done}>
-        {done ? "✔ Направено" : "Ще го направя"}
-      </Btn>
+      {isCompleted ? (
+        <p className={styles.doneBadge}>✔ Направено</p>
+      ) : (
+        <button className={styles.doBtn} onClick={handleDo}>Ще го направя →</button>
+      )}
     </li>
   );
 }
 
-function CompletedCard({
-  activity,
-  completedAt,
-}: {
-  activity: Activity;
-  completedAt: string;
-}) {
-  const router = useRouter();
+// ── LocalFavCard (event / place / local idea) ─────────────────────────────────
+
+function LocalFavCard({ item, onRemove }: { item: LocalFavItem; onRemove: () => void }) {
+  return (
+    <li className={styles.card}>
+      <button className={styles.heartBtn} onClick={onRemove} aria-label="Премахни от любими">
+        <Heart size={18} strokeWidth={1.75} fill="currentColor" />
+      </button>
+
+      <p className={styles.category}>{TYPE_LABEL[item.type]}</p>
+      <h2 className={styles.cardTitle}>{item.title}</h2>
+      <p className={styles.cardDesc}>{item.description}</p>
+
+      {item.link && (
+        <a
+          href={item.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.localLink}
+        >
+          Виж повече →
+        </a>
+      )}
+    </li>
+  );
+}
+
+// ── CompletedCard ─────────────────────────────────────────────────────────────
+
+function CompletedCard({ activity, completedAt }: { activity: Activity; completedAt: string }) {
+  const router        = useRouter();
   const markCompleted = useMomlyStore((s) => s.markCompleted);
-  const likeIdea = useMomlyStore((s) => s.likeIdea);
+  const likeIdea      = useMomlyStore((s) => s.likeIdea);
 
   const [done, setDone] = useState(false);
 
-  const date = parseSafeDate(completedAt);
+  const date      = parseSafeDate(completedAt);
   const dateLabel = date ? formatRelative(date) : null;
 
   function handleDoAgain() {
@@ -261,9 +370,7 @@ function CompletedCard({
     <li className={styles.card}>
       <div className={styles.cardHeader}>
         <p className={styles.category}>
-          {activity.emoji && (
-            <span style={{ marginRight: 4 }}>{activity.emoji}</span>
-          )}
+          {activity.emoji && <span style={{ marginRight: 4 }}>{activity.emoji}</span>}
           {CATEGORY_LABEL[activity.category[0]] ?? activity.category[0]}
         </p>
         {dateLabel && <span className={styles.cardDate}>{dateLabel}</span>}

@@ -18,9 +18,9 @@ const TIME_OPTIONS: { value: Duration; label: string; sub: string }[] = [
 ];
 
 const ENERGY_OPTIONS: { value: EnergyLevel; label: string; sub: string }[] = [
-  { value: "low", label: "Изтощена съм 🪫", sub: "" },
-  { value: "medium", label: "Окей съм 👌", sub: "" },
-  { value: "high", label: "Имам енергия ⚡", sub: "" },
+  { value: "low", label: "Изморена 🪫", sub: "" },
+  { value: "medium", label: "Окей 👌", sub: "" },
+  { value: "high", label: "Енергична ⚡", sub: "" },
 ];
 
 const CTX_OPTIONS = [
@@ -65,7 +65,11 @@ export default function DecideScreen() {
       profile,
       store.recentIds,
       store.userPreferences,
-      { favorites: store.favorites, completedIds: store.completedIds, city: profile.city },
+      {
+        favorites: store.favorites,
+        completedIds: store.completedIds,
+        city: profile.city,
+      },
     );
     store.setResults(results);
     if (results[0]) store.addRecentId(results[0].id);

@@ -15,7 +15,7 @@ export interface LocalEvent {
   image?: string;
 }
 
-const LOCAL_EVENTS: LocalEvent[] = [
+export const LOCAL_EVENTS: LocalEvent[] = [
 
   // ── София — деца ───────────────────────────────────────────────────────────
   {

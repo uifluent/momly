@@ -198,15 +198,16 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  border-radius: 9999px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: var(--surface);
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
   color: var(--primary);
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, transform 0.15s;
 }
-.favoriteBtn:hover { background: var(--primary-dim); }
+.favoriteBtn:hover  { background: var(--primary-dim); }
+.favoriteBtn:active { transform: scale(0.88); }
 
 .closeSecondaryBtn {
   font-family: 'Comfortaa', sans-serif;
