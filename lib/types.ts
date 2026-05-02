@@ -55,6 +55,14 @@ export interface Activity {
   effort: Effort;
   interruptibility: Interruptibility;
   mentalLoad: MentalLoad;
+  /** Freeform tags for scoring hints ("easy", "default", "rain-friendly", "active", "outdoor", etc.) */
+  tags?: string[];
+  /** True → always available as last-resort fallback, regardless of filters */
+  isFallback?: boolean;
+  /** Short motivational copy shown as a reason to pick this idea */
+  reason?: string;
+  /** City constraint (Bulgarian name, e.g. "София"). Omit for city-agnostic activities. */
+  city?: string;
 }
 
 // ─── Filters (decision screen) ───────────────────────────────────────────────

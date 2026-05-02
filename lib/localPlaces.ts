@@ -11,6 +11,8 @@ export interface LocalPlace {
   description: string;
   city:        string;
   type:        PlaceType;
+  /** True for places whose type is "group" but are physically indoors (used for weather scoring) */
+  indoor?:     boolean;
   withChild:   boolean;
   energy:      EnergyLevel;
   duration:    "20-40" | "40-90" | "90+";
@@ -130,6 +132,24 @@ export const LOCAL_PLACES: LocalPlace[] = [
   },
 
   // ── София — закрити активности ────────────────────────────────────────────
+  {
+    id: "funtopia",
+    title: "Катерене и игра във Funtopia 🧗‍♀️",
+    description: "Движение и забавление за по-активни деца",
+    city: "София", type: "group", indoor: true, withChild: true,
+    energy: "high", duration: "40-90",
+    ageRange: { min: 4, max: 12 }, milestone: "play",
+    link: "https://funtopiaworld.com/",
+  },
+  {
+    id: "area52",
+    title: "Скачане в Area 52 🤸",
+    description: "Много движение и забавление",
+    city: "София", type: "group", indoor: true, withChild: true,
+    energy: "high", duration: "40-90",
+    ageRange: { min: 5, max: 14 }, milestone: "play",
+    link: "https://area52.bg/",
+  },
   {
     id: "balkan-climbing",
     title: "Катерене в Balkan Climbing 🧗‍♀️",
@@ -473,6 +493,133 @@ export const LOCAL_PLACES: LocalPlace[] = [
     energy: "low", duration: "40-90", distance: 80,
     ageRange: { min: 2, max: 10 }, milestone: "sensory",
   },
+  {
+    id: "ekopark_stamboliyski",
+    title: "Екопарк Стамболийски 🎠",
+    description: "Цветно място с катерушки, люлки и безплатен закрит детски кът.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "medium", duration: "40-90", distance: 20,
+    ageRange: { min: 2, max: 8 }, milestone: "play",
+  },
+  {
+    id: "rope_park_chavdar",
+    title: "Въжен парк Чавдар 🌲",
+    description: "Въжени трасета и площадки за различни възрасти.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "high", duration: "40-90", distance: 50,
+    ageRange: { min: 3, max: 10 }, milestone: "play",
+  },
+  {
+    id: "fairytale_alley",
+    title: "Алея на приказките 🧚",
+    description: "Разходка сред приказни фигури за деца.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "low", duration: "20-40", distance: 100,
+    ageRange: { min: 2, max: 6 }, milestone: "exploration",
+  },
+  {
+    id: "gardens_of_world",
+    title: "Градините на света 🌸",
+    description: "Красив и поддържан парк за разходка и пикник.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "low", duration: "40-90", distance: 100,
+    ageRange: { min: 2, max: 8 }, milestone: "exploration",
+  },
+  {
+    id: "hills_plovdiv",
+    title: "Hills Пловдив 🏖️",
+    description: "Пясъчник, игри и храна – идеално за топли дни.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "medium", duration: "40-90", distance: 140,
+    ageRange: { min: 2, max: 8 }, milestone: "play",
+  },
+
+  // ── Ферми / открити природни места ───────────────────────────────────────
+  {
+    id: "farm_of_dreams",
+    title: "Фермата на мечтите 🐄",
+    description: "Животни, природа и свободна игра.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "medium", duration: "40-90",
+    ageRange: { min: 2, max: 8 }, milestone: "play",
+  },
+  {
+    id: "aquapark_sofia",
+    title: "Aquapark Sofia 💦",
+    description: "Водни забавления и пързалки.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "high", duration: "40-90",
+    ageRange: { min: 3, max: 10 }, milestone: "play",
+  },
+  {
+    id: "galunka_trail",
+    title: "Галунка – Витоша 🌿",
+    description: "Лека разходка в планината, подходяща за деца.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "low", duration: "40-90",
+    ageRange: { min: 2, max: 6 }, milestone: "exploration",
+  },
+
+  {
+    id: "kremikovtsi_monastery",
+    title: "Кремиковски манастир 🏛️",
+    description: "Тиха разходка с красива гледка и спокойствие.",
+    city: "София", type: "outdoor", withChild: true,
+    energy: "low", duration: "40-90",
+    ageRange: { min: 2, max: 8 }, milestone: "exploration",
+  },
+
+  // ── Музеи / образователни ─────────────────────────────────────────────────
+  {
+    id: "earth_museum",
+    title: "Геологически музей 🪨",
+    description: "Интересни експонати за земята и природата.",
+    city: "София", type: "calm", withChild: true,
+    energy: "low", duration: "20-40",
+    ageRange: { min: 4, max: 10 }, milestone: "learning",
+  },
+  {
+    id: "techno_magic",
+    title: "TechnoMagicLand 🔬",
+    description: "Интерактивен научен център.",
+    city: "София", type: "focused", withChild: true,
+    energy: "medium", duration: "40-90",
+    ageRange: { min: 4, max: 10 }, milestone: "learning",
+  },
+  {
+    id: "natural_history",
+    title: "Природонаучен музей 🦕",
+    description: "Животни, скелети и природа.",
+    city: "София", type: "calm", withChild: true,
+    energy: "low", duration: "40-90",
+    ageRange: { min: 3, max: 10 }, milestone: "learning",
+  },
+  {
+    id: "phenomena_museum",
+    title: "Phenomena Museum ⚡",
+    description: "Интерактивни експерименти и забавна наука.",
+    city: "София", type: "focused", withChild: true,
+    energy: "medium", duration: "40-90",
+    ageRange: { min: 4, max: 10 }, milestone: "learning",
+  },
+
+  // ── Детски центрове / творчески ───────────────────────────────────────────
+  {
+    id: "trinity_kids",
+    title: "Trinity Kids 🛝",
+    description: "Детски център с активности и игри.",
+    city: "София", type: "group", indoor: true, withChild: true,
+    energy: "medium", duration: "40-90",
+    ageRange: { min: 2, max: 7 }, milestone: "play",
+  },
+  {
+    id: "tiny_tales",
+    title: "Tiny Tales ✂️",
+    description: "Креативни детски работилници.",
+    city: "София", type: "focused", withChild: true,
+    energy: "low", duration: "20-40",
+    ageRange: { min: 2, max: 6 }, milestone: "play",
+  },
 ];
 
 function scorePlace(
@@ -484,6 +631,15 @@ function scorePlace(
   let score = 0;
 
   if (place.city !== city) return -99;  // hard city filter
+
+  // Hard-exclude high-energy places when user is low-energy
+  if (place.energy === "high" && filters.energy === "low") return -99;
+
+  // Hard-exclude high-energy places when child is too young for them
+  if (place.energy === "high" && childAgeMonths !== null) {
+    const minAgeMonths = place.ageRange.min * 12;
+    if (childAgeMonths < minAgeMonths) return -99;
+  }
 
   // Duration match
   if (filters.time && DURATION_MAP[place.duration] === filters.time) score += 2;
@@ -527,8 +683,18 @@ function scorePlace(
   // Weekend boost
   if (isWeekend() && OUTDOOR_TYPES.includes(place.type))            score += 2;
 
-  // Anti-repeat penalty
+  // Weather score
+  const weather = getWeatherCondition();
+  score += weatherScore(place, weather);
+
+  // Diversity penalty: if last shown place was also high-energy, reduce score
   const history = getLocalHistory();
+  if (place.energy === "high" && history.length > 0) {
+    const lastPlace = LOCAL_PLACES.find((p) => p.id === history[history.length - 1]);
+    if (lastPlace?.energy === "high") score -= 3;
+  }
+
+  // Anti-repeat penalty
   if (history.includes(place.id))                                    score -= 4;
 
   return score;
@@ -554,6 +720,12 @@ const TYPE_STEPS: Record<PlaceType, string[]> = {
 
 export function placeToActivity(place: LocalPlace): Activity {
   const durationKey = DURATION_MAP[place.duration];
+
+  const tags: string[] = [];
+  if (place.energy === "high") tags.push("active", "energy");
+  if (place.type === "outdoor") tags.push("outdoor");
+  if (place.indoor || place.type === "indoor") tags.push("rain-friendly");
+
   return {
     id:               `place-${place.id}`,
     title:             place.title,
@@ -569,6 +741,8 @@ export function placeToActivity(place: LocalPlace): Activity {
     interruptibility:  "medium",
     mentalLoad:        "light",
     repeatable:        true,
+    tags:              tags.length > 0 ? tags : undefined,
+    reason:            place.energy === "high" ? "🔥 Освободи енергия" : undefined,
   };
 }
 
@@ -619,13 +793,17 @@ function getWeatherCondition(): WeatherCondition {
   return "cloudy";
 }
 
-function weatherScore(type: PlaceType, weather: WeatherCondition): number {
-  const isOutdoor = type === "outdoor";
-  if (weather === "rainy"  && isOutdoor)    return -3;
-  if (weather === "rainy"  && type === "indoor")  return  4;  // strong rainy-day option
-  if (weather === "rainy"  && type === "focused") return  3;  // structured indoor = great rainy-day pick
-  if (weather === "rainy"  && type === "calm")    return  2;
-  if (weather === "sunny"  && isOutdoor)    return  2;
+function weatherScore(place: { type: PlaceType; indoor?: boolean }, weather: WeatherCondition): number {
+  const isOutdoor  = place.type === "outdoor";
+  const isIndoor   = place.type === "indoor";
+  const indoorGroup = place.indoor === true;  // group type that is physically indoors
+
+  if (weather === "rainy" && isOutdoor)     return -3;
+  if (weather === "rainy" && isIndoor)      return  4;  // dedicated indoor venue
+  if (weather === "rainy" && indoorGroup)   return  2;  // indoor group place (Funtopia, Area52, etc.)
+  if (weather === "rainy" && place.type === "focused") return  3;
+  if (weather === "rainy" && place.type === "calm")    return  2;
+  if (weather === "sunny" && isOutdoor)     return  2;
   return 0;
 }
 
@@ -665,7 +843,7 @@ function scoreNearby(
   else if (km < 60) score += 1;
 
   // Weather
-  score += weatherScore(place.type, weather);
+  score += weatherScore(place, weather);
 
   // Saved boost
   if (savedIds.includes(place.id)) score += 4;

@@ -5,7 +5,7 @@ import { PlaceThumbnail } from "./PlaceThumbnail";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
 import { Topbar, Btn } from "./UI";
-import { X, RefreshCcw, Heart } from "lucide-react";
+import { X, Heart, Dice6, SlidersHorizontal } from "lucide-react";
 import { ActivityCard } from "./ActivityCard";
 import { getBestIdeas } from "@/lib/getBestIdeas";
 import activitiesData from "@/data/activities.json";
@@ -15,6 +15,8 @@ import { getBestUpcomingEvent } from "@/lib/upcomingEvents";
 import { getBestLocalEvent } from "@/lib/localEvents";
 import { getBestLocalPlace, getBestNearbyPlace, toggleSavedTrip, getSavedTrips } from "@/lib/localPlaces";
 import { addToLocalHistory, getFavoriteLocalItems, toggleFavoriteLocalItem } from "@/lib/sessionPrefs";
+import { useSurpriseIdea } from "@/hooks/useSurpriseIdea";
+import { IdeaDetailModal } from "./IdeaDetailModal";
 import styles from "./Home.module.css";
 
 const allActivities = activitiesData as Activity[];
@@ -109,13 +111,19 @@ export default function Home() {
   ].filter(Boolean) as { id: string; title: string; description: string; link?: string; image?: string; score: number }[];
 
   const localItem = candidates.sort((a, b) => b.score - a.score)[0] ?? null;
-  const [idea, setIdea] = useState<Activity | null>(null);
-  const [shownIds, setShownIds] = useState<string[]>([]);
+  const surprise = useSurpriseIdea(filters);
+
+  const [idea,        setIdea]        = useState<Activity | null>(null);
+  const [backupIdeas, setBackupIdeas] = useState<Activity[]>([]);
+  const [shownIds,    setShownIds]    = useState<string[]>([]);
   const [shuffleCount, setShuffleCount] = useState(0);
-  const [showRefine, setShowRefine] = useState(false);
-  const [showDetail, setShowDetail] = useState(false);
-  const [done, setDone] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [showDetail,    setShowDetail]    = useState(false);
+  const [done,          setDone]          = useState(false);
+  const [isAnimating,   setIsAnimating]   = useState(false);
+  const [surpriseLoading, setSurpriseLoading] = useState(false);
+  const [isSurprise,      setIsSurprise]      = useState(false);
+  const [selectedIdea,    setSelectedIdea]    = useState<Activity | null>(null);
   const [tripSaved,      setTripSaved]      = useState(() =>
     nearbyPlace ? getSavedTrips().includes(nearbyPlace.id) : false
   );
@@ -135,11 +143,15 @@ export default function Home() {
   useEffect(() => {
     const resolved = resolveFilters(useMomlyStore.getState().filters);
     setFilters(resolved);
-    const first = pickIdea(resolved, []);
+    const s = useMomlyStore.getState();
+    const results = getBestIdeas(allActivities, resolved, s.profile, s.recentIds, s.userPreferences,
+      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city });
+    const [first, ...rest] = results;
     if (first) {
       setIdea(first);
+      setBackupIdeas(rest.slice(0, 2));
       setShownIds([first.id]);
-      useMomlyStore.getState().addRecentId(first.id);
+      s.addRecentId(first.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -155,17 +167,7 @@ export default function Home() {
     }, 180);
   }
 
-  function handleShuffle() {
-    if (!idea) return;
-    store.skipIdea(idea.category);
-    const nextShown = [...shownIds, idea.id].slice(-5);
-    setShownIds(nextShown);
-    setShuffleCount((c) => c + 1);
-    const next = pickIdea(filters, nextShown);
-    if (next) swapIdea(next);
-  }
-
-  function handleDone() {
+function handleDone() {
     if (!idea) return;
     store.likeIdea(idea.category);
     store.markCompleted(idea.id);
@@ -185,9 +187,58 @@ export default function Home() {
     store.setFilter("ctx",    filters.ctx);
     setShownIds([]);
     setShuffleCount(0);
-    const next = pickIdea(filters, []);
-    if (next) swapIdea(next);
-    setShowRefine(false);
+    setIsSurprise(false);
+    surprise.reset();
+    const s = useMomlyStore.getState();
+    const results = getBestIdeas(allActivities, filters, s.profile, s.recentIds, s.userPreferences,
+      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city });
+    const [first, ...rest] = results;
+    if (first) { swapIdea(first); setBackupIdeas(rest.slice(0, 2)); }
+    setIsFilterModalOpen(false);
+  }
+
+  // Cycle a single filter value and refresh ideas
+  function cycleFilter<K extends keyof Filters>(key: K, options: Filters[K][]) {
+    const idx  = options.indexOf(filters[key]);
+    const next = options[(idx + 1) % options.length];
+    const newF = { ...filters, [key]: next };
+    setFilters(newF);
+    store.setFilter(key, next);
+    setShownIds([]);
+    setIsSurprise(false);
+    surprise.reset();
+    const s = useMomlyStore.getState();
+    const results = getBestIdeas(allActivities, newF, s.profile, s.recentIds, s.userPreferences,
+      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city });
+    const [first, ...rest] = results;
+    if (first) { swapIdea(first); setBackupIdeas(rest.slice(0, 2)); }
+  }
+
+  function handleConfirmBackup(b: Activity) {
+    const s = useMomlyStore.getState();
+    const exclude = [b.id, ...shownIds];
+    swapIdea(b);
+    const fresh = getBestIdeas(
+      allActivities, filters, s.profile, s.recentIds, s.userPreferences,
+      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city },
+    ).filter((a) => !exclude.includes(a.id));
+    setBackupIdeas(fresh.slice(0, 2));
+    setSelectedIdea(null);
+  }
+
+  function handleSurprise() {
+    if (surpriseLoading) return;
+    setSurpriseLoading(true);
+    const delay = 500 + Math.random() * 300; // 500–800 ms
+    setTimeout(() => {
+      const picked = surprise.pick(idea ? [idea.id, ...shownIds] : shownIds);
+      if (picked) {
+        swapIdea(picked);
+        setIsSurprise(true);
+        setShownIds((prev) => [...prev, picked.id].slice(-5));
+      }
+      setSurpriseLoading(false);
+    }, delay);
   }
 
   // ── Main home ─────────────────────────────────────────────────────────────
@@ -200,6 +251,37 @@ export default function Home() {
             {displayName ? `Здравей, ${displayName} 💛` : "Здравей 💛"}
           </p>
           <h1 className={styles.mainMessage}>{dailyHeadline()}</h1>
+        </div>
+
+        {/* ── Context pills ─────────────────────────────────────────────── */}
+        <div className={`${styles.pillsOuter} anim-fade-up`}>
+          <div className={styles.pillsRow}>
+            <button
+              className={styles.pill}
+              onClick={() => cycleFilter("energy", ["low", "medium", "high"])}
+            >
+              {ENERGY_OPTS.find((o) => o.value === filters.energy)?.label ?? filters.energy}
+            </button>
+            <button
+              className={styles.pill}
+              onClick={() => cycleFilter("time", ["short", "medium", "long"])}
+            >
+              {TIME_OPTS.find((o) => o.value === filters.time)?.label ?? filters.time}
+            </button>
+            <button
+              className={styles.pill}
+              onClick={() => cycleFilter("ctx", ["alone", "child"])}
+            >
+              {CTX_OPTS.find((o) => o.value === filters.ctx)?.label ?? filters.ctx}
+            </button>
+          </div>
+          <button
+            className={styles.pillsFilterBtn}
+            onClick={() => setIsFilterModalOpen(true)}
+            aria-label="Отвори филтри"
+          >
+            <SlidersHorizontal size={15} strokeWidth={2} />
+          </button>
         </div>
 
         {idea && (
@@ -219,15 +301,45 @@ export default function Home() {
           />
         )}
 
-        {idea && (
+        {/* ── Backup ideas ──────────────────────────────────────────────── */}
+        {backupIdeas.length > 0 && (
+          <div className={`${styles.backupsRow} anim-fade-up delay-2`}>
+            {backupIdeas.map((b) => (
+              <button
+                key={b.id}
+                className={styles.backupCard}
+                onClick={() => setSelectedIdea(b)}
+              >
+                <span className={styles.backupTitle}>{b.title}</span>
+                <span className={styles.backupArrow}>→</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* ── Surprise me ───────────────────────────────────────────────── */}
+        <button
+          className={[
+            styles.surpriseBtn,
+            surpriseLoading ? styles.surpriseBtnLoading : "",
+            "anim-fade-up delay-2",
+          ].join(" ")}
+          onClick={handleSurprise}
+          disabled={surpriseLoading}
+        >
+          <Dice6 size={18} strokeWidth={2} />
+          {surpriseLoading ? "Търся нещо..." : "Изненадай ме"}
+        </button>
+
+        {isSurprise && !surpriseLoading && (
           <button
-            className={`${styles.shuffleBtn} anim-fade-up delay-2`}
-            onClick={() => setShowRefine(true)}
+            className={`${styles.surpriseAgainBtn} anim-fade-up`}
+            onClick={handleSurprise}
           >
-            <RefreshCcw size={15} strokeWidth={2} />
-            Покажи друга идея
+            🎲 Ощe веднъж
           </button>
         )}
+
 
         {/* ── Upcoming event ─────────────────────────────────────────────── */}
         {upcomingEvent && (
@@ -340,11 +452,22 @@ export default function Home() {
         )}
       </div>
 
+      {/* ── Idea detail modal ────────────────────────────────────────────── */}
+      {selectedIdea && (
+        <IdeaDetailModal
+          idea={selectedIdea}
+          isFavorite={favorites.includes(selectedIdea.id)}
+          onClose={() => setSelectedIdea(null)}
+          onConfirm={() => handleConfirmBackup(selectedIdea)}
+          onToggleFavorite={() => store.toggleFavorite(selectedIdea.id)}
+        />
+      )}
+
       {/* ── Refine modal (bottom sheet) ───────────────────────────────────── */}
-      {showRefine && (
+      {isFilterModalOpen && (
         <div
           className={styles.modalBackdrop}
-          onClick={() => setShowRefine(false)}
+          onClick={() => setIsFilterModalOpen(false)}
         >
           <div
             className={styles.modalSheet}
@@ -355,7 +478,7 @@ export default function Home() {
               <h2 className={styles.refineTitle}>Да го нагласим за теб</h2>
               <button
                 className={styles.closeBtn}
-                onClick={() => setShowRefine(false)}
+                onClick={() => setIsFilterModalOpen(false)}
                 aria-label="Затвори"
               >
                 <X size={20} strokeWidth={2} />

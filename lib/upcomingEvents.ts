@@ -13,6 +13,8 @@ export interface UpcomingEvent {
   endDate?:    string;    // ISO "YYYY-MM-DD" — last showing (optional)
   dateLabel?:  string;    // human label shown in card
   source?:     string;    // e.g. "Plays.bg"
+  isClear?:    boolean;   // well-organised, easy to navigate
+  easyAccess?: boolean;   // central location / easy parking
 }
 
 // ── Curated events — update manually as new events are confirmed ──────────────
@@ -33,6 +35,8 @@ export const UPCOMING_EVENTS: UpcomingEvent[] = [
     endDate: "2026-05-04",
     dateLabel: "3–4 май",
     source: "Plays.bg",
+    isClear: true,
+    easyAccess: true,
   },
   {
     id: "plays-detski-spektakl-2",
@@ -47,6 +51,8 @@ export const UPCOMING_EVENTS: UpcomingEvent[] = [
     endDate: "2026-05-03",
     dateLabel: "2–3 май",
     source: "Plays.bg",
+    isClear: true,
+    easyAccess: true,
   },
   {
     id: "plays-baby-spektakl",
@@ -60,6 +66,7 @@ export const UPCOMING_EVENTS: UpcomingEvent[] = [
     date: "2026-05-04",
     dateLabel: "4 май",
     source: "Plays.bg",
+    isClear: true,
   },
 ];
 
@@ -86,14 +93,27 @@ function scoreUpcoming(
   event: UpcomingEvent,
   childAgeMonths: number | null,
 ): number {
-  let score = 5;  // base upcoming bonus
+  let score = 0;
 
+  // Timing bonus
+  const now   = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const start = new Date(event.date);
+  const days  = Math.floor((start.getTime() - today.getTime()) / 86_400_000);
+  if (days <= 1)      score += 4;  // today or tomorrow
+  else if (days <= 3) score += 2;  // within 3 days
+
+  // Age match
   if (childAgeMonths !== null) {
     const minM = event.ageRange.min * 12;
     const maxM = event.ageRange.max * 12;
     if (childAgeMonths >= minM && childAgeMonths <= maxM)            score += 3;
     else if (childAgeMonths < minM && childAgeMonths >= minM - 12)  score += 1;
   }
+
+  // Quality signals
+  if (event.isClear)    score += 2;
+  if (event.easyAccess) score += 2;
 
   return score;
 }

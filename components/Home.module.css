@@ -281,6 +281,139 @@
   opacity: 0.4;
 }
 
+/* ── Context pills ───────────────────────────────────────────────────────────── */
+.pillsOuter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.pillsRow {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pill {
+  padding: 6px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--surface);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.pill:hover  { background: var(--primary-dim); border-color: var(--primary); color: var(--primary); }
+.pill:active { opacity: 0.7; }
+.pillsFilterBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--surface);
+  color: var(--text-3);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.pillsFilterBtn:hover  { background: var(--primary-dim); border-color: var(--primary); color: var(--primary); }
+.pillsFilterBtn:active { opacity: 0.7; }
+
+/* ── Backup idea cards ───────────────────────────────────────────────────────── */
+.backupsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+.backupCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 12px 16px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background 0.15s, border-color 0.15s;
+}
+.backupCard:hover  { background: var(--primary-dim); border-color: var(--primary); }
+.backupCard:active { opacity: 0.7; }
+.backupTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  flex: 1;
+  min-width: 0;
+}
+.backupArrow {
+  font-size: 14px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* ── Surprise me button ──────────────────────────────────────────────────────── */
+@keyframes surprisePulse {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.7; transform: scale(0.97); }
+}
+
+.surpriseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 52px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--primary);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: opacity 0.15s, transform 0.1s;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+.surpriseBtn:hover  { opacity: 0.88; }
+.surpriseBtn:active { transform: scale(0.97); opacity: 0.75; }
+.surpriseBtn:disabled { cursor: default; }
+
+.surpriseBtnLoading {
+  animation: surprisePulse 0.9s ease-in-out infinite;
+}
+
+.surpriseAgainBtn {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.15s;
+  margin-top: 4px;
+}
+.surpriseAgainBtn:hover  { opacity: 0.7; }
+
 /* ── "Дай друга" button (below card) ─────────────────────────────────────────── */
 .shuffleBtn {
   font-family: 'Comfortaa', sans-serif;

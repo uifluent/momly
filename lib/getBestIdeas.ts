@@ -176,6 +176,16 @@ function scoreIdea(
   // ── Preference learning (from favorited activities) ───────────────────────────
   score += a.category.filter((c) => preferredCats.has(c)).length;
 
+  // ── Tag-based energy alignment ────────────────────────────────────────────────
+  if (a.tags) {
+    if (filters.energy === "low" && (a.tags.includes("easy") || a.tags.includes("default"))) {
+      score += 2;
+    }
+    if (filters.energy === "high" && (a.tags.includes("active") || a.tags.includes("outdoor") || a.tags.includes("adventure"))) {
+      score += 2;
+    }
+  }
+
   return score;
 }
 
@@ -209,6 +219,8 @@ export function getBestIdeas(
 
   // ── Hard filters ─────────────────────────────────────────────────────────────
   let pool = allIdeas.filter((a) => {
+    // City-specific activities only show for matching city
+    if (a.city && context.city && a.city !== context.city) return false;
     if (!a.duration.includes(filters.time)) return false;
     if (
       filters.energy === "low" &&
@@ -225,8 +237,19 @@ export function getBestIdeas(
     return true;
   });
 
+  // First fallback: relax duration and child-age filter, keep city + ctx
   if (pool.length === 0) {
-    pool = allIdeas.filter((a) => a.duration.includes(filters.time));
+    pool = allIdeas.filter((a) => {
+      if (a.city && context.city && a.city !== context.city) return false;
+      if (withChild && !a.withChild) return false;
+      if (!withChild && a.withChild) return false;
+      return a.duration.includes(filters.time);
+    });
+  }
+
+  // Second fallback: isFallback items always available regardless of all filters
+  if (pool.length === 0) {
+    pool = allIdeas.filter((a) => a.isFallback === true);
   }
 
   // ── 80 / 20: 20% chance to lead with a random favorite ───────────────────────

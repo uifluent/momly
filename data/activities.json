@@ -1228,5 +1228,274 @@
         "withChild": "Уютен момент заедно, без да планирате много."
       }
     }
+  },
+  {
+    "id": "ikea_sofia",
+    "title": "ИКЕА",
+    "emoji": "🏬",
+    "description": "Лесен ден – всичко на едно място. Детски кът + храна.",
+    "feelsLike": "лесно и без стрес",
+    "steps": [
+      "Вземи детето и тръгнайте без план",
+      "Разходете се из детската секция — нека избира",
+      "Хапнете заедно в ресторанта"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "low",
+      "medium"
+    ],
+    "withChild": true,
+    "ageRange": [
+      12,
+      60
+    ],
+    "category": [
+      "explore",
+      "movement"
+    ],
+    "effort": "low",
+    "interruptibility": "high",
+    "mentalLoad": "light",
+    "repeatable": true,
+    "tags": [
+      "easy",
+      "default",
+      "rain-friendly"
+    ],
+    "isFallback": true,
+    "reason": "Перфектно за ден, в който нямаш енергия",
+    "city": "София"
+  },
+  {
+    "id": "pulse_kids",
+    "title": "Pulse Kids",
+    "emoji": "🏃",
+    "description": "Активна игра и движение за изразходване на енергия.",
+    "feelsLike": "активно и забавно",
+    "steps": [
+      "Купете билети на касата или онлайн",
+      "Оставете детето да избира активности свободно",
+      "Следвайте го и се забавлявайте заедно"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "high"
+    ],
+    "withChild": true,
+    "ageRange": [
+      24,
+      72
+    ],
+    "category": [
+      "movement",
+      "social"
+    ],
+    "effort": "low",
+    "interruptibility": "medium",
+    "mentalLoad": "light",
+    "repeatable": true,
+    "tags": [
+      "active",
+      "energy"
+    ],
+    "isFallback": false,
+    "reason": "Ще изразходи енергията му 😄",
+    "city": "София"
+  },
+  {
+    "id": "kids_library",
+    "title": "Детска библиотека",
+    "emoji": "📚",
+    "description": "Спокойно време с книги и игри.",
+    "feelsLike": "тихо и спокойно",
+    "steps": [
+      "Влезте в детския отдел на библиотеката",
+      "Изберете 2-3 книги заедно с детето",
+      "Намерете тихо кътче и четете заедно"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
+    "withChild": true,
+    "ageRange": [
+      24,
+      72
+    ],
+    "category": [
+      "calm",
+      "explore"
+    ],
+    "effort": "zero",
+    "interruptibility": "high",
+    "mentalLoad": "light",
+    "repeatable": true,
+    "tags": [
+      "calm",
+      "learning"
+    ],
+    "isFallback": true,
+    "reason": "Спокойно и приятно време заедно",
+    "city": "София"
+  },
+  {
+    "id": "bowling",
+    "title": "Боулинг",
+    "emoji": "🎳",
+    "description": "Забавление с рампи за деца и семейна атмосфера.",
+    "feelsLike": "забавно и различно",
+    "steps": [
+      "Наемете обувки и изберете лента с рампи за деца",
+      "Покажете как се хвърля топката",
+      "Забавлявайте се без притеснение за резултата"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "medium"
+    ],
+    "withChild": true,
+    "ageRange": [
+      36,
+      96
+    ],
+    "category": [
+      "movement",
+      "social"
+    ],
+    "effort": "low",
+    "interruptibility": "medium",
+    "mentalLoad": "light",
+    "tags": [
+      "fun",
+      "coordination"
+    ],
+    "isFallback": false,
+    "reason": "Нещо различно и забавно заедно",
+    "city": "София"
+  },
+  {
+    "id": "yunak_adventure",
+    "title": "Приключенски парк Юнак",
+    "emoji": "🌲",
+    "description": "Катерене и въжени трасета сред природата.",
+    "feelsLike": "приключение навън",
+    "steps": [
+      "Облечете удобни дрехи и обувки",
+      "Изберете трасе по силата на детето",
+      "Вървете заедно и се подкрепяйте по пътя"
+    ],
+    "duration": [
+      "medium"
+    ],
+    "energy": [
+      "high"
+    ],
+    "withChild": true,
+    "ageRange": [
+      48,
+      120
+    ],
+    "category": [
+      "movement",
+      "explore",
+      "reset"
+    ],
+    "effort": "low",
+    "interruptibility": "low",
+    "mentalLoad": "light",
+    "tags": [
+      "outdoor",
+      "adventure"
+    ],
+    "isFallback": false,
+    "reason": "Малко приключение и движение навън",
+    "city": "София"
+  },
+  {
+    "id": "pump_track_elin_pelin",
+    "title": "Pump track Елин Пелин",
+    "emoji": "🚲",
+    "description": "Каране на колело или тротинетка върху вълнообразна писта.",
+    "feelsLike": "активно и весело навън",
+    "steps": [
+      "Вземете колело или тротинетка",
+      "Нека детето кара свободно по пистата",
+      "Снимайте и се радвайте заедно"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "high"
+    ],
+    "withChild": true,
+    "ageRange": [
+      36,
+      120
+    ],
+    "category": [
+      "movement",
+      "reset"
+    ],
+    "effort": "low",
+    "interruptibility": "medium",
+    "mentalLoad": "light",
+    "tags": [
+      "bike",
+      "active",
+      "outdoor"
+    ],
+    "isFallback": false,
+    "reason": "Перфектно за активно дете навън",
+    "city": "Елин Пелин"
+  },
+  {
+    "id": "kids_event_generic",
+    "title": "Детско събитие",
+    "emoji": "🎉",
+    "description": "Актуално събитие за деца този уикенд.",
+    "feelsLike": "нещо ново и различно",
+    "steps": [
+      "Намерете актуално събитие в града",
+      "Изберете подходящо за възрастта на детето",
+      "Отидете заедно и се насладете"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "medium"
+    ],
+    "withChild": true,
+    "ageRange": [
+      24,
+      120
+    ],
+    "category": [
+      "social",
+      "explore"
+    ],
+    "effort": "low",
+    "interruptibility": "high",
+    "mentalLoad": "light",
+    "tags": [
+      "event",
+      "weekend"
+    ],
+    "reason": "Нещо ново и различно",
+    "city": "София"
   }
 ]
