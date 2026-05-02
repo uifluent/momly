@@ -34,7 +34,7 @@
 
 .greetingText {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
   line-height: 1;
@@ -59,6 +59,56 @@
   line-height: 1.5;
 }
 
+/* ── Daily progress ──────────────────────────────────────────────────────────── */
+.dailyProgress {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-3);
+  text-align: center;
+  opacity: 0.7;
+}
+
+/* ── Type chips (event / place) ─────────────────────────────────────────────── */
+.typeChip {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.typeChipEvent {
+  background: var(--secondary-light);
+  color: var(--secondary-dark);
+}
+.typeChipPlace {
+  background: var(--place-light);
+  color: var(--place-dark);
+}
+
+/* ── Section headers ─────────────────────────────────────────────────────────── */
+.sectionHeader {
+  padding-top: 4px;
+}
+.sectionTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+  margin-top: 15px;
+}
+.sectionSubtitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+
 /* ── Upcoming event card ─────────────────────────────────────────────────────── */
 .eventCard {
   background: var(--surface);
@@ -76,14 +126,14 @@
 }
 .eventTitle {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
   margin-bottom: 2px;
 }
 .eventDesc {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-3);
   line-height: 1.5;
@@ -229,14 +279,14 @@
 }
 .localTitle {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
   margin-bottom: 2px;
 }
 .localDesc {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-3);
   line-height: 1.5;
@@ -252,6 +302,23 @@
   transition: opacity 0.15s;
 }
 .localLink:hover { opacity: 0.75; }
+
+.cardLinkRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.mapsBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--place-dark);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.mapsBtn:hover { opacity: 0.75; }
 
 /* ── Today's wins ────────────────────────────────────────────────────────────── */
 .wins {
@@ -346,7 +413,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 .pillsRow {
   flex: 1;
@@ -376,13 +443,24 @@
   height: 34px;
   border-radius: 9999px;
   border: none;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   color: #fff;
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }
-.pillsFilterBtn:hover  { background: var(--primary-hover); }
 .pillsFilterBtn:active { transform: scale(0.92); }
+
+/* ── Cards section (main + backups) with refresh transition ─────────────────── */
+.cardsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity 0.18s ease;
+}
+.cardsSectionLoading {
+  opacity: 0.28;
+  pointer-events: none;
+}
 
 /* ── Backup idea cards ───────────────────────────────────────────────────────── */
 .backupsRow {
@@ -477,7 +555,6 @@
   font-weight: 600;
   color: var(--text);
   background: none;
-  text-transform: uppercase;
   cursor: pointer;
   border: none;
   padding: 0 24px;

@@ -217,8 +217,17 @@ export function getBestIdeas(
     localStorage.setItem("completedIdeas", JSON.stringify(completedIds));
   } catch { /* SSR / quota — safe to ignore */ }
 
+  const today = new Date().toDateString();
+  const completedToday = new Set(
+    Object.entries(completedIds)
+      .filter(([, iso]) => iso && new Date(iso).toDateString() === today)
+      .map(([id]) => id),
+  );
+
   // ── Hard filters ─────────────────────────────────────────────────────────────
   let pool = allIdeas.filter((a) => {
+    // Never show activities completed today
+    if (completedToday.has(a.id)) return false;
     // City-specific activities only show for matching city
     if (a.city && context.city && a.city !== context.city) return false;
     if (!a.duration.includes(filters.time)) return false;

@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
-import { Topbar } from "@/components/UI";
 import styles from "./page.module.css";
 
 export default function SettingsPage() {
-  const router = useRouter();
-  const store  = useMomlyStore();
-  const city   = store.profile.city;
+  const router       = useRouter();
+  const store        = useMomlyStore();
+  const city         = store.profile.city;
+  const displayName  = store.profile.displayName;
 
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -30,7 +30,7 @@ export default function SettingsPage() {
       {showConfirm && (
         <div className={styles.modalBackdrop}>
           <div className={styles.modal}>
-            <p className={styles.modalTitle}>Изчисти данните?</p>
+            <p className={styles.modalTitle}>Нулирай приложението?</p>
             <p className={styles.modalSub}>
               Всичките ти любими и изпълнени идеи ще бъдат изтрити.
             </p>
@@ -39,7 +39,7 @@ export default function SettingsPage() {
                 Отказ
               </button>
               <button className={styles.modalConfirm} onClick={handleReset}>
-                Изтрий
+                Нулирай
               </button>
             </div>
           </div>
@@ -49,16 +49,16 @@ export default function SettingsPage() {
       <div className={styles.body}>
         <h1 className={styles.title}>За теб</h1>
 
-        {/* ── Needs section ───────────────────────────────────────────────── */}
+        {/* ── Profile ─────────────────────────────────────────────────────── */}
+        <p className={styles.sectionLabel}>Профил</p>
         <div className={styles.section}>
-          <button className={styles.row} onClick={() => router.push("/settings/needs")}>
-            <span className={styles.rowLabel}>От какво имаш нужда</span>
-            <span className={styles.rowArrow}>›</span>
+          <button className={styles.row} onClick={() => router.push("/settings/name")}>
+            <span className={styles.rowLabel}>Име</span>
+            <span className={styles.rowRight}>
+              <span className={styles.rowHint}>{displayName || "Добави"}</span>
+              <span className={styles.rowArrow}>›</span>
+            </span>
           </button>
-        </div>
-
-        {/* ── Children + City ─────────────────────────────────────────────── */}
-        <div className={styles.section}>
           <button className={styles.row} onClick={() => router.push("/onboarding?from=settings")}>
             <span className={styles.rowLabel}>Деца</span>
             <span className={styles.rowArrow}>›</span>
@@ -73,6 +73,7 @@ export default function SettingsPage() {
         </div>
 
         {/* ── Account ─────────────────────────────────────────────────────── */}
+        <p className={styles.sectionLabel}>Акаунт</p>
         <div className={styles.section}>
           <button className={styles.row} onClick={handleLogout}>
             <span className={styles.rowLabel}>Смени профил</span>
@@ -82,7 +83,7 @@ export default function SettingsPage() {
             className={[styles.row, styles.rowDanger].join(" ")}
             onClick={() => setShowConfirm(true)}
           >
-            <span className={styles.rowLabel}>Изчисти данните</span>
+            <span className={styles.rowLabel}>Нулирай приложението</span>
           </button>
         </div>
       </div>

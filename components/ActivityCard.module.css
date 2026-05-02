@@ -20,6 +20,9 @@
   transform: translateY(-10px);
   pointer-events: none;
 }
+.cardCompleted {
+  opacity: 0.72;
+}
 
 .heartBtn {
   position: absolute;
@@ -73,7 +76,7 @@
 
 .title {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
   line-height: 1.28;
@@ -83,7 +86,7 @@
 
 .desc {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: var(--text-3);
   line-height: 1.6;
@@ -107,7 +110,7 @@
   padding: 8px 12px;
   cursor: pointer;
   font-family: 'Comfortaa', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #3a2e2a;
   transition: opacity 0.15s;
@@ -176,7 +179,7 @@
 }
 .stepText {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: var(--text-2);
   line-height: 1.55;
@@ -185,3 +188,29 @@
 /* ── Actions ─────────────────────────────────────────────────────────────────── */
 .actions { display: flex; flex-direction: column; }
 
+.doBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 0 0;
+  text-align: center;
+  width: 100%;
+  transition: opacity 0.15s;
+}
+.doBtn:hover  { opacity: 0.75; }
+.doBtn:active { opacity: 0.55; }
+
+
+/* ── Done badge ──────────────────────────────────────────────────────────────── */
+.doneBadge {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-align: center;
+  padding: 10px 0 0;
+}

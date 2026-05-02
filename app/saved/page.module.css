@@ -91,7 +91,7 @@
 /* ── Local item link ─────────────────────────────────────────────────────────── */
 .localLink {
   display: inline-block;
-  margin-top: 8px;
+  margin-right: 10px;
   font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -169,6 +169,80 @@
   margin: 0;
 }
 
+/* ── Type chips ─────────────────────────────────────────────────────────────── */
+.typeChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  pointer-events: none;
+}
+.typeChipIdea  { background: var(--primary-dim);     color: var(--primary-hover); }
+.typeChipEvent { background: var(--secondary-light); color: var(--secondary-dark); }
+.typeChipPlace { background: var(--place-light);     color: var(--place-dark); }
+
+/* ── LocalFavCard (matches Home event/place card style) ─────────────────────── */
+.localFavCard {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin: 0 24px 16px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+}
+.localFavCardEvent { border-left: 4px solid var(--secondary); }
+.localFavCardPlace  { border-left: 4px solid var(--place); }
+.localFavCardIdea   { border-left: 4px solid var(--primary); }
+
+.localFavLabelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.localFavTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.localFavDesc {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.miniHeart {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.15s;
+}
+.miniHeart:active { transform: scale(0.88); }
+.miniHeartEvent { color: var(--secondary-dark); }
+.miniHeartPlace { color: var(--place-dark); }
+
 /* ── Card ────────────────────────────────────────────────────────────────────── */
 .card {
   position: relative;
@@ -179,6 +253,29 @@
   box-shadow: var(--shadow-soft);
   display: flex;
   flex-direction: column;
+}
+
+/* ── Idea card (matches ActivityCard from Home) ──────────────────────────────── */
+.ideaCard {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 24px 24px 24px 20px;
+  margin: 0 24px 16px;
+  border-left: 4px solid var(--primary);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.09);
+  display: flex;
+  flex-direction: column;
+}
+.ideaCategory {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-hover);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .category {
@@ -193,7 +290,7 @@
 }
 .cardTitle {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
   line-height: 1.28;
@@ -206,7 +303,7 @@
 }
 .cardDesc {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: var(--text-3);
   line-height: 1.6;

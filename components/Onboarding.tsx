@@ -8,56 +8,79 @@ import type { ChildGender, Need } from "@/lib/types";
 import { Topbar, Btn } from "./UI";
 import styles from "./Onboarding.module.css";
 
-const NEEDS: { value: Need; emoji: string; label: string }[] = [
-  { value: "me-time", emoji: "🛁", label: "Време за мен" },
-  { value: "meals", emoji: "🍳", label: "Бързи рецепти" },
-  {
-    value: "child-activities",
-    emoji: "🧸",
-    label: "Занимания с детето",
-  },
-  { value: "outside", emoji: "🌤️", label: "Активности навън" },
-  { value: "movement", emoji: "🧘‍♀️", label: "Движение" },
-  { value: "calm", emoji: "🌙", label: "Спокойствие" },
-  { value: "creative", emoji: "🎨", label: "Нещо творческо" },
-];
-
 const GENDER_OPTIONS: { value: ChildGender; label: string }[] = [
   { value: "boy", label: "Момче 🧒" },
   { value: "girl", label: "Момиче 👧" },
   { value: "any", label: "Няма значение 🧸" },
 ];
 
+const CITIES = [
+  "София",
+  "Пловдив",
+  "Варна",
+  "Бургас",
+  "Стара Загора",
+  "Русе",
+  "Плевен",
+  "Велико Търново",
+  "Сливен",
+  "Шумен",
+  "Добрич",
+  "Хасково",
+  "Ямбол",
+  "Пазарджик",
+  "Благоевград",
+  "Враца",
+  "Монтана",
+  "Перник",
+  "Кюстендил",
+  "Ловеч",
+  "Търговище",
+  "Силистра",
+  "Разград",
+  "Видин",
+];
+
+const NEEDS: { value: Need; emoji: string; label: string }[] = [
+  { value: "me-time", emoji: "🛁", label: "Време за мен" },
+  { value: "meals", emoji: "🍳", label: "Бързи рецепти" },
+  { value: "child-activities", emoji: "🧸", label: "Занимания с детето" },
+  { value: "outside", emoji: "🌤️", label: "Активности навън" },
+  { value: "movement", emoji: "🧘‍♀️", label: "Движение" },
+  { value: "calm", emoji: "🌙", label: "Спокойствие" },
+  { value: "creative", emoji: "🎨", label: "Нещо творческо" },
+];
+
 function formatAge(birthDate: string) {
   const birth = new Date(birthDate);
   const now = new Date();
-
   let months =
     (now.getFullYear() - birth.getFullYear()) * 12 +
     now.getMonth() -
     birth.getMonth();
-
   if (now.getDate() < birth.getDate()) months -= 1;
   if (months < 0) return "";
-
   const years = Math.floor(months / 12);
-  const restMonths = months % 12;
-
-  if (years === 0) return `${restMonths} м.`;
-  if (restMonths === 0) return `${years} г.`;
-  return `${years}г. ${restMonths}м.`;
+  const rest = months % 12;
+  if (years === 0) return `${rest} м.`;
+  if (rest === 0) return `${years} г.`;
+  return `${years}г. ${rest}м.`;
 }
 
+// ── Flow ─────────────────────────────────────────────────────────────────────
+// Regular:     1 (City) → 2 (Children) → 3 (Needs)
+// fromSettings: 1 (Children) → 2 (Needs)
+
 export default function Onboarding() {
-  const router       = useRouter();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const fromSettings = searchParams.get("from") === "settings";
-  const store        = useMomlyStore();
-
-  const [step, setStep] = useState(1);
+  const store = useMomlyStore();
 
   const profile = store.profile;
   const children = profile.children ?? [];
+
+  const [step, setStep] = useState(1);
 
   useEffect(() => {
     function maybeAddDefault() {
@@ -65,20 +88,24 @@ export default function Onboarding() {
         useMomlyStore.getState().addChild();
       }
     }
-
-    if (useMomlyStore.persist.hasHydrated()) {
-      maybeAddDefault();
-    } else {
-      return useMomlyStore.persist.onFinishHydration(maybeAddDefault);
-    }
+    if (useMomlyStore.persist.hasHydrated()) maybeAddDefault();
+    else return useMomlyStore.persist.onFinishHydration(maybeAddDefault);
   }, []);
+
   const childrenReady =
-    children.length > 0 && children.every((child) => child.birthDate);
+    children.length > 0 && children.every((c) => c.birthDate);
+  const cityStep = fromSettings ? -1 : 1;
+  const childrenStep = fromSettings ? 1 : 2;
+  const needsStep = fromSettings ? 2 : 3;
 
   function next() {
+    if (step < (fromSettings ? 2 : 3)) {
+      setStep((s) => s + 1);
+      return;
+    }
     try {
       localStorage.setItem("momly_children", JSON.stringify(children));
-    } catch { /* quota / SSR */ }
+    } catch {}
     store.completeOnboarding();
     router.push(fromSettings ? "/settings" : "/");
   }
@@ -91,38 +118,61 @@ export default function Onboarding() {
     router.push(fromSettings ? "/settings" : "/");
   }
 
-  function finishOnboarding() {
-    store.completeOnboarding();
-    router.push("/decide");
-  }
-
-  // ✅ delete child
   function removeChild(index: number) {
-    if (children.length === 1) return; // safeguard
-
-    const updated = children.filter((_, i) => i !== index);
-    store.setChildren(updated); // 👉 трябва да имаш този метод в store
+    if (children.length === 1) return;
+    store.setChildren(children.filter((_, i) => i !== index));
   }
 
   return (
     <div className={styles.wrap}>
-      {!fromSettings && <Topbar showBack={step === 2} onBack={back} hideFav />}
+      <Topbar showBack={step > 1 || fromSettings} onBack={back} hideFav />
 
-      {/* STEP 1 */}
-      {step === 1 && (
+      {/* ── STEP: City ─────────────────────────────────────────────────────── */}
+      {step === cityStep && (
+        <div className={styles.body}>
+          <div className={`${styles.header} anim-fade-up`}>
+            <h2 className={styles.titleLarge}>От къде си? 📍</h2>
+          </div>
+
+          <select
+            className={styles.dobInput}
+            value={profile.city ?? ""}
+            onChange={(e) => store.setCity(e.target.value)}
+            style={{ marginTop: 8 }}
+          >
+            <option value="" disabled>
+              Избери град
+            </option>
+            {CITIES.map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+
+          <Btn
+            onClick={next}
+            disabled={!profile.city}
+            className={styles.ctaBtn}
+          >
+            Продължи
+          </Btn>
+        </div>
+      )}
+
+      {/* ── STEP: Children ─────────────────────────────────────────────────── */}
+      {step === childrenStep && (
         <div className={styles.body}>
           <div className={`${styles.header} anim-fade-up`}>
             {fromSettings ? (
-              <div className={styles.headerRow}>
-                <button className={styles.backBtn} onClick={back} aria-label="Назад">←</button>
-                <h2 className={styles.title}>Деца</h2>
-              </div>
+              <h2 className={styles.titleLarge}>Деца</h2>
             ) : (
-              <h2 className={styles.title}>Добави децата си 🤍</h2>
+              <>
+                <h2 className={styles.titleLarge}>Добави дете 👶</h2>
+              </>
             )}
           </div>
 
-          {/* One card per child */}
           <motion.div layout className={styles.childrenList}>
             <AnimatePresence initial={false}>
               {children.map((child, index) => (
@@ -221,7 +271,6 @@ export default function Onboarding() {
             </AnimatePresence>
           </motion.div>
 
-          {/* Add child — outside and below cards */}
           <motion.button
             layout
             className={styles.addChildBtn}
@@ -244,36 +293,32 @@ export default function Onboarding() {
         </div>
       )}
 
-      {/* STEP 2 */}
-      {step === 2 && (
+      {/* ── STEP: Needs ────────────────────────────────────────────────────── */}
+      {step === needsStep && (
         <div className={styles.body}>
           <div className={`${styles.header} anim-fade-up`}>
-            <h2 className={styles.title}>От какво най-вече имаш нужда?</h2>
-            <p className={styles.meta}>{profile.needs.length}/3 избрани</p>
+            <h2 className={styles.titleLarge}>От какво имаш нужда?</h2>
+            <p className={styles.metaSub}>{profile.needs.length}/3 избрани</p>
           </div>
 
-          <div className={`${styles.card} anim-card-in delay-1`}>
-            <p className={styles.cardLabel}>Избери до 3</p>
-
-            <div className={styles.needsGrid}>
-              {NEEDS.map((n) => (
-                <button
-                  key={n.value}
-                  className={[
-                    styles.needChip,
-                    profile.needs.includes(n.value) ? styles.needChipSel : "",
-                  ].join(" ")}
-                  onClick={() => store.toggleNeed(n.value)}
-                >
-                  <span className={styles.needEmoji}>{n.emoji}</span>
-                  {n.label}
-                </button>
-              ))}
-            </div>
+          <div className={styles.needsGrid}>
+            {NEEDS.map((n) => (
+              <button
+                key={n.value}
+                className={[
+                  styles.needChip,
+                  profile.needs.includes(n.value) ? styles.needChipSel : "",
+                ].join(" ")}
+                onClick={() => store.toggleNeed(n.value)}
+              >
+                <span className={styles.needEmoji}>{n.emoji}</span>
+                {n.label}
+              </button>
+            ))}
           </div>
 
           <Btn
-            onClick={finishOnboarding}
+            onClick={next}
             disabled={profile.needs.length < 2}
             className={styles.ctaBtn}
           >

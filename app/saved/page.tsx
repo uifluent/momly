@@ -273,12 +273,12 @@ function SavedCard({ activity, onRemove }: { activity: Activity; onRemove: () =>
   const isCompleted = done || activity.id in completedIds;
 
   return (
-    <li className={[styles.card, isCompleted ? styles.cardDone : ""].join(" ")}>
+    <li className={[styles.ideaCard, isCompleted ? styles.cardDone : ""].join(" ")}>
       <button className={styles.heartBtn} onClick={onRemove} aria-label="Премахни от любими">
         <Heart size={18} strokeWidth={1.75} fill="currentColor" />
       </button>
 
-      <p className={styles.category}>
+      <p className={styles.ideaCategory}>
         {activity.emoji && <span style={{ marginRight: 4 }}>{activity.emoji}</span>}
         {CATEGORY_LABEL[activity.category[0]] ?? activity.category[0]}
       </p>
@@ -323,15 +323,39 @@ function SavedCard({ activity, onRemove }: { activity: Activity; onRemove: () =>
 // ── LocalFavCard (event / place / local idea) ─────────────────────────────────
 
 function LocalFavCard({ item, onRemove }: { item: LocalFavItem; onRemove: () => void }) {
-  return (
-    <li className={styles.card}>
-      <button className={styles.heartBtn} onClick={onRemove} aria-label="Премахни от любими">
-        <Heart size={18} strokeWidth={1.75} fill="currentColor" />
-      </button>
+  const accentClass =
+    item.type === "event" ? styles.localFavCardEvent :
+    item.type === "place" ? styles.localFavCardPlace :
+    styles.localFavCardIdea;
 
-      <p className={styles.category}>{TYPE_LABEL[item.type]}</p>
-      <h2 className={styles.cardTitle}>{item.title}</h2>
-      <p className={styles.cardDesc}>{item.description}</p>
+  const chipClass =
+    item.type === "event" ? styles.typeChipEvent :
+    item.type === "place" ? styles.typeChipPlace :
+    styles.typeChipIdea;
+
+  const emoji = item.type === "event" ? "🎭" : item.type === "place" ? "📍" : "💡";
+
+  const heartClass =
+    item.type === "event" ? styles.miniHeartEvent :
+    item.type === "place" ? styles.miniHeartPlace :
+    "";
+
+  return (
+    <li className={`${styles.localFavCard} ${accentClass}`}>
+      <div className={styles.localFavLabelRow}>
+        <span className={`${styles.typeChip} ${chipClass}`}>
+          {emoji} {TYPE_LABEL[item.type]}
+        </span>
+        <button
+          className={`${styles.miniHeart} ${heartClass}`}
+          onClick={onRemove}
+          aria-label="Премахни от любими"
+        >
+          <Heart size={15} strokeWidth={2} fill="currentColor" />
+        </button>
+      </div>
+      <h2 className={styles.localFavTitle}>{item.title}</h2>
+      <p className={styles.localFavDesc}>{item.description}</p>
 
       {item.link && (
         <a
@@ -367,9 +391,9 @@ function CompletedCard({ activity, completedAt }: { activity: Activity; complete
   }
 
   return (
-    <li className={styles.card}>
+    <li className={styles.ideaCard}>
       <div className={styles.cardHeader}>
-        <p className={styles.category}>
+        <p className={styles.ideaCategory}>
           {activity.emoji && <span style={{ marginRight: 4 }}>{activity.emoji}</span>}
           {CATEGORY_LABEL[activity.category[0]] ?? activity.category[0]}
         </p>
@@ -377,9 +401,11 @@ function CompletedCard({ activity, completedAt }: { activity: Activity; complete
       </div>
       <h2 className={styles.cardTitle}>{activity.title}</h2>
       <p className={styles.cardDesc}>{activity.description}</p>
-      <Btn onClick={handleDoAgain} disabled={done}>
-        {done ? "✔ Направено" : "Ще го направя пак"}
-      </Btn>
+      {done ? (
+        <p className={styles.doneBadge}>✔ Направено</p>
+      ) : (
+        <button className={styles.doBtn} onClick={handleDoAgain}>Ще го направя пак →</button>
+      )}
     </li>
   );
 }

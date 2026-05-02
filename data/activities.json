@@ -1497,5 +1497,84 @@
     ],
     "reason": "Нещо ново и различно",
     "city": "София"
+  },
+  {
+    "id": "hologram_zoo",
+    "title": "Hologram Zoo",
+    "emoji": "🦁",
+    "description": "Интерактивно холограмно изживяване с животни – много впечатляващо за деца.",
+    "feelsLike": "уау и различно",
+    "steps": [
+      "Отидете на място или резервирайте билети",
+      "Влезте и разгледайте заедно",
+      "Оставете детето да изследва свободно"
+    ],
+    "duration": [
+      "short",
+      "medium"
+    ],
+    "energy": [
+      "medium"
+    ],
+    "withChild": true,
+    "ageRange": [
+      36,
+      120
+    ],
+    "category": [
+      "explore",
+      "social"
+    ],
+    "effort": "low",
+    "interruptibility": "medium",
+    "mentalLoad": "light",
+    "repeatable": false,
+    "tags": [
+      "experience",
+      "wow",
+      "indoor"
+    ],
+    "isFallback": false,
+    "reason": "Нещо различно и впечатляващо заедно",
+    "city": "София"
+  },
+  {
+    "id": "kids_railway_sofia",
+    "title": "Детска железница (Борисова градина)",
+    "emoji": "🚂",
+    "description": "Малко влакче в парка – спокойно и вълнуващо за децата.",
+    "feelsLike": "спокойно и вълшебно",
+    "steps": [
+      "Отидете в Борисовата градина",
+      "Намерете детската железница",
+      "Качете се и се насладете на разходката"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low"
+    ],
+    "withChild": true,
+    "ageRange": [
+      18,
+      72
+    ],
+    "category": [
+      "explore",
+      "calm"
+    ],
+    "effort": "low",
+    "interruptibility": "medium",
+    "mentalLoad": "light",
+    "repeatable": true,
+    "tags": [
+      "outdoor",
+      "experience",
+      "easy"
+    ],
+    "isFallback": false,
+    "reason": "Леко и приятно излизане с нещо различно",
+    "city": "София"
   }
 ]

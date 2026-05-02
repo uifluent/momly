@@ -77,8 +77,6 @@
   font-family: 'Comfortaa', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   cursor: pointer;
   border: none;
   transition: background 0.15s, opacity 0.15s, color 0.15s;
@@ -108,8 +106,6 @@
   height: 40px;
   font-size: 14px;
   font-weight: 400;
-  text-transform: none;
-  letter-spacing: 0;
 }
 .btnGhost:hover { color: var(--text-2); }
 

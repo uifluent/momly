@@ -143,20 +143,24 @@
 /* ── Steps ───────────────────────────────────────────────────────────────────── */
 .steps {
   margin-bottom: 24px;
+  background: #f6f4f3;
+  border-radius: var(--radius-chip);
+  overflow: hidden;
 }
 
 .stepsLabel {
   font-family: 'Comfortaa', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: var(--text);
-  margin: 0 0 10px;
+  color: #3a2e2a;
+  margin: 0;
+  padding: 8px 12px;
 }
 
 .stepsList {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding: 0 12px;
+  margin: 0 0 10px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -228,7 +232,7 @@
   height: 48px;
   border-radius: var(--radius-md);
   border: none;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   font-family: 'Comfortaa', sans-serif;
   font-size: 14px;
   font-weight: 600;

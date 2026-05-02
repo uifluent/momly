@@ -229,7 +229,6 @@
   font-family: 'Comfortaa', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  text-transform: uppercase;
   cursor: pointer;
   margin-top: 10px;
 }
@@ -274,3 +273,101 @@
 /* ── CTA positioning ────────────────────────────────────────────────────────── */
 .ctaBtn  { margin-top: auto; }
 .ghostBtn { margin-top: 8px; }
+
+/* ── City list (Step 3) ──────────────────────────────────────────────────────── */
+.cityList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.cityBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 13px 16px;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+.cityBtn:hover { background: rgba(0, 0, 0, 0.02); }
+.cityBtnSel {
+  color: var(--primary);
+  font-weight: 600;
+  background: var(--primary-dim);
+}
+.cityBtnSel:hover { background: var(--primary-dim); }
+.cityCheck {
+  color: var(--primary);
+  font-size: 14px;
+}
+
+/* ── Refactored step styles ──────────────────────────────────────────────────── */
+.titleLarge {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.25;
+  margin: 0 0 6px;
+  text-align: center;
+}
+.metaSub {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+  text-align: center;
+  margin: 0;
+}
+
+/* ── Simple children list ────────────────────────────────────────────────────── */
+.childSimpleList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+.childSimpleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.childSimpleInputs {
+  flex: 1;
+  position: relative;
+}
+.childAgeInline {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+  pointer-events: none;
+}
+.addChildLink {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  padding: 4px 0;
+  text-align: left;
+  transition: opacity 0.15s;
+  margin-top: 4px;
+}
+.addChildLink:hover { opacity: 0.75; }

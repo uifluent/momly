@@ -25,10 +25,9 @@
 /* ── Section label ───────────────────────────────────────────────────────────── */
 .sectionLabel {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-3);
-  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
 }
 
 /* ── Needs chips ─────────────────────────────────────────────────────────────── */

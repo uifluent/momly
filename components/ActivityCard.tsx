@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { CirclePlus, CircleMinus, Heart } from "lucide-react";
-import { Btn } from "./UI";
 import type { Activity, Duration, Filters } from "@/lib/types";
 import { getDescription, getSteps } from "@/lib/getDescription";
 import styles from "./ActivityCard.module.css";
@@ -60,7 +59,11 @@ export function ActivityCard({
 
   return (
     <div
-      className={[styles.card, isAnimating ? styles.cardExiting : ""].join(" ")}
+      className={[
+        styles.card,
+        isAnimating ? styles.cardExiting : "",
+        done || isCompleted ? styles.cardCompleted : "",
+      ].join(" ")}
     >
       {/* Save / heart */}
       <button
@@ -129,9 +132,9 @@ export function ActivityCard({
       {/* Primary action */}
       <div className={styles.actions}>
         {done || isCompleted ? (
-          <p className={styles.doneBadge}>✔ Направено</p>
+          <p className={styles.doneBadge}>✔ Готово 💛</p>
         ) : (
-          <Btn onClick={onDone}>Ще го направя</Btn>
+          <button className={styles.doBtn} onClick={onDone}>Ще го направя →</button>
         )}
       </div>
     </div>

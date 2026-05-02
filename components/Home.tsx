@@ -39,6 +39,14 @@ const allActivities = activitiesData as Activity[];
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
+const COMPLETION_MSGS = [
+  "✨ Малка стъпка, но важна 💛",
+  "✨ Браво. Това беше само за теб",
+  "✨ Това има значение",
+  "✨ Ти се справяш",
+  "✨ Важно е, че го направи",
+];
+
 const HEADLINES: { text: string; highlight: string }[] = [
   { text: "Днес не е нужно да мислиш 👇", highlight: "мислиш" },
   { text: "Имаш малко време? Ето идея 👇", highlight: "идея" },
@@ -193,7 +201,6 @@ export default function Home() {
   const [done, setDone] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [surpriseLoading, setSurpriseLoading] = useState(false);
-  const [isSurprise, setIsSurprise] = useState(false);
   const [selectedIdea, setSelectedIdea] = useState<Activity | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [tripSaved, setTripSaved] = useState(() =>
@@ -259,13 +266,16 @@ export default function Home() {
     store.likeIdea(idea.category);
     store.markCompleted(idea.id);
     setDone(true);
+    showToast(
+      COMPLETION_MSGS[Math.floor(Math.random() * COMPLETION_MSGS.length)],
+    );
     setTimeout(() => {
       const nextShown = [...shownIds, idea.id].slice(-5);
       setShownIds(nextShown);
       setShuffleCount((c) => c + 1);
       const next = pickIdea(filters, nextShown);
       if (next) swapIdea(next);
-    }, 1400);
+    }, 1800);
   }
 
   function handleRefineApply() {
@@ -274,7 +284,7 @@ export default function Home() {
     store.setFilter("ctx", filters.ctx);
     setShownIds([]);
     setShuffleCount(0);
-    setIsSurprise(false);
+
     surprise.reset();
     const s = useMomlyStore.getState();
     const results = getBestIdeas(
@@ -320,13 +330,20 @@ export default function Home() {
   function handleSurprise() {
     if (surpriseLoading) return;
     setSurpriseLoading(true);
-    const delay = 500 + Math.random() * 300; // 500–800 ms
+    const delay = 500 + Math.random() * 300;
     setTimeout(() => {
-      const picked = surprise.pick(idea ? [idea.id, ...shownIds] : shownIds);
+      const exclude = idea ? [idea.id, ...shownIds] : shownIds;
+      const picked = surprise.pick(exclude);
       if (picked) {
         swapIdea(picked);
-        setIsSurprise(true);
-        setShownIds((prev) => [...prev, picked.id].slice(-5));
+        const newShown = [...exclude, picked.id].slice(-5);
+        setShownIds(newShown);
+        const s = useMomlyStore.getState();
+        const fresh = getBestIdeas(
+          allActivities, filters, s.profile, s.recentIds, s.userPreferences,
+          { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city },
+        ).filter((a) => !newShown.includes(a.id));
+        setBackupIdeas(fresh.slice(0, 2));
       }
       setSurpriseLoading(false);
     }, delay);
@@ -395,38 +412,44 @@ export default function Home() {
           </button>
         </div>
 
-        {idea && (
-          <ActivityCard
-            key={idea.id}
-            activity={idea}
-            filters={filters}
-            isFavorite={favorites.includes(idea.id)}
-            isCompleted={idea.id in completedIds}
-            showDetail={showDetail}
-            done={done}
-            isAnimating={isAnimating}
-            isLocalPlace={idea.id.startsWith("place-")}
-            onStart={() => setShowDetail(true)}
-            onDone={handleDone}
-            onToggleFavorite={() => store.toggleFavorite(idea.id)}
-          />
-        )}
+        {/* ── Main card + backups with unified refresh transition ───────── */}
+        <div className={[styles.cardsSection, surpriseLoading ? styles.cardsSectionLoading : ""].join(" ")}>
+          {idea && (
+            <ActivityCard
+              key={idea.id}
+              activity={idea}
+              filters={filters}
+              isFavorite={favorites.includes(idea.id)}
+              isCompleted={idea.id in completedIds}
+              showDetail={showDetail}
+              done={done}
+              isAnimating={isAnimating}
+              isLocalPlace={idea.id.startsWith("place-")}
+              onStart={() => setShowDetail(true)}
+              onDone={handleDone}
+              onToggleFavorite={() => store.toggleFavorite(idea.id)}
+            />
+          )}
 
-        {/* ── Backup ideas ──────────────────────────────────────────────── */}
-        {backupIdeas.length > 0 && (
-          <div className={`${styles.backupsRow} anim-fade-up delay-2`}>
-            {backupIdeas.map((b) => (
-              <button
-                key={b.id}
-                className={styles.backupCard}
-                onClick={() => setSelectedIdea(b)}
-              >
-                <span className={styles.backupTitle}>{b.title}</span>
-                <span className={styles.backupArrow}>→</span>
-              </button>
-            ))}
-          </div>
-        )}
+          {/* ── Backup ideas ────────────────────────────────────────────── */}
+          {backupIdeas.length > 0 && (
+            <div className={styles.backupsRow}>
+              {backupIdeas.map((b) => (
+                <button
+                  key={b.id}
+                  className={styles.backupCard}
+                  onClick={() => setSelectedIdea(b)}
+                >
+                  <span className={styles.backupTitle}>
+                  {b.emoji && <span style={{ marginRight: 6 }}>{b.emoji}</span>}
+                  {b.title}
+                </span>
+                  <span className={styles.backupArrow}>→</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* ── Surprise me ───────────────────────────────────────────────── */}
         <button
@@ -442,24 +465,23 @@ export default function Home() {
           {surpriseLoading ? "Търся нещо..." : "Изненадай ме"}
         </button>
 
-        {isSurprise && !surpriseLoading && (
-          <button
-            className={`${styles.surpriseAgainBtn} anim-fade-up`}
-            onClick={handleSurprise}
-          >
-            🎲 Ощe веднъж
-          </button>
+
+        {/* ── Events section ────────────────────────────────────────────── */}
+        {upcomingEvent && (
+          <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
+            <p className={styles.sectionTitle}>🎭 Събития за теб</p>
+            <p className={styles.sectionSubtitle}>
+              Подбрани активности за следващите дни
+            </p>
+          </div>
         )}
 
-        {/* ── Upcoming event ─────────────────────────────────────────────── */}
         {upcomingEvent && (
           <div className={`${styles.eventCard} anim-fade-up delay-2`}>
             <div className={styles.cardLabelRow}>
-              <p className={styles.eventLabel}>
-                {upcomingEvent.source
-                  ? `🎭 ${upcomingEvent.source}`
-                  : "🎭 Нещо интересно скоро"}
-              </p>
+              <span className={`${styles.typeChip} ${styles.typeChipEvent}`}>
+                🎭 Събитие
+              </span>
               <button
                 className={`${styles.miniHeart} ${styles.miniHeartEvent}`}
                 onClick={() => {
@@ -476,49 +498,69 @@ export default function Home() {
                 />
               </button>
             </div>
-            <p className={styles.eventTitle}>{upcomingEvent.title}</p>
-            <p className={styles.eventDesc}>{upcomingEvent.description}</p>
-            {upcomingEvent.dateLabel && (
-              <p className={styles.eventDate}>📅 {upcomingEvent.dateLabel}</p>
-            )}
-            <a
-              href={upcomingEvent.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.eventLink}
-            >
-              Виж повече →
-            </a>
+            <div className={styles.cardRow}>
+              <PlaceThumbnail
+                link={upcomingEvent.link}
+                alt={upcomingEvent.title}
+                fallbackEmoji="🎭"
+              />
+              <div className={styles.cardRowText}>
+                <p className={styles.eventTitle}>{upcomingEvent.title}</p>
+                <p className={styles.eventDesc}>{upcomingEvent.description}</p>
+                {upcomingEvent.dateLabel && (
+                  <p className={styles.eventDate}>📅 {upcomingEvent.dateLabel}</p>
+                )}
+                <a
+                  href={upcomingEvent.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.eventLink}
+                >
+                  Виж повече →
+                </a>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* ── Weekend nearby suggestion ──────────────────────────────────── */}
+        {/* ── Nearby section ────────────────────────────────────────────── */}
+        {(nearbyPlace || localItem) && (
+          <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
+            <p className={styles.sectionTitle}>📍 Днес около теб</p>
+            <p className={styles.sectionSubtitle}>
+              Места, които можеш да посетиш сега
+            </p>
+          </div>
+        )}
+
         {nearbyPlace && (
           <div className={`${styles.weekendCard} anim-fade-up delay-2`}>
             <p className={styles.weekendLabel}>🌤 Уикенд идея</p>
-            <div className={styles.cardRow}>
-              <PlaceThumbnail
-                link={nearbyPlace.link}
-                staticImage={nearbyPlace.image}
-                alt={nearbyPlace.title}
-              />
-              <div className={styles.cardRowText}>
-                <p className={styles.weekendTitle}>{nearbyPlace.title}</p>
-                <p className={styles.weekendDesc}>{nearbyPlace.description}</p>
-                <div className={styles.weekendFooter}>
-                  <p className={styles.weekendDist}>
-                    🕐 На {nearbyPlace.travelTime} от теб
-                  </p>
-                  <button
-                    className={styles.weekendSaveBtn}
-                    onClick={() => {
-                      const saved = toggleSavedTrip(nearbyPlace.id);
-                      setTripSaved(saved);
-                    }}
-                  >
-                    {tripSaved ? "✔ Запазено" : "💾 Запази"}
-                  </button>
-                </div>
+            <span className={`${styles.typeChip} ${styles.typeChipPlace}`}>📍 Място</span>
+            <p className={styles.weekendTitle}>{nearbyPlace.title}</p>
+            <p className={styles.weekendDesc}>{nearbyPlace.description}</p>
+            <div className={styles.weekendFooter}>
+              <p className={styles.weekendDist}>
+                🕐 На {nearbyPlace.travelTime} от теб
+              </p>
+              <div className={styles.cardLinkRow}>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(nearbyPlace.title)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mapsBtn}
+                >
+                  Маршрут 📍
+                </a>
+                <button
+                  className={styles.weekendSaveBtn}
+                  onClick={() => {
+                    const saved = toggleSavedTrip(nearbyPlace.id);
+                    setTripSaved(saved);
+                  }}
+                >
+                  {tripSaved ? "✔ Запазено" : "💾 Запази"}
+                </button>
               </div>
             </div>
           </div>
@@ -528,9 +570,9 @@ export default function Home() {
         {localItem && (
           <div className={`${styles.localCard} anim-fade-up delay-2`}>
             <div className={styles.cardLabelRow}>
-              <p className={styles.localLabel}>
-                {localItem.link ? "Днес около теб" : "Нещо близо до теб"}
-              </p>
+              <span className={`${styles.typeChip} ${styles.typeChipPlace}`}>
+                📍 Място
+              </span>
               <button
                 className={`${styles.miniHeart} ${styles.miniHeartPlace}`}
                 onClick={() => {
@@ -547,26 +589,27 @@ export default function Home() {
                 />
               </button>
             </div>
-            <div className={styles.cardRow}>
-              <PlaceThumbnail
-                link={localItem.link}
-                staticImage={localItem.image}
-                alt={localItem.title}
-              />
-              <div className={styles.cardRowText}>
-                <p className={styles.localTitle}>{localItem.title}</p>
-                <p className={styles.localDesc}>{localItem.description}</p>
-                {localItem.link && (
-                  <a
-                    href={localItem.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.localLink}
-                  >
-                    Виж повече →
-                  </a>
-                )}
-              </div>
+            <p className={styles.localTitle}>{localItem.title}</p>
+            <p className={styles.localDesc}>{localItem.description}</p>
+            <div className={styles.cardLinkRow}>
+              {localItem.link && (
+                <a
+                  href={localItem.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.localLink}
+                >
+                  Виж повече →
+                </a>
+              )}
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(localItem.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.mapsBtn}
+              >
+                Маршрут 📍
+              </a>
             </div>
           </div>
         )}
