@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import { BottomNavWrapper } from "@/components/BottomNavWrapper";
 
@@ -21,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning>
         <div id="app-shell">
           {children}
-          <BottomNavWrapper />
+          <Suspense fallback={null}><BottomNavWrapper /></Suspense>
         </div>
       </body>
     </html>
