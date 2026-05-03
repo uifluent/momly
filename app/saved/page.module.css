@@ -169,8 +169,8 @@
   margin: 0;
 }
 
-/* ── Type chips ─────────────────────────────────────────────────────────────── */
-.typeChip {
+/* ── Card type chips (non-interactive label inside cards) ────────────────────── */
+.cardChip {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -185,6 +185,7 @@
 .typeChipIdea  { background: var(--primary-dim);     color: var(--primary-hover); }
 .typeChipEvent { background: var(--secondary-light); color: var(--secondary-dark); }
 .typeChipPlace { background: var(--place-light);     color: var(--place-dark); }
+.typeChipVenue { background: var(--venue-light);     color: var(--venue-dark); }
 
 /* ── LocalFavCard (matches Home event/place card style) ─────────────────────── */
 .localFavCard {
@@ -197,8 +198,9 @@
   flex-direction: column;
 }
 .localFavCardEvent { border-left: 4px solid var(--secondary); }
-.localFavCardPlace  { border-left: 4px solid var(--place); }
-.localFavCardIdea   { border-left: 4px solid var(--primary); }
+.localFavCardPlace { border-left: 4px solid var(--place); }
+.localFavCardVenue { border-left: 4px solid var(--venue); }
+.localFavCardIdea  { border-left: 4px solid var(--primary); }
 
 .localFavLabelRow {
   display: flex;
@@ -242,6 +244,7 @@
 .miniHeart:active { transform: scale(0.88); }
 .miniHeartEvent { color: var(--secondary-dark); }
 .miniHeartPlace { color: var(--place-dark); }
+.miniHeartVenue { color: var(--venue-dark); }
 
 /* ── Card ────────────────────────────────────────────────────────────────────── */
 .card {

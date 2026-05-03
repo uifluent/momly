@@ -25,6 +25,7 @@ export interface LocalPlace {
   coords?:     { lat: number; lng: number };  // GPS coordinates for real distance
   link?:       string;
   image?:      string;                        // path inside /public, e.g. "/images/muzeiko.jpg"
+  tags?:       string[];                      // explicit context tags, e.g. ["🧗 Приключение", "🌳 Навън"]
 }
 
 // Duration string → Duration type mapping

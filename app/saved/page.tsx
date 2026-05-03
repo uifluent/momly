@@ -59,7 +59,7 @@ function parseSafeDate(iso: string): Date | null {
 
 // ── Unified local-item lookup ─────────────────────────────────────────────────
 
-type LocalFavType = "event" | "place" | "idea";
+type LocalFavType = "event" | "place" | "venue" | "idea";
 interface LocalFavItem {
   id:          string;
   type:        LocalFavType;
@@ -78,7 +78,11 @@ function buildLocalFavItems(ids: string[]): LocalFavItem[] {
     if (locEv) { result.push({ id, type: "event", title: locEv.title, description: locEv.description, link: locEv.link }); continue; }
 
     const pl = LOCAL_PLACES.find((p) => p.id === id);
-    if (pl) { result.push({ id, type: "place", title: pl.title, description: pl.description, link: pl.link }); continue; }
+    if (pl) {
+      const type = pl.section === "venue" ? "venue" : "place";
+      result.push({ id, type, title: pl.title, description: pl.description, link: pl.link });
+      continue;
+    }
 
     const li = LOCAL_IDEAS.find((i) => i.id === id);
     if (li) { result.push({ id, type: "idea", title: li.title, description: li.description }); continue; }
@@ -89,13 +93,14 @@ function buildLocalFavItems(ids: string[]): LocalFavItem[] {
 const TYPE_LABEL: Record<LocalFavType, string> = {
   event: "Събитие",
   place: "Място",
+  venue: "Заведение",
   idea:  "Идея",
 };
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 type MainTab   = "favorites" | "completed";
-type TypeFilter = "all" | "ideas" | "events" | "places";
+type TypeFilter = "all" | "ideas" | "events" | "places" | "venues";
 
 export default function SavedPage() {
   const router         = useRouter();
@@ -111,6 +116,7 @@ export default function SavedPage() {
   const localFavItems      = buildLocalFavItems(localFavIds);
   const localEvents        = localFavItems.filter((i) => i.type === "event");
   const localPlaces        = localFavItems.filter((i) => i.type === "place");
+  const localVenues        = localFavItems.filter((i) => i.type === "venue");
 
   const completedActivities = allActivities.filter((a) => a.id in completedIds);
   const weeklyWins = completedActivities.filter((a) => {
@@ -128,12 +134,14 @@ export default function SavedPage() {
   const showActivities = typeFilter === "all" || typeFilter === "ideas";
   const showEvents     = typeFilter === "all" || typeFilter === "events";
   const showPlaces     = typeFilter === "all" || typeFilter === "places";
+  const showVenues     = typeFilter === "all" || typeFilter === "venues";
 
   const filteredActivities = showActivities ? savedActivities : [];
   const filteredEvents     = showEvents     ? localEvents     : [];
   const filteredPlaces     = showPlaces     ? localPlaces     : [];
+  const filteredVenues     = showVenues     ? localVenues     : [];
 
-  const totalFiltered = filteredActivities.length + filteredEvents.length + filteredPlaces.length;
+  const totalFiltered = filteredActivities.length + filteredEvents.length + filteredPlaces.length + filteredVenues.length;
   const totalFavs     = savedActivities.length + localFavItems.length;
 
   function handleRemoveLocal(id: string) {
@@ -172,13 +180,13 @@ export default function SavedPage() {
             {/* Type filter pills */}
             {totalFavs > 0 && (
               <div className={styles.typeFilter}>
-                {(["all", "ideas", "events", "places"] as TypeFilter[]).map((f) => (
+                {(["all", "ideas", "events", "places", "venues"] as TypeFilter[]).map((f) => (
                   <button
                     key={f}
                     className={[styles.typeChip, typeFilter === f ? styles.typeChipSel : ""].join(" ")}
                     onClick={() => setTypeFilter(f)}
                   >
-                    {{ all: "Всички", ideas: "Идеи", events: "Събития", places: "Места" }[f]}
+                    {{ all: "Всички", ideas: "Идеи", events: "Събития", places: "Места", venues: "Заведения" }[f]}
                   </button>
                 ))}
               </div>
@@ -188,10 +196,11 @@ export default function SavedPage() {
               <div className={styles.empty}>
                 <span className={styles.emptyIcon}>🤍</span>
                 <p className={styles.emptyTitle}>
-                  {typeFilter === "all"    ? "Нямаш запазени идеи"    :
-                   typeFilter === "ideas"  ? "Нямаш запазени идеи"    :
-                   typeFilter === "events" ? "Нямаш запазени събития" :
-                                            "Нямаш запазени места"}
+                  {typeFilter === "ideas"  ? "Нямаш запазени идеи"       :
+                   typeFilter === "events" ? "Нямаш запазени събития"   :
+                   typeFilter === "places" ? "Нямаш запазени места"     :
+                   typeFilter === "venues" ? "Нямаш запазени заведения" :
+                                            "Нямаш запазени идеи"}
                 </p>
                 <p className={styles.emptySub}>Запази идеи, за да ги намериш по-лесно</p>
                 <Btn onClick={() => router.push("/")}>Намери идея</Btn>
@@ -213,6 +222,13 @@ export default function SavedPage() {
                   />
                 ))}
                 {filteredPlaces.map((item) => (
+                  <LocalFavCard
+                    key={item.id}
+                    item={item}
+                    onRemove={() => handleRemoveLocal(item.id)}
+                  />
+                ))}
+                {filteredVenues.map((item) => (
                   <LocalFavCard
                     key={item.id}
                     item={item}
@@ -326,24 +342,30 @@ function LocalFavCard({ item, onRemove }: { item: LocalFavItem; onRemove: () => 
   const accentClass =
     item.type === "event" ? styles.localFavCardEvent :
     item.type === "place" ? styles.localFavCardPlace :
+    item.type === "venue" ? styles.localFavCardVenue :
     styles.localFavCardIdea;
 
   const chipClass =
     item.type === "event" ? styles.typeChipEvent :
     item.type === "place" ? styles.typeChipPlace :
+    item.type === "venue" ? styles.typeChipVenue :
     styles.typeChipIdea;
 
-  const emoji = item.type === "event" ? "🎭" : item.type === "place" ? "📍" : "💡";
+  const emoji =
+    item.type === "event" ? "🎭" :
+    item.type === "place" ? "📍" :
+    item.type === "venue" ? "🏠" : "💡";
 
   const heartClass =
     item.type === "event" ? styles.miniHeartEvent :
     item.type === "place" ? styles.miniHeartPlace :
+    item.type === "venue" ? styles.miniHeartVenue :
     "";
 
   return (
     <li className={`${styles.localFavCard} ${accentClass}`}>
       <div className={styles.localFavLabelRow}>
-        <span className={`${styles.typeChip} ${chipClass}`}>
+        <span className={`${styles.cardChip} ${chipClass}`}>
           {emoji} {TYPE_LABEL[item.type]}
         </span>
         <button

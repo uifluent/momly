@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Heart, Settings } from "lucide-react";
+import { Home, Compass, Heart, User } from "lucide-react";
 import styles from "./BottomNav.module.css";
 
 const TABS = [
-  { href: "/",         label: "Начало",    Icon: Home              },
-  { href: "/saved",    label: "Любими",    Icon: Heart             },
-  { href: "/settings", label: "Настройки", Icon: Settings          },
+  { href: "/",         label: "Начало",  Icon: Home    },
+  { href: "/explore",  label: "Открий",  Icon: Compass },
+  { href: "/saved",    label: "Любими",  Icon: Heart   },
+  { href: "/settings", label: "Профил",  Icon: User    },
 ];
 
 export function BottomNav() {

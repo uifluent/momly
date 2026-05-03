@@ -24,7 +24,7 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  min-width: 60px;
+  min-width: 48px;
   text-decoration: none;
   color: rgba(58, 46, 42, 0.35);
   transition: color 0.2s ease-out, transform 0.2s ease-out;

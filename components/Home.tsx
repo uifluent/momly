@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { PlaceThumbnail } from "./PlaceThumbnail";
 import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
 import { Btn } from "./UI";
@@ -17,21 +16,7 @@ import type {
   Filters,
   Need,
 } from "@/lib/types";
-import { getUpcomingEvents } from "@/lib/upcomingEvents";
-import {
-  getNearbyPlaces,
-  getVenues,
-  toggleSavedTrip,
-  getSavedTrips,
-} from "@/lib/localPlaces";
-import {
-  addToLocalHistory,
-  getFavoriteLocalItems,
-  toggleFavoriteLocalItem,
-} from "@/lib/sessionPrefs";
 import { useSurpriseIdea } from "@/hooks/useSurpriseIdea";
-import { useUserLocation } from "@/hooks/useUserLocation";
-import { haversineKm, formatDistanceBg } from "@/lib/haversine";
 import { IdeaDetailModal } from "./IdeaDetailModal";
 import styles from "./Home.module.css";
 
@@ -136,48 +121,8 @@ export default function Home() {
 
   const city = store.profile.city;
   const childAge = store.profile.childAgeMonths;
-  const children = store.profile.children;
-
-  const upcomingEvents = useMemo(() => {
-    // Compute current age in months for every child with a known birthdate
-    const now = new Date();
-    const allChildAges = (children ?? [])
-      .filter((c) => c.birthDate)
-      .map((c) => {
-        const dob = new Date(c.birthDate);
-        return (now.getFullYear() - dob.getFullYear()) * 12 +
-               (now.getMonth() - dob.getMonth());
-      });
-
-    const all = getUpcomingEvents(city, childAge ?? null, 7, allChildAges);
-    // shuffle and cap at 5
-    for (let i = all.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [all[i], all[j]] = [all[j], all[i]];
-    }
-    return all.slice(0, 5);
-  }, [city, childAge, children]);
-
-  const nearbyPlaces = useMemo(
-    () => getNearbyPlaces(city, childAge ?? null, filters, 5),
-    [city, childAge, filters], // eslint-disable-line react-hooks/exhaustive-deps
-  );
-
-  const venues = useMemo(
-    () => getVenues(city, childAge ?? null, filters, 5),
-    [city, childAge, filters], // eslint-disable-line react-hooks/exhaustive-deps
-  );
 
   const surprise = useSurpriseIdea(filters);
-  const userLocation = useUserLocation();
-
-  function distLabel(place: { coords?: { lat: number; lng: number }; travelTime: string }): string {
-    if (place.coords && userLocation) {
-      const km = haversineKm(userLocation.lat, userLocation.lng, place.coords.lat, place.coords.lng);
-      return formatDistanceBg(km);
-    }
-    return `на ${place.travelTime} от теб`;
-  }
 
   const [idea, setIdea] = useState<Activity | null>(null);
   const [backupIdeas, setBackupIdeas] = useState<Activity[]>([]);
@@ -190,25 +135,19 @@ export default function Home() {
   const [surpriseLoading, setSurpriseLoading] = useState(false);
   const [selectedIdea, setSelectedIdea] = useState<Activity | null>(null);
   const [toast, setToast] = useState<string | null>(null);
-  // Unified set of all locally-favorited IDs (events + places)
-  const [favLocalIds, setFavLocalIds] = useState<Set<string>>(
-    () => new Set(getFavoriteLocalItems()),
-  );
-  function toggleLocalFav(id: string) {
-    const saved = toggleFavoriteLocalItem(id);
-    setFavLocalIds((prev) => {
-      const s = new Set(prev);
-      saved ? s.add(id) : s.delete(id);
-      return s;
-    });
-    if (saved) showToast("Запазено 💛");
+
+  // Filter button tooltip & pulse
+  const [showTooltip,    setShowTooltip]    = useState(false);
+  const [filterBtnPulse, setFilterBtnPulse] = useState(false);
+
+  function dismissTooltip() {
+    setShowTooltip(false);
   }
 
   function showToast(msg: string) {
     setToast(msg);
     setTimeout(() => setToast(null), 1800);
   }
-
 
   // Auto-pick on mount — store is guaranteed hydrated by page.tsx
   useEffect(() => {
@@ -235,6 +174,34 @@ export default function Home() {
       s.addRecentId(first.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Pulse + tooltip — localStorage, shown if never opened filters OR new day
+  useEffect(() => {
+    const today      = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const opened     = localStorage.getItem("filtersOpened");
+    const lastVisit  = localStorage.getItem("lastVisitDate");
+    const shouldShow = opened !== "true" || lastVisit !== today;
+    if (!shouldShow) return;
+
+    // Pulse: 2 × 0.8s = 1.6s total
+    setFilterBtnPulse(true);
+    const pulseEnd = setTimeout(() => {
+      setFilterBtnPulse(false);
+      localStorage.setItem("lastVisitDate", today);
+    }, 1600);
+
+    // Tooltip fades in after animation completes
+    const tooltipShow = setTimeout(() => setShowTooltip(true), 1600);
+
+    // Auto-dismiss tooltip after 3s
+    const tooltipHide = setTimeout(() => setShowTooltip(false), 4600);
+
+    return () => {
+      clearTimeout(pulseEnd);
+      clearTimeout(tooltipShow);
+      clearTimeout(tooltipHide);
+    };
   }, []);
 
   function swapIdea(next: Activity) {
@@ -378,6 +345,7 @@ export default function Home() {
               headline.text
             )}
           </h1>
+          <p className={styles.modeSubtitle}>Как си днес?</p>
         </div>
 
         {/* ── Context pills ─────────────────────────────────────────────── */}
@@ -398,13 +366,27 @@ export default function Home() {
                 filters.ctx}
             </span>
           </div>
-          <button
-            className={styles.pillsFilterBtn}
-            onClick={() => setIsFilterModalOpen(true)}
-            aria-label="Отвори филтри"
-          >
-            <SlidersHorizontal size={15} strokeWidth={2} />
-          </button>
+          <div className={styles.filterBtnWrap}>
+            {showTooltip && (
+              <div className={styles.filterTooltip}>
+                Хайде да го нагласим за теб 👆
+              </div>
+            )}
+            <button
+              className={[
+                styles.pillsFilterBtn,
+                filterBtnPulse ? styles.pillsFilterBtnPulse : "",
+              ].join(" ")}
+              onClick={() => {
+                dismissTooltip();
+                localStorage.setItem("filtersOpened", "true");
+                setIsFilterModalOpen(true);
+              }}
+              aria-label="Отвори филтри"
+            >
+              <SlidersHorizontal size={15} strokeWidth={2} />
+            </button>
+          </div>
         </div>
 
         {/* ── Main card + backups with unified refresh transition ───────── */}
@@ -466,149 +448,6 @@ export default function Home() {
           <Dice6 size={18} strokeWidth={2} />
           {surpriseLoading ? "Търся нещо..." : "Изненадай ме"}
         </button>
-
-        {/* ── Events carousel ───────────────────────────────────────────── */}
-        {upcomingEvents.length > 0 && (
-          <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
-            <p className={styles.sectionTitle}>🎭 Събития за теб</p>
-            <p className={styles.sectionSubtitle}>
-              Подбрани активности за следващите дни
-            </p>
-          </div>
-        )}
-
-        {upcomingEvents.length > 0 && (
-          <div className={`${styles.eventsCarousel} anim-fade-up delay-2`}>
-            {upcomingEvents.map((ev) => (
-              <div key={ev.id} className={styles.eventCard}>
-                <div className={styles.cardLabelRow}>
-                  <span
-                    className={`${styles.typeChip} ${styles.typeChipEvent}`}
-                  >
-                    🎭 Събитие
-                  </span>
-                  <button
-                    className={`${styles.miniHeart} ${styles.miniHeartEvent}`}
-                    onClick={() => toggleLocalFav(ev.id)}
-                    aria-label={
-                      favLocalIds.has(ev.id) ? "Премахни от любими" : "Запази"
-                    }
-                  >
-                    <Heart
-                      size={15}
-                      strokeWidth={2}
-                      fill={favLocalIds.has(ev.id) ? "currentColor" : "none"}
-                    />
-                  </button>
-                </div>
-                <div className={styles.eventCardTop}>
-                  <PlaceThumbnail
-                    staticImage={ev.image}
-                    link={ev.link}
-                    alt={ev.title}
-                    fallbackEmoji="🎭"
-                  />
-                  <div className={styles.eventCardMeta}>
-                    <p className={styles.eventTitle}>{ev.title}</p>
-                    {ev.dateLabel && (
-                      <p className={styles.eventDate}>📅 {ev.dateLabel}</p>
-                    )}
-                  </div>
-                </div>
-                <p className={styles.eventDesc}>{ev.description}</p>
-                <a
-                  href={ev.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${styles.eventLink} ${styles.eventLinkEvent}`}
-                >
-                  Разгледай →
-                </a>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── Nearby places carousel ────────────────────────────────────── */}
-        {nearbyPlaces.length > 0 && (
-          <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
-            <p className={styles.sectionTitle}>📍 Места около теб</p>
-            <p className={styles.sectionSubtitle}>Подходящи за днес</p>
-          </div>
-        )}
-
-        {nearbyPlaces.length > 0 && (
-          <div className={`${styles.eventsCarousel} anim-fade-up delay-2`}>
-            {nearbyPlaces.map((place) => (
-              <div key={place.id} className={`${styles.eventCard} ${styles.placeCard}`}>
-                <div className={styles.cardLabelRow}>
-                  <span className={`${styles.typeChip} ${styles.typeChipPlace}`}>📍 Място</span>
-                  <button
-                    className={`${styles.miniHeart} ${styles.miniHeartPlace}`}
-                    onClick={() => toggleLocalFav(place.id)}
-                    aria-label={favLocalIds.has(place.id) ? "Премахни от любими" : "Запази"}
-                  >
-                    <Heart size={15} strokeWidth={2} fill={favLocalIds.has(place.id) ? "currentColor" : "none"} />
-                  </button>
-                </div>
-                <p className={styles.eventTitle}>{place.title}</p>
-                <p className={styles.eventDate}>🕐 {distLabel(place)}</p>
-                <p className={styles.eventDesc}>{place.description}</p>
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.title)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${styles.eventLink} ${styles.eventLinkPlace}`}
-                >
-                  Маршрут →
-                </a>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── Venues carousel ───────────────────────────────────────────── */}
-        {venues.length > 0 && (
-          <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
-            <p className={styles.sectionTitle}>🏠 Заведения</p>
-            <p className={styles.sectionSubtitle}>Закрити места за игра и занимания</p>
-          </div>
-        )}
-
-        {venues.length > 0 && (
-          <div className={`${styles.eventsCarousel} anim-fade-up delay-2`}>
-            {venues.map((place) => (
-              <div key={place.id} className={`${styles.eventCard} ${styles.venueCard}`}>
-                <div className={styles.cardLabelRow}>
-                  <span className={`${styles.typeChip} ${styles.typeChipVenue}`}>🏠 Заведение</span>
-                  <button
-                    className={`${styles.miniHeart} ${styles.miniHeartVenue}`}
-                    onClick={() => toggleLocalFav(place.id)}
-                    aria-label={favLocalIds.has(place.id) ? "Премахни от любими" : "Запази"}
-                  >
-                    <Heart size={15} strokeWidth={2} fill={favLocalIds.has(place.id) ? "currentColor" : "none"} />
-                  </button>
-                </div>
-                <p className={styles.eventTitle}>{place.title}</p>
-                <p className={styles.eventDesc}>{place.description}</p>
-                <div className={styles.eventFooter}>
-                  {place.link && (
-                    <a href={place.link} target="_blank" rel="noopener noreferrer" className={`${styles.eventLink} ${styles.eventLinkVenue}`}>
-                      Разгледай →
-                    </a>
-                  )}
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.title)}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className={`${styles.eventLink} ${styles.eventLinkVenue}`}
-                  >
-                    Маршрут →
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
 
         {todayDone.length > 0 && (
           <div className={`${styles.wins} anim-fade-up delay-2`}>
