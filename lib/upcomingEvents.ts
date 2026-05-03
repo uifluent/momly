@@ -1,4 +1,5 @@
 import type { EnergyLevel, Duration } from "./types";
+import rawEvents from "./upcomingEventsData.json";
 
 export interface UpcomingEvent {
   id:          string;
@@ -15,60 +16,11 @@ export interface UpcomingEvent {
   source?:     string;    // e.g. "Plays.bg"
   isClear?:    boolean;   // well-organised, easy to navigate
   easyAccess?: boolean;   // central location / easy parking
+  image?:      string;    // Unsplash or local /images/… URL
 }
 
-// ── Curated events — update manually as new events are confirmed ──────────────
-// Source: plays.bg/детски-спектакли/sofia
-// Rule: add only confirmed events; remove or update dates when shows change.
-
-export const UPCOMING_EVENTS: UpcomingEvent[] = [
-  {
-    id: "plays-detski-spektakl-1",
-    title: "Вълшебният свят на Шрек 🟢",
-    description: "Мюзикъл за деца и семейства по любимия анимационен филм.",
-    city: "София",
-    duration: "medium",
-    energy: ["medium"],
-    ageRange: { min: 4, max: 12 },
-    link: "https://www.plays.bg/детски-спектакли/sofia",
-    date: "2026-05-03",
-    endDate: "2026-05-04",
-    dateLabel: "3–4 май",
-    source: "Plays.bg",
-    isClear: true,
-    easyAccess: true,
-  },
-  {
-    id: "plays-detski-spektakl-2",
-    title: "Снежанка и седемте джуджета ❄️",
-    description: "Класическа приказка на живо — магия за малките.",
-    city: "София",
-    duration: "medium",
-    energy: ["low", "medium"],
-    ageRange: { min: 3, max: 8 },
-    link: "https://www.plays.bg/детски-спектакли/sofia",
-    date: "2026-05-02",
-    endDate: "2026-05-03",
-    dateLabel: "2–3 май",
-    source: "Plays.bg",
-    isClear: true,
-    easyAccess: true,
-  },
-  {
-    id: "plays-baby-spektakl",
-    title: "Бебешко представление 🎭",
-    description: "Интерактивно шоу за бебета и техните родители.",
-    city: "София",
-    duration: "short",
-    energy: ["low"],
-    ageRange: { min: 0, max: 3 },
-    link: "https://www.plays.bg/детски-спектакли/sofia",
-    date: "2026-05-04",
-    dateLabel: "4 май",
-    source: "Plays.bg",
-    isClear: true,
-  },
-];
+// Auto-updated weekly by GitHub Actions via scripts/fetch-plays.mjs --write
+export const UPCOMING_EVENTS: UpcomingEvent[] = rawEvents as UpcomingEvent[];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -121,19 +73,44 @@ function scoreUpcoming(
 export function getBestUpcomingEvent(
   city: string | undefined,
   childAgeMonths: number | null,
-  windowDays = 3,
+  windowDays = 7,
 ): (UpcomingEvent & { score: number }) | null {
-  if (!city) return null;
+  const all = getUpcomingEvents(city, childAgeMonths, windowDays);
+  return all[0] ?? null;
+}
 
-  const pool = UPCOMING_EVENTS.filter(
-    (e) => e.city === city && isUpcoming(e, windowDays),
-  );
+/** True if the event's age range covers at least one of the given child ages. */
+function fitsAnyChild(event: UpcomingEvent, childAgesMonths: number[]): boolean {
+  if (childAgesMonths.length === 0) return true;
+  const minM = event.ageRange.min * 12;
+  const maxM = event.ageRange.max * 12;
+  // Allow up to 6 months younger than the stated minimum (common edge rounding)
+  return childAgesMonths.some((age) => age >= minM - 6 && age <= maxM);
+}
 
-  if (pool.length === 0) return null;
+/** Returns ALL upcoming events for the city, sorted by score. */
+export function getUpcomingEvents(
+  city: string | undefined,
+  childAgeMonths: number | null,
+  windowDays = 7,
+  allChildAgesMonths: number[] = [],
+): (UpcomingEvent & { score: number })[] {
+  if (!city) return [];
 
-  const scored = pool
-    .map((e) => ({ ...e, score: scoreUpcoming(e, childAgeMonths) }))
+  const hasAgeFilter = allChildAgesMonths.length > 0;
+
+  const filtered = UPCOMING_EVENTS.filter((e) => {
+    if (e.city !== city || !isUpcoming(e, windowDays)) return false;
+    if (hasAgeFilter) return fitsAnyChild(e, allChildAgesMonths);
+    return true;
+  });
+
+  // If age filter leaves nothing, fall back to unfiltered
+  const pool = hasAgeFilter && filtered.length === 0
+    ? UPCOMING_EVENTS.filter((e) => e.city === city && isUpcoming(e, windowDays))
+    : filtered;
+
+  return pool
+    .map((e)  => ({ ...e, score: scoreUpcoming(e, childAgeMonths) }))
     .sort((a, b) => b.score - a.score);
-
-  return scored[0];
 }

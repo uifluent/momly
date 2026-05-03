@@ -18,11 +18,9 @@ import type {
   Need,
 } from "@/lib/types";
 import { getLocalIdea } from "@/lib/localIdeas";
-import { getBestUpcomingEvent } from "@/lib/upcomingEvents";
-import { getBestLocalEvent } from "@/lib/localEvents";
+import { getUpcomingEvents } from "@/lib/upcomingEvents";
 import {
-  getBestLocalPlace,
-  getBestNearbyPlace,
+  getNearbyPlaces,
   toggleSavedTrip,
   getSavedTrips,
 } from "@/lib/localPlaces";
@@ -32,6 +30,8 @@ import {
   toggleFavoriteLocalItem,
 } from "@/lib/sessionPrefs";
 import { useSurpriseIdea } from "@/hooks/useSurpriseIdea";
+import { useUserLocation } from "@/hooks/useUserLocation";
+import { haversineKm, formatDistanceBg } from "@/lib/haversine";
 import { IdeaDetailModal } from "./IdeaDetailModal";
 import styles from "./Home.module.css";
 
@@ -136,61 +136,48 @@ export default function Home() {
 
   const city = store.profile.city;
   const childAge = store.profile.childAgeMonths;
+  const children = store.profile.children;
 
-  const upcomingEvent = useMemo(
-    () => getBestUpcomingEvent(city, childAge ?? null),
-    [city, childAge],
+  const upcomingEvents = useMemo(() => {
+    // Compute current age in months for every child with a known birthdate
+    const now = new Date();
+    const allChildAges = (children ?? [])
+      .filter((c) => c.birthDate)
+      .map((c) => {
+        const dob = new Date(c.birthDate);
+        return (now.getFullYear() - dob.getFullYear()) * 12 +
+               (now.getMonth() - dob.getMonth());
+      });
+
+    const all = getUpcomingEvents(city, childAge ?? null, 7, allChildAges);
+    // shuffle and cap at 5
+    for (let i = all.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [all[i], all[j]] = [all[j], all[i]];
+    }
+    return all.slice(0, 5);
+  }, [city, childAge, children]);
+
+  const nearbyPlaces = useMemo(
+    () => getNearbyPlaces(city, childAge ?? null, filters, 3),
+    [city, childAge, filters], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  const nearbyPlace = useMemo(
-    () => getBestNearbyPlace(city, childAge ?? null),
-    [city, childAge],
-  );
-
-  // localItem is memoised so toggling a heart (or any unrelated state change)
-  // doesn't re-roll the random tie-breaking inside getBestLocalPlace.
-  const localItem = useMemo(() => {
-    const localEvent = getBestLocalEvent(filters, city);
-    const localPlace = getBestLocalPlace(filters, city, childAge ?? null);
-    const localIdea = getLocalIdea(filters, city);
-
-    const candidates = [
-      localEvent && {
-        id: localEvent.id,
-        title: localEvent.title,
-        description: localEvent.description,
-        link: (localEvent as { link?: string }).link,
-        image: (localEvent as { image?: string }).image,
-        score: localEvent.score,
-      },
-      localPlace && {
-        id: localPlace.id,
-        title: localPlace.title,
-        description: localPlace.description,
-        link: localPlace.link,
-        image: localPlace.image,
-        score: localPlace.score,
-      },
-      localIdea && {
-        id: localIdea.id,
-        title: localIdea.title,
-        description: localIdea.description,
-        link: undefined,
-        image: undefined,
-        score: localIdea.score,
-      },
-    ].filter(Boolean) as {
-      id: string;
-      title: string;
-      description: string;
-      link?: string;
-      image?: string;
-      score: number;
-    }[];
-
-    return candidates.sort((a, b) => b.score - a.score)[0] ?? null;
-  }, [filters.time, filters.energy, filters.ctx, city, childAge]); // eslint-disable-line react-hooks/exhaustive-deps
+  const weekendIdea = useMemo(() => {
+    const day = new Date().getDay();
+    if (day !== 0 && day !== 6) return null; // only Sat/Sun
+    return getLocalIdea(filters, city) ?? null;
+  }, [filters.time, filters.energy, filters.ctx, city]); // eslint-disable-line react-hooks/exhaustive-deps
   const surprise = useSurpriseIdea(filters);
+  const userLocation = useUserLocation();
+
+  function distLabel(place: { coords?: { lat: number; lng: number }; travelTime: string }): string {
+    if (place.coords && userLocation) {
+      const km = haversineKm(userLocation.lat, userLocation.lng, place.coords.lat, place.coords.lng);
+      return formatDistanceBg(km);
+    }
+    return `на ${place.travelTime} от теб`;
+  }
 
   const [idea, setIdea] = useState<Activity | null>(null);
   const [backupIdeas, setBackupIdeas] = useState<Activity[]>([]);
@@ -203,25 +190,25 @@ export default function Home() {
   const [surpriseLoading, setSurpriseLoading] = useState(false);
   const [selectedIdea, setSelectedIdea] = useState<Activity | null>(null);
   const [toast, setToast] = useState<string | null>(null);
-  const [tripSaved, setTripSaved] = useState(() =>
-    nearbyPlace ? getFavoriteLocalItems().includes(nearbyPlace.id) : false,
+  // Unified set of all locally-favorited IDs (events + places)
+  const [favLocalIds, setFavLocalIds] = useState<Set<string>>(
+    () => new Set(getFavoriteLocalItems()),
   );
-  const [localFav, setLocalFav] = useState(() =>
-    localItem ? getFavoriteLocalItems().includes(localItem.id) : false,
-  );
-  const [eventFav, setEventFav] = useState(() =>
-    upcomingEvent ? getFavoriteLocalItems().includes(upcomingEvent.id) : false,
-  );
+  function toggleLocalFav(id: string) {
+    const saved = toggleFavoriteLocalItem(id);
+    setFavLocalIds((prev) => {
+      const s = new Set(prev);
+      saved ? s.add(id) : s.delete(id);
+      return s;
+    });
+    if (saved) showToast("Запазено 💛");
+  }
 
   function showToast(msg: string) {
     setToast(msg);
     setTimeout(() => setToast(null), 1800);
   }
 
-  // Track which local item was shown for anti-repeat
-  useEffect(() => {
-    if (localItem) addToLocalHistory(localItem.id);
-  }, [localItem?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Auto-pick on mount — store is guaranteed hydrated by page.tsx
   useEffect(() => {
@@ -340,8 +327,16 @@ export default function Home() {
         setShownIds(newShown);
         const s = useMomlyStore.getState();
         const fresh = getBestIdeas(
-          allActivities, filters, s.profile, s.recentIds, s.userPreferences,
-          { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city },
+          allActivities,
+          filters,
+          s.profile,
+          s.recentIds,
+          s.userPreferences,
+          {
+            favorites: s.favorites,
+            completedIds: s.completedIds,
+            city: s.profile.city,
+          },
         ).filter((a) => !newShown.includes(a.id));
         setBackupIdeas(fresh.slice(0, 2));
       }
@@ -413,7 +408,12 @@ export default function Home() {
         </div>
 
         {/* ── Main card + backups with unified refresh transition ───────── */}
-        <div className={[styles.cardsSection, surpriseLoading ? styles.cardsSectionLoading : ""].join(" ")}>
+        <div
+          className={[
+            styles.cardsSection,
+            surpriseLoading ? styles.cardsSectionLoading : "",
+          ].join(" ")}
+        >
           {idea && (
             <ActivityCard
               key={idea.id}
@@ -441,9 +441,11 @@ export default function Home() {
                   onClick={() => setSelectedIdea(b)}
                 >
                   <span className={styles.backupTitle}>
-                  {b.emoji && <span style={{ marginRight: 6 }}>{b.emoji}</span>}
-                  {b.title}
-                </span>
+                    {b.emoji && (
+                      <span style={{ marginRight: 6 }}>{b.emoji}</span>
+                    )}
+                    {b.title}
+                  </span>
                   <span className={styles.backupArrow}>→</span>
                 </button>
               ))}
@@ -465,9 +467,8 @@ export default function Home() {
           {surpriseLoading ? "Търся нещо..." : "Изненадай ме"}
         </button>
 
-
-        {/* ── Events section ────────────────────────────────────────────── */}
-        {upcomingEvent && (
+        {/* ── Events carousel ───────────────────────────────────────────── */}
+        {upcomingEvents.length > 0 && (
           <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
             <p className={styles.sectionTitle}>🎭 Събития за теб</p>
             <p className={styles.sectionSubtitle}>
@@ -476,141 +477,123 @@ export default function Home() {
           </div>
         )}
 
-        {upcomingEvent && (
-          <div className={`${styles.eventCard} anim-fade-up delay-2`}>
-            <div className={styles.cardLabelRow}>
-              <span className={`${styles.typeChip} ${styles.typeChipEvent}`}>
-                🎭 Събитие
-              </span>
-              <button
-                className={`${styles.miniHeart} ${styles.miniHeartEvent}`}
-                onClick={() => {
-                  const saved = toggleFavoriteLocalItem(upcomingEvent.id);
-                  setEventFav(saved);
-                  if (saved) showToast("Запазено 💛");
-                }}
-                aria-label={eventFav ? "Премахни от любими" : "Запази"}
-              >
-                <Heart
-                  size={15}
-                  strokeWidth={2}
-                  fill={eventFav ? "currentColor" : "none"}
-                />
-              </button>
-            </div>
-            <div className={styles.cardRow}>
-              <PlaceThumbnail
-                link={upcomingEvent.link}
-                alt={upcomingEvent.title}
-                fallbackEmoji="🎭"
-              />
-              <div className={styles.cardRowText}>
-                <p className={styles.eventTitle}>{upcomingEvent.title}</p>
-                <p className={styles.eventDesc}>{upcomingEvent.description}</p>
-                {upcomingEvent.dateLabel && (
-                  <p className={styles.eventDate}>📅 {upcomingEvent.dateLabel}</p>
-                )}
+        {upcomingEvents.length > 0 && (
+          <div className={`${styles.eventsCarousel} anim-fade-up delay-2`}>
+            {upcomingEvents.map((ev) => (
+              <div key={ev.id} className={styles.eventCard}>
+                <div className={styles.cardLabelRow}>
+                  <span
+                    className={`${styles.typeChip} ${styles.typeChipEvent}`}
+                  >
+                    🎭 Събитие
+                  </span>
+                  <button
+                    className={`${styles.miniHeart} ${styles.miniHeartEvent}`}
+                    onClick={() => toggleLocalFav(ev.id)}
+                    aria-label={
+                      favLocalIds.has(ev.id) ? "Премахни от любими" : "Запази"
+                    }
+                  >
+                    <Heart
+                      size={15}
+                      strokeWidth={2}
+                      fill={favLocalIds.has(ev.id) ? "currentColor" : "none"}
+                    />
+                  </button>
+                </div>
+                <div className={styles.eventCardTop}>
+                  <PlaceThumbnail
+                    staticImage={ev.image}
+                    link={ev.link}
+                    alt={ev.title}
+                    fallbackEmoji="🎭"
+                  />
+                  <div className={styles.eventCardMeta}>
+                    <p className={styles.eventTitle}>{ev.title}</p>
+                    {ev.dateLabel && (
+                      <p className={styles.eventDate}>📅 {ev.dateLabel}</p>
+                    )}
+                  </div>
+                </div>
+                <p className={styles.eventDesc}>{ev.description}</p>
                 <a
-                  href={upcomingEvent.link}
+                  href={ev.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.eventLink}
                 >
-                  Виж повече →
+                  Разгледай →
                 </a>
               </div>
-            </div>
+            ))}
           </div>
         )}
 
-        {/* ── Nearby section ────────────────────────────────────────────── */}
-        {(nearbyPlace || localItem) && (
+        {/* ── Nearby places carousel ────────────────────────────────────── */}
+        {nearbyPlaces.length > 0 && (
           <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
-            <p className={styles.sectionTitle}>📍 Днес около теб</p>
-            <p className={styles.sectionSubtitle}>
-              Места, които можеш да посетиш сега
-            </p>
+            <p className={styles.sectionTitle}>📍 Места около теб</p>
+            <p className={styles.sectionSubtitle}>Подходящи за днес</p>
           </div>
         )}
 
-        {nearbyPlace && (
-          <div className={`${styles.weekendCard} anim-fade-up delay-2`}>
-            <p className={styles.weekendLabel}>🌤 Уикенд идея</p>
-            <span className={`${styles.typeChip} ${styles.typeChipPlace}`}>📍 Място</span>
-            <p className={styles.weekendTitle}>{nearbyPlace.title}</p>
-            <p className={styles.weekendDesc}>{nearbyPlace.description}</p>
-            <div className={styles.weekendFooter}>
-              <p className={styles.weekendDist}>
-                🕐 На {nearbyPlace.travelTime} от теб
-              </p>
-              <div className={styles.cardLinkRow}>
+        {nearbyPlaces.length > 0 && (
+          <div className={`${styles.eventsCarousel} anim-fade-up delay-2`}>
+            {nearbyPlaces.map((place) => (
+              <div key={place.id} className={`${styles.eventCard} ${styles.placeCard}`}>
+                <div className={styles.cardLabelRow}>
+                  <span className={`${styles.typeChip} ${styles.typeChipPlace}`}>📍 Място</span>
+                  <button
+                    className={`${styles.miniHeart} ${styles.miniHeartPlace}`}
+                    onClick={() => toggleLocalFav(place.id)}
+                    aria-label={favLocalIds.has(place.id) ? "Премахни от любими" : "Запази"}
+                  >
+                    <Heart size={15} strokeWidth={2} fill={favLocalIds.has(place.id) ? "currentColor" : "none"} />
+                  </button>
+                </div>
+                <div className={styles.eventCardTop}>
+                  <PlaceThumbnail staticImage={place.image} link={place.link} alt={place.title} fallbackEmoji="📍" />
+                  <div className={styles.eventCardMeta}>
+                    <p className={styles.eventTitle}>{place.title}</p>
+                    <p className={styles.eventDate}>🕐 {distLabel(place)}</p>
+                  </div>
+                </div>
+                <p className={styles.eventDesc}>{place.description}</p>
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(nearbyPlace.title)}`}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.title)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={styles.mapsBtn}
+                  className={`${styles.eventLink} ${styles.eventLinkPlace}`}
                 >
-                  Маршрут 📍
+                  Маршрут →
                 </a>
-                <button
-                  className={styles.weekendSaveBtn}
-                  onClick={() => {
-                    const saved = toggleSavedTrip(nearbyPlace.id);
-                    setTripSaved(saved);
-                  }}
-                >
-                  {tripSaved ? "✔ Запазено" : "💾 Запази"}
-                </button>
               </div>
-            </div>
+            ))}
           </div>
         )}
 
-        {/* ── Local idea / event ─────────────────────────────────────────── */}
-        {localItem && (
-          <div className={`${styles.localCard} anim-fade-up delay-2`}>
+        {/* ── Weekend idea (Sat/Sun only) ───────────────────────────────── */}
+        {weekendIdea && (
+          <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
+            <p className={styles.sectionTitle}>🌤 Уикенд идея</p>
+            <p className={styles.sectionSubtitle}>Нещо хубаво за днес</p>
+          </div>
+        )}
+
+        {weekendIdea && (
+          <div className={`${styles.weekendIdeaCard} anim-fade-up delay-2`}>
             <div className={styles.cardLabelRow}>
-              <span className={`${styles.typeChip} ${styles.typeChipPlace}`}>
-                📍 Място
-              </span>
+              <span className={`${styles.typeChip} ${styles.typeChipIdea}`}>💡 Идея</span>
               <button
-                className={`${styles.miniHeart} ${styles.miniHeartPlace}`}
-                onClick={() => {
-                  const saved = toggleFavoriteLocalItem(localItem.id);
-                  setLocalFav(saved);
-                  if (saved) showToast("Запазено 💛");
-                }}
-                aria-label={localFav ? "Премахни от любими" : "Запази"}
+                className={styles.miniHeart}
+                onClick={() => toggleLocalFav(weekendIdea.id)}
+                aria-label={favLocalIds.has(weekendIdea.id) ? "Премахни от любими" : "Запази"}
               >
-                <Heart
-                  size={15}
-                  strokeWidth={2}
-                  fill={localFav ? "currentColor" : "none"}
-                />
+                <Heart size={15} strokeWidth={2} fill={favLocalIds.has(weekendIdea.id) ? "currentColor" : "none"} />
               </button>
             </div>
-            <p className={styles.localTitle}>{localItem.title}</p>
-            <p className={styles.localDesc}>{localItem.description}</p>
-            <div className={styles.cardLinkRow}>
-              {localItem.link && (
-                <a
-                  href={localItem.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.localLink}
-                >
-                  Виж повече →
-                </a>
-              )}
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(localItem.title)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.mapsBtn}
-              >
-                Маршрут 📍
-              </a>
-            </div>
+            <p className={styles.weekendIdeaTitle}>{weekendIdea.title}</p>
+            <p className={styles.weekendIdeaDesc}>{weekendIdea.description}</p>
           </div>
         )}
 

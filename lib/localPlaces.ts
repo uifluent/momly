@@ -19,6 +19,7 @@ export interface LocalPlace {
   ageRange:    { min: number; max: number };  // years
   milestone:   PlaceMilestone;
   distance?:   number;                        // km from city centre
+  coords?:     { lat: number; lng: number };  // GPS coordinates for real distance
   link?:       string;
   image?:      string;                        // path inside /public, e.g. "/images/muzeiko.jpg"
 }
@@ -427,6 +428,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Просторно и красиво място за разходка",
     city: "София", type: "outdoor", withChild: true,
     energy: "low", duration: "40-90", distance: 15,
+    coords: { lat: 42.693, lng: 23.555 },
     ageRange: { min: 1, max: 10 }, milestone: "exploration",
   },
   {
@@ -435,6 +437,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Среща с коне и природа",
     city: "София", type: "group", withChild: true,
     energy: "medium", duration: "40-90", distance: 20,
+    coords: { lat: 42.565, lng: 23.285 },
     ageRange: { min: 3, max: 10 }, milestone: "exploration",
   },
   {
@@ -443,6 +446,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Лека разходка в природата",
     city: "София", type: "outdoor", withChild: true,
     energy: "low", duration: "40-90", distance: 20,
+    coords: { lat: 42.726, lng: 23.124 },
     ageRange: { min: 2, max: 10 }, milestone: "exploration",
   },
   {
@@ -451,6 +455,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Гора, въздух и спокойствие",
     city: "София", type: "outdoor", withChild: true,
     energy: "low", duration: "40-90", distance: 20,
+    coords: { lat: 42.607, lng: 23.280 },
     ageRange: { min: 2, max: 10 }, milestone: "exploration",
   },
   {
@@ -459,6 +464,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Интересно място с пространство за игра",
     city: "София", type: "group", withChild: true,
     energy: "medium", duration: "40-90", distance: 30,
+    coords: { lat: 42.722, lng: 23.660 },
     ageRange: { min: 3, max: 10 }, milestone: "play",
   },
   {
@@ -467,6 +473,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Близка среща с животни",
     city: "София", type: "outdoor", withChild: true,
     energy: "low", duration: "40-90", distance: 40,
+    coords: { lat: 42.516, lng: 23.126 },
     ageRange: { min: 2, max: 10 }, milestone: "sensory",
   },
   {
@@ -475,6 +482,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Красиво и подредено място за семейства",
     city: "София", type: "group", withChild: true,
     energy: "low", duration: "40-90", distance: 50,
+    coords: { lat: 42.723, lng: 23.845 },
     ageRange: { min: 2, max: 10 }, milestone: "exploration",
   },
   {
@@ -483,6 +491,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Малко приключение сред природата",
     city: "София", type: "outdoor", withChild: true,
     energy: "medium", duration: "40-90", distance: 50,
+    coords: { lat: 43.012, lng: 24.032 },
     ageRange: { min: 4, max: 12 }, milestone: "play",
   },
   {
@@ -491,6 +500,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Релакс за теб и игра за детето",
     city: "София", type: "calm", withChild: true,
     energy: "low", duration: "40-90", distance: 80,
+    coords: { lat: 42.290, lng: 23.269 },
     ageRange: { min: 2, max: 10 }, milestone: "sensory",
   },
   {
@@ -499,6 +509,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Цветно място с катерушки, люлки и безплатен закрит детски кът.",
     city: "София", type: "outdoor", withChild: true,
     energy: "medium", duration: "40-90", distance: 20,
+    coords: { lat: 42.543, lng: 23.179 },
     ageRange: { min: 2, max: 8 }, milestone: "play",
   },
   {
@@ -507,6 +518,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Въжени трасета и площадки за различни възрасти.",
     city: "София", type: "outdoor", withChild: true,
     energy: "high", duration: "40-90", distance: 50,
+    coords: { lat: 42.710, lng: 23.850 },
     ageRange: { min: 3, max: 10 }, milestone: "play",
   },
   {
@@ -515,6 +527,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Разходка сред приказни фигури за деца.",
     city: "София", type: "outdoor", withChild: true,
     energy: "low", duration: "20-40", distance: 100,
+    coords: { lat: 42.193, lng: 24.337 },
     ageRange: { min: 2, max: 6 }, milestone: "exploration",
   },
   {
@@ -523,6 +536,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Красив и поддържан парк за разходка и пикник.",
     city: "София", type: "outdoor", withChild: true,
     energy: "low", duration: "40-90", distance: 100,
+    coords: { lat: 42.193, lng: 24.337 },
     ageRange: { min: 2, max: 8 }, milestone: "exploration",
   },
   {
@@ -531,6 +545,7 @@ export const LOCAL_PLACES: LocalPlace[] = [
     description: "Пясъчник, игри и храна – идеално за топли дни.",
     city: "София", type: "outdoor", withChild: true,
     energy: "medium", duration: "40-90", distance: 140,
+    coords: { lat: 42.150, lng: 24.750 },
     ageRange: { min: 2, max: 8 }, milestone: "play",
   },
 
@@ -872,36 +887,26 @@ export interface NearbyPlace extends LocalPlace {
   weather:     WeatherCondition;
 }
 
-export function getBestNearbyPlace(
+/** Returns top N places sorted by full scorePlace logic (filters + age + weather + anti-repeat). */
+export function getNearbyPlaces(
   city: string | undefined,
   childAgeMonths: number | null,
-): NearbyPlace | null {
-  if (!city)        return null;
-  if (!isWeekend()) return null;
-
-  // Show at most once per calendar day (unless a saved trip exists)
-  const savedIds = getSavedTrips();
-  try {
-    const shownToday = localStorage.getItem(NEARBY_SHOWN_KEY) === new Date().toDateString();
-    if (shownToday && savedIds.length === 0) return null;
-  } catch { /* SSR */ }
-
-  const pool = LOCAL_PLACES.filter(
-    (p) => p.city === city && p.distance !== undefined,
-  ) as (LocalPlace & { distance: number })[];
-
-  if (pool.length === 0) return null;
+  filters: LocalFilters,
+  count = 3,
+): (Omit<LocalPlace, "distance"> & { distance?: number; score: number; travelTime: string; weather: WeatherCondition })[] {
+  if (!city) return [];
 
   const weather = getWeatherCondition();
 
-  const scored = pool
-    .map((p) => ({ ...p, score: scoreNearby(p, childAgeMonths, weather, savedIds) }))
-    .sort((a, b) => b.score - a.score);
-
-  const best = scored[0];
-  if (best.score < 2) return null;
-
-  try { localStorage.setItem(NEARBY_SHOWN_KEY, new Date().toDateString()); } catch {}
-
-  return { ...best, travelTime: estimateTravelTime(best.distance), weather };
+  return LOCAL_PLACES
+    .filter((p) => p.city === city)
+    .map((p) => ({ ...p, score: scorePlace(p, filters, city, childAgeMonths) }))
+    .filter((p) => p.score > -99)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, count)
+    .map((p) => ({
+      ...p,
+      travelTime: p.distance !== undefined ? estimateTravelTime(p.distance) : "пеша",
+      weather,
+    }));
 }

@@ -1,0 +1,36 @@
+name: Fetch weekly events
+
+on:
+  schedule:
+    - cron: "0 5 * * 0"   # every Sunday at 05:00 UTC (08:00 Sofia time)
+  workflow_dispatch:        # allow manual trigger from GitHub UI
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch events from sofia.plays.bg
+        run: node scripts/fetch-plays.mjs --write --days=10
+        timeout-minutes: 5
+
+      - name: Commit updated events
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add lib/upcomingEventsData.json
+          git diff --cached --quiet && echo "No changes" || \
+            git commit -m "chore: update events from sofia.plays.bg [skip ci]"
+          git push
