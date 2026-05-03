@@ -17,10 +17,10 @@ import type {
   Filters,
   Need,
 } from "@/lib/types";
-import { getLocalIdea } from "@/lib/localIdeas";
 import { getUpcomingEvents } from "@/lib/upcomingEvents";
 import {
   getNearbyPlaces,
+  getVenues,
   toggleSavedTrip,
   getSavedTrips,
 } from "@/lib/localPlaces";
@@ -159,15 +159,15 @@ export default function Home() {
   }, [city, childAge, children]);
 
   const nearbyPlaces = useMemo(
-    () => getNearbyPlaces(city, childAge ?? null, filters, 3),
+    () => getNearbyPlaces(city, childAge ?? null, filters, 5),
     [city, childAge, filters], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  const weekendIdea = useMemo(() => {
-    const day = new Date().getDay();
-    if (day !== 0 && day !== 6) return null; // only Sat/Sun
-    return getLocalIdea(filters, city) ?? null;
-  }, [filters.time, filters.energy, filters.ctx, city]); // eslint-disable-line react-hooks/exhaustive-deps
+  const venues = useMemo(
+    () => getVenues(city, childAge ?? null, filters, 5),
+    [city, childAge, filters], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
   const surprise = useSurpriseIdea(filters);
   const userLocation = useUserLocation();
 
@@ -520,7 +520,7 @@ export default function Home() {
                   href={ev.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={styles.eventLink}
+                  className={`${styles.eventLink} ${styles.eventLinkEvent}`}
                 >
                   Разгледай →
                 </a>
@@ -551,13 +551,8 @@ export default function Home() {
                     <Heart size={15} strokeWidth={2} fill={favLocalIds.has(place.id) ? "currentColor" : "none"} />
                   </button>
                 </div>
-                <div className={styles.eventCardTop}>
-                  <PlaceThumbnail staticImage={place.image} link={place.link} alt={place.title} fallbackEmoji="📍" />
-                  <div className={styles.eventCardMeta}>
-                    <p className={styles.eventTitle}>{place.title}</p>
-                    <p className={styles.eventDate}>🕐 {distLabel(place)}</p>
-                  </div>
-                </div>
+                <p className={styles.eventTitle}>{place.title}</p>
+                <p className={styles.eventDate}>🕐 {distLabel(place)}</p>
                 <p className={styles.eventDesc}>{place.description}</p>
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.title)}`}
@@ -572,28 +567,46 @@ export default function Home() {
           </div>
         )}
 
-        {/* ── Weekend idea (Sat/Sun only) ───────────────────────────────── */}
-        {weekendIdea && (
+        {/* ── Venues carousel ───────────────────────────────────────────── */}
+        {venues.length > 0 && (
           <div className={`${styles.sectionHeader} anim-fade-up delay-2`}>
-            <p className={styles.sectionTitle}>🌤 Уикенд идея</p>
-            <p className={styles.sectionSubtitle}>Нещо хубаво за днес</p>
+            <p className={styles.sectionTitle}>🏠 Заведения</p>
+            <p className={styles.sectionSubtitle}>Закрити места за игра и занимания</p>
           </div>
         )}
 
-        {weekendIdea && (
-          <div className={`${styles.weekendIdeaCard} anim-fade-up delay-2`}>
-            <div className={styles.cardLabelRow}>
-              <span className={`${styles.typeChip} ${styles.typeChipIdea}`}>💡 Идея</span>
-              <button
-                className={styles.miniHeart}
-                onClick={() => toggleLocalFav(weekendIdea.id)}
-                aria-label={favLocalIds.has(weekendIdea.id) ? "Премахни от любими" : "Запази"}
-              >
-                <Heart size={15} strokeWidth={2} fill={favLocalIds.has(weekendIdea.id) ? "currentColor" : "none"} />
-              </button>
-            </div>
-            <p className={styles.weekendIdeaTitle}>{weekendIdea.title}</p>
-            <p className={styles.weekendIdeaDesc}>{weekendIdea.description}</p>
+        {venues.length > 0 && (
+          <div className={`${styles.eventsCarousel} anim-fade-up delay-2`}>
+            {venues.map((place) => (
+              <div key={place.id} className={`${styles.eventCard} ${styles.venueCard}`}>
+                <div className={styles.cardLabelRow}>
+                  <span className={`${styles.typeChip} ${styles.typeChipVenue}`}>🏠 Заведение</span>
+                  <button
+                    className={`${styles.miniHeart} ${styles.miniHeartVenue}`}
+                    onClick={() => toggleLocalFav(place.id)}
+                    aria-label={favLocalIds.has(place.id) ? "Премахни от любими" : "Запази"}
+                  >
+                    <Heart size={15} strokeWidth={2} fill={favLocalIds.has(place.id) ? "currentColor" : "none"} />
+                  </button>
+                </div>
+                <p className={styles.eventTitle}>{place.title}</p>
+                <p className={styles.eventDesc}>{place.description}</p>
+                <div className={styles.eventFooter}>
+                  {place.link && (
+                    <a href={place.link} target="_blank" rel="noopener noreferrer" className={`${styles.eventLink} ${styles.eventLinkVenue}`}>
+                      Разгледай →
+                    </a>
+                  )}
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.title)}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className={`${styles.eventLink} ${styles.eventLinkVenue}`}
+                  >
+                    Маршрут →
+                  </a>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
