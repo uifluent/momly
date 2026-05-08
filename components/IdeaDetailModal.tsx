@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Heart, X } from "lucide-react";
 import type { Activity } from "@/lib/types";
 import styles from "./IdeaDetailModal.module.css";
@@ -25,6 +26,15 @@ const ENERGY_LABEL: Record<string, string> = {
 };
 
 export function IdeaDetailModal({ idea, isFavorite, onClose, onConfirm, onToggleFavorite }: Props) {
+  const [hearted, setHearted] = useState(false);
+
+  function handleHeart() {
+    onToggleFavorite();
+    setHearted(false);
+    requestAnimationFrame(() => setHearted(true));
+    setTimeout(() => setHearted(false), 650);
+  }
+
   return (
     <div className={styles.backdrop} onClick={onClose}>
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
@@ -87,8 +97,8 @@ export function IdeaDetailModal({ idea, isFavorite, onClose, onConfirm, onToggle
         {/* CTAs */}
         <div className={styles.ctaRow}>
           <button
-            className={styles.favoriteBtn}
-            onClick={onToggleFavorite}
+            className={[styles.favoriteBtn, hearted ? "heart-popped" : ""].join(" ")}
+            onClick={handleHeart}
             aria-label={isFavorite ? "Премахни от любими" : "Запази"}
           >
             <Heart size={18} strokeWidth={2} fill={isFavorite ? "currentColor" : "none"} />

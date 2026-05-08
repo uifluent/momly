@@ -1241,8 +1241,7 @@
       "Хапнете заедно в ресторанта"
     ],
     "duration": [
-      "short",
-      "medium"
+      "long"
     ],
     "energy": [
       "low",
@@ -1271,83 +1270,6 @@
     "city": "София"
   },
   {
-    "id": "pulse_kids",
-    "title": "Pulse Kids",
-    "emoji": "🏃",
-    "description": "Активна игра и движение за изразходване на енергия.",
-    "feelsLike": "активно и забавно",
-    "steps": [
-      "Купете билети на касата или онлайн",
-      "Оставете детето да избира активности свободно",
-      "Следвайте го и се забавлявайте заедно"
-    ],
-    "duration": [
-      "short",
-      "medium"
-    ],
-    "energy": [
-      "high"
-    ],
-    "withChild": true,
-    "ageRange": [
-      24,
-      72
-    ],
-    "category": [
-      "movement",
-      "social"
-    ],
-    "effort": "low",
-    "interruptibility": "medium",
-    "mentalLoad": "light",
-    "repeatable": true,
-    "tags": [
-      "active",
-      "energy"
-    ],
-    "isFallback": false,
-    "reason": "Ще изразходи енергията му 😄",
-    "city": "София"
-  },
-  {
-    "id": "kids_library",
-    "title": "Детска библиотека",
-    "emoji": "📚",
-    "description": "Спокойно време с книги и игри.",
-    "feelsLike": "тихо и спокойно",
-    "steps": [
-      "Влезте в детския отдел на библиотеката",
-      "Изберете 2-3 книги заедно с детето",
-      "Намерете тихо кътче и четете заедно"
-    ],
-    "duration": [
-      "short"
-    ],
-    "energy": [
-      "low"
-    ],
-    "withChild": true,
-    "ageRange": [
-      24,
-      72
-    ],
-    "category": [
-      "calm",
-      "explore"
-    ],
-    "effort": "zero",
-    "interruptibility": "high",
-    "mentalLoad": "light",
-    "repeatable": true,
-    "tags": [
-      "calm",
-      "learning"
-    ],
-    "isFallback": true,
-    "reason": "Спокойно и приятно време заедно",
-    "city": "София"
-  },
-  {
     "id": "bowling",
     "title": "Боулинг",
     "emoji": "🎳",
@@ -1359,8 +1281,7 @@
       "Забавлявайте се без притеснение за резултата"
     ],
     "duration": [
-      "short",
-      "medium"
+      "long"
     ],
     "energy": [
       "medium"
@@ -1386,44 +1307,6 @@
     "city": "София"
   },
   {
-    "id": "yunak_adventure",
-    "title": "Приключенски парк Юнак",
-    "emoji": "🌲",
-    "description": "Катерене и въжени трасета сред природата.",
-    "feelsLike": "приключение навън",
-    "steps": [
-      "Облечете удобни дрехи и обувки",
-      "Изберете трасе по силата на детето",
-      "Вървете заедно и се подкрепяйте по пътя"
-    ],
-    "duration": [
-      "medium"
-    ],
-    "energy": [
-      "high"
-    ],
-    "withChild": true,
-    "ageRange": [
-      48,
-      120
-    ],
-    "category": [
-      "movement",
-      "explore",
-      "reset"
-    ],
-    "effort": "low",
-    "interruptibility": "low",
-    "mentalLoad": "light",
-    "tags": [
-      "outdoor",
-      "adventure"
-    ],
-    "isFallback": false,
-    "reason": "Малко приключение и движение навън",
-    "city": "София"
-  },
-  {
     "id": "pump_track_elin_pelin",
     "title": "Pump track Елин Пелин",
     "emoji": "🚲",
@@ -1435,8 +1318,7 @@
       "Снимайте и се радвайте заедно"
     ],
     "duration": [
-      "short",
-      "medium"
+      "long"
     ],
     "energy": [
       "high"
@@ -1463,42 +1345,6 @@
     "city": "Елин Пелин"
   },
   {
-    "id": "kids_event_generic",
-    "title": "Детско събитие",
-    "emoji": "🎉",
-    "description": "Актуално събитие за деца този уикенд.",
-    "feelsLike": "нещо ново и различно",
-    "steps": [
-      "Намерете актуално събитие в града",
-      "Изберете подходящо за възрастта на детето",
-      "Отидете заедно и се насладете"
-    ],
-    "duration": [
-      "short"
-    ],
-    "energy": [
-      "medium"
-    ],
-    "withChild": true,
-    "ageRange": [
-      24,
-      120
-    ],
-    "category": [
-      "social",
-      "explore"
-    ],
-    "effort": "low",
-    "interruptibility": "high",
-    "mentalLoad": "light",
-    "tags": [
-      "event",
-      "weekend"
-    ],
-    "reason": "Нещо ново и различно",
-    "city": "София"
-  },
-  {
     "id": "hologram_zoo",
     "title": "Hologram Zoo",
     "emoji": "🦁",
@@ -1510,8 +1356,7 @@
       "Оставете детето да изследва свободно"
     ],
     "duration": [
-      "short",
-      "medium"
+      "long"
     ],
     "energy": [
       "medium"
@@ -1539,15 +1384,54 @@
     "city": "София"
   },
   {
-    "id": "kids_railway_sofia",
-    "title": "Детска железница (Борисова градина)",
-    "emoji": "🚂",
-    "description": "Малко влакче в парка – спокойно и вълнуващо за децата.",
-    "feelsLike": "спокойно и вълшебно",
+    "id": "38",
+    "title": "Закуска за вечеря",
+    "emoji": "🍳",
+    "description": "Яйца, тост и сок за вечеря — бързо, вкусно, без стрес",
+    "feelsLike": "вкусна импровизация",
     "steps": [
-      "Отидете в Борисовата градина",
-      "Намерете детската железница",
-      "Качете се и се насладете на разходката"
+      "Реши какво ще е вечерята — яйца, тост, палачинки",
+      "Нека детето помага — дай му нещо лесно",
+      "Яжте заедно без бързане"
+    ],
+    "duration": [
+      "short"
+    ],
+    "energy": [
+      "low",
+      "medium"
+    ],
+    "withChild": true,
+    "ageRange": [
+      18,
+      96
+    ],
+    "category": [
+      "real-life"
+    ],
+    "effort": "zero",
+    "interruptibility": "medium",
+    "mentalLoad": "light",
+    "energyVariants": {
+      "low": {
+        "withChild": "Яйца за вечеря. Детето ще се радва — ти почти нищо не правиш."
+      },
+      "medium": {
+        "withChild": "Бърза и вкусна вечеря заедно. Без план, без стрес."
+      }
+    },
+    "reason": "Бързо, вкусно и децата го обожават"
+  },
+  {
+    "id": "39",
+    "title": "Вечеря по пижами",
+    "emoji": "🌙",
+    "description": "Облечете пижамите преди вечеря — уютен ритуал за края на деня",
+    "feelsLike": "мек и уютен ритуал",
+    "steps": [
+      "Облечете пижамите преди вечеря",
+      "Хапнете заедно без бързане",
+      "Останете уютни за вечерта"
     ],
     "duration": [
       "short"
@@ -1557,24 +1441,20 @@
     ],
     "withChild": true,
     "ageRange": [
-      18,
-      72
+      12,
+      96
     ],
     "category": [
-      "explore",
       "calm"
     ],
-    "effort": "low",
-    "interruptibility": "medium",
+    "effort": "zero",
+    "interruptibility": "high",
     "mentalLoad": "light",
-    "repeatable": true,
-    "tags": [
-      "outdoor",
-      "experience",
-      "easy"
-    ],
-    "isFallback": false,
-    "reason": "Леко и приятно излизане с нещо различно",
-    "city": "София"
+    "energyVariants": {
+      "low": {
+        "withChild": "Пижами, вечеря, тишина. Нищо повече не е нужно."
+      }
+    },
+    "reason": "Малък ритуал, голямо усещане за уют"
   }
 ]

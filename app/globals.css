@@ -100,3 +100,14 @@ body {
 .delay-2 { animation-delay: 0.12s; }
 .delay-3 { animation-delay: 0.20s; }
 .delay-4 { animation-delay: 0.28s; }
+
+@keyframes heartPopGlobal {
+  0%   { transform: scale(1);    }
+  35%  { transform: scale(1.26); }
+  62%  { transform: scale(0.93); }
+  82%  { transform: scale(1.07); }
+  100% { transform: scale(1);    }
+}
+.heart-popped {
+  animation: heartPopGlobal 0.62s cubic-bezier(0.22, 0.61, 0.36, 1) both !important;
+}

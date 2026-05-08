@@ -31,8 +31,7 @@ export default function LoginPage() {
     localStorage.setItem("userName", trimmed);
     setDisplayName(trimmed);
     const { profile } = useMomlyStore.getState();
-    const hasChildren = (profile.children ?? []).length > 0;
-    router.push(hasChildren ? "/" : "/onboarding");
+    router.push(profile.onboardingComplete ? "/" : "/onboarding");
   }
 
   return (

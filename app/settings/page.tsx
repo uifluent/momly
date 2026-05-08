@@ -19,6 +19,7 @@ export default function SettingsPage() {
   }
 
   function handleReset() {
+    store.resetStore();
     localStorage.clear();
     router.replace("/login");
   }

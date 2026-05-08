@@ -1,24 +1,98 @@
 @keyframes cardEnter {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
 
+@keyframes itemFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes heartPop {
+  0%   { transform: scale(1);    }
+  35%  { transform: scale(1.26); }
+  62%  { transform: scale(0.93); }
+  82%  { transform: scale(1.07); }
+  100% { transform: scale(1);    }
+}
+
+@keyframes cardBreathe {
+  0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 6px 24px rgba(var(--cat-rgb), 0.10); }
+  50%       { box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 10px 36px rgba(var(--cat-rgb), 0.18); }
+}
+
+@keyframes glowDrift {
+  0%, 100% { transform: translate(0, 0) scale(1);         opacity: 0.80; }
+  38%       { transform: translate(-14px, 10px) scale(1.06); opacity: 1;    }
+  72%       { transform: translate(7px, -7px) scale(0.95);  opacity: 0.72; }
+}
+
 .card {
-  background: var(--surface);
+  background:
+    radial-gradient(
+      ellipse 160% 110% at 96% 2%,
+      rgba(var(--cat-rgb), 0.14) 0%,
+      transparent 54%
+    ),
+    linear-gradient(
+      176deg,
+      rgba(var(--cat-rgb), 0.06) 0%,
+      transparent 36%
+    ),
+    var(--surface);
   border-radius: var(--radius-md);
   padding: 24px 24px 24px 20px;
-  border-left: 4px solid var(--primary);
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.09);
+  border-left: 2px solid rgba(var(--cat-rgb), 0.35);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 6px 24px rgba(var(--cat-rgb), 0.10);
   position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  animation: cardEnter 0.22s ease-out both;
+  animation: cardEnter 0.28s ease-out both, cardBreathe 11s ease-in-out 0.8s infinite;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
+
+/* ── Floating ambient glow (behind content) ─────────────────────────────── */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -55px;
+  right: -55px;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(var(--cat-rgb), 0.20) 0%,
+    transparent 65%
+  );
+  filter: blur(38px);
+  animation: glowDrift 14s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+
+/* ── Energy-state modifiers ─────────────────────────────────────────────── */
+.energyLow::before  { animation-duration: 18s; opacity: 0.85; }
+.energyHigh::before { animation-duration: 10s; }
 .cardExiting {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-10px) scale(0.98);
   pointer-events: none;
+}
+
+/* ── Staggered entry ────────────────────────────────────────────────────── */
+.animItem { animation: itemFadeIn 0.30s ease-out both; }
+.d0  { animation-delay: 0ms;   }
+.d1  { animation-delay: 65ms;  }
+.d2  { animation-delay: 115ms; }
+.d3  { animation-delay: 158ms; }
+.d4  { animation-delay: 200ms; }
+
+/* ── Heart spring ───────────────────────────────────────────────────────── */
+.heartPopped {
+  animation: heartPop 0.62s cubic-bezier(0.22, 0.61, 0.36, 1) both !important;
 }
 .cardCompleted {
   opacity: 0.72;
@@ -26,10 +100,10 @@
 
 .heartBtn {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   background: rgba(0, 0, 0, 0.04);
@@ -38,6 +112,7 @@
   justify-content: center;
   color: var(--primary);
   cursor: pointer;
+  z-index: 2;
   transition: background 0.15s, transform 0.15s;
 }
 .heartBtn:hover  { background: var(--primary-dim); }
@@ -90,7 +165,18 @@
   font-weight: 400;
   color: var(--text-3);
   line-height: 1.6;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+.reasonNote {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-2, #7a6e6a);
+  line-height: 1.55;
+  margin-bottom: 14px;
+  opacity: 0.85;
 }
 
 /* ── "Как да започна" collapsible ────────────────────────────────────────────── */
@@ -192,17 +278,46 @@
   font-family: 'Comfortaa', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: var(--primary);
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 13px 32px;
+  text-align: center;
+  align-self: center;
+  margin-top: 4px;
+  box-shadow: 0 4px 16px rgba(217, 115, 101, 0.30);
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.22s ease,
+    opacity 0.15s ease;
+}
+.doBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 22px rgba(217, 115, 101, 0.42);
+  opacity: 0.92;
+}
+.doBtn:active {
+  transform: scale(0.96) translateY(0);
+  box-shadow: 0 3px 10px rgba(217, 115, 101, 0.22);
+  opacity: 0.78;
+}
+
+.skipBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px 0 0;
+  padding: 10px 0 2px;
   text-align: center;
   width: 100%;
-  transition: opacity 0.15s;
+  transition: color 0.15s;
 }
-.doBtn:hover  { opacity: 0.75; }
-.doBtn:active { opacity: 0.55; }
+.skipBtn:hover { color: var(--text); }
 
 
 /* ── Done badge ──────────────────────────────────────────────────────────────── */

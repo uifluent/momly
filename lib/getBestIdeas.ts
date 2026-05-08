@@ -132,7 +132,16 @@ function scoreIdea(
   if (a.category.every((cat) => !recentCats.has(cat)))          score += 2;
 
   // ── Effort-energy alignment ──────────────────────────────────────────────────
-  if (filters.energy === "low" && a.effort === "zero")          score += 2;
+  if (filters.energy === "low"  && a.effort === "zero")         score += 3;
+  if (filters.energy === "low"  && a.effort === "low")          score -= 1;
+  if (filters.energy === "low"  && a.effort === "medium")       score -= 4;
+  if (filters.energy === "high" && a.effort === "medium")       score += 2;
+
+  // ── Outdoor/physical penalty for low energy ───────────────────────────────────
+  if (filters.energy === "low") {
+    if (a.category.some(c => ["movement", "explore"].includes(c)) && a.effort !== "zero") score -= 2;
+    if (a.tags?.some(t => ["outdoor", "active", "adventure"].includes(t))) score -= 1;
+  }
 
   // ── Repeatable bonus ─────────────────────────────────────────────────────────
   if (a.repeatable && filters.energy === "low")                 score += 2;
@@ -224,39 +233,48 @@ export function getBestIdeas(
       .map(([id]) => id),
   );
 
-  // ── Hard filters ─────────────────────────────────────────────────────────────
-  let pool = allIdeas.filter((a) => {
-    // Never show activities completed today
-    if (completedToday.has(a.id)) return false;
-    // City-specific activities only show for matching city
-    if (a.city && context.city && a.city !== context.city) return false;
-    if (!a.duration.includes(filters.time)) return false;
-    if (
-      filters.energy === "low" &&
-      a.energy.includes("high") &&
-      !a.energy.includes("low") &&
-      !a.energy.includes("medium")
-    ) return false;
-    if (withChild && !a.withChild) return false;
-    if (!withChild && a.withChild) return false;
-    if (withChild && a.ageRange && profile.childAgeMonths != null) {
+  // ── Hard filters — Level 1 (strict) ─────────────────────────────────────────
+  const baseFilter = (a: Activity, relaxEnergy = false, relaxDuration = false, relaxAge = false) => {
+    if (completedToday.has(a.id))                            return false;
+    if (a.city && context.city && a.city !== context.city)   return false;
+    if (withChild  && !a.withChild)                          return false;
+    if (!withChild && a.withChild)                           return false;
+    if (!relaxDuration && !a.duration.includes(filters.time)) return false;
+    if (!relaxEnergy && !a.energy.includes(filters.energy))  return false;
+    if (!relaxAge && withChild && a.ageRange && profile.childAgeMonths != null) {
       const age = profile.childAgeMonths;
-      if (age < a.ageRange[0] || age > a.ageRange[1]) return false;
+      if (age < a.ageRange[0] || age > a.ageRange[1])       return false;
     }
     return true;
-  });
+  };
 
-  // First fallback: relax duration and child-age filter, keep city + ctx
-  if (pool.length === 0) {
-    pool = allIdeas.filter((a) => {
-      if (a.city && context.city && a.city !== context.city) return false;
-      if (withChild && !a.withChild) return false;
-      if (!withChild && a.withChild) return false;
-      return a.duration.includes(filters.time);
-    });
+  let pool = allIdeas.filter((a) => baseFilter(a));
+
+  // Level 2: relax age range
+  if (pool.length < 3) {
+    const l2 = allIdeas.filter((a) => baseFilter(a, false, false, true));
+    if (l2.length > pool.length) pool = l2;
   }
 
-  // Second fallback: isFallback items always available regardless of all filters
+  // Level 3: relax energy to adjacent levels
+  if (pool.length < 3) {
+    const adjacent = allIdeas.filter((a) => {
+      if (!baseFilter(a, true, false, true)) return false;
+      if (filters.energy === "low"    && a.energy.some(e => ["low","medium"].includes(e)))    return true;
+      if (filters.energy === "medium" && a.energy.some(e => ["low","medium","high"].includes(e))) return true;
+      if (filters.energy === "high"   && a.energy.some(e => ["medium","high"].includes(e)))   return true;
+      return false;
+    });
+    if (adjacent.length > pool.length) pool = adjacent;
+  }
+
+  // Level 4: relax duration too
+  if (pool.length < 3) {
+    const l4 = allIdeas.filter((a) => baseFilter(a, true, true, true));
+    if (l4.length > pool.length) pool = l4;
+  }
+
+  // Level 5: isFallback items as last resort
   if (pool.length === 0) {
     pool = allIdeas.filter((a) => a.isFallback === true);
   }
@@ -280,6 +298,5 @@ export function getBestIdeas(
   const fillCount = forcedFav ? 2 : 3;
   const top = scored.slice(0, fillCount).map(({ idea }) => idea);
 
-  const result = forcedFav ? [forcedFav, ...top] : top;
-  return shuffle(result);
+  return forcedFav ? [forcedFav, ...top] : top;
 }

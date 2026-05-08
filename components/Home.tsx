@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMomlyStore } from "@/lib/store";
 import { Btn } from "./UI";
 import Image from "next/image";
-import { X, Heart, Dice6, SlidersHorizontal } from "lucide-react";
+import { X, Heart, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { ActivityCard } from "./ActivityCard";
 import { getBestIdeas } from "@/lib/getBestIdeas";
 import activitiesData from "@/data/activities.json";
@@ -17,7 +17,6 @@ import type {
   Need,
 } from "@/lib/types";
 import { useSurpriseIdea } from "@/hooks/useSurpriseIdea";
-import { IdeaDetailModal } from "./IdeaDetailModal";
 import styles from "./Home.module.css";
 
 const allActivities = activitiesData as Activity[];
@@ -32,12 +31,6 @@ const COMPLETION_MSGS = [
   "✨ Важно е, че го направи",
 ];
 
-const HEADLINES: { text: string; highlight: string }[] = [
-  { text: "Днес не е нужно да мислиш 👇", highlight: "мислиш" },
-  { text: "Имаш малко време? Ето идея 👇", highlight: "идея" },
-  { text: "Нещо малко, което може да ти дойде добре 🤍", highlight: "добре" },
-  { text: "За теб, точно сега 👇", highlight: "теб" },
-];
 
 const TIME_OPTS: { value: Duration; label: string }[] = [
   { value: "short", label: "20 – 40мин" },
@@ -66,8 +59,41 @@ const NEED_OPTS: { value: Need; icon: string; label: string }[] = [
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function dailyHeadline(): { text: string; highlight: string } {
-  return HEADLINES[new Date().getDate() % HEADLINES.length];
+function getContextualGreeting(name: string): { greeting: string; subtitle: string } {
+  const now = new Date();
+  const hour = now.getHours();
+  const day = now.getDay();
+  const isWeekend = day === 0 || day === 6;
+
+  if (isWeekend) {
+    const dayName = day === 6 ? "Събота" : "Неделя";
+    return name
+      ? { greeting: `${dayName} е, ${name} 💛`, subtitle: "Без план, без натиск. Просто едно предложение." }
+      : { greeting: `${dayName} 💛`, subtitle: "Ако имаш 20 минути — имаме идея." };
+  }
+  if (hour >= 6 && hour < 11) {
+    return name
+      ? { greeting: `Добро утро, ${name} 💛`, subtitle: "Деня още не е започнал. Имаме нещо за теб." }
+      : { greeting: "Добро утро 💛", subtitle: "Преди всичко друго — за теб." };
+  }
+  if (hour >= 11 && hour < 14) {
+    return name
+      ? { greeting: `Как мина сутринта, ${name} 💛`, subtitle: "Имаме идея за малко почивка." }
+      : { greeting: "Обедна пауза 💛", subtitle: "Дори 20 минути са достатъчни." };
+  }
+  if (hour >= 14 && hour < 18) {
+    return name
+      ? { greeting: `Следобед вече е, ${name} 💛`, subtitle: "Намерихме нещо лесно за тази час." }
+      : { greeting: "Следобедът е твой 💛", subtitle: "Намерихме нещо лесно." };
+  }
+  if (hour >= 18 && hour < 21) {
+    return name
+      ? { greeting: `Добър вечер, ${name} 💛`, subtitle: "Изглежда е дълъг ден. Избрахме нещо лесно." }
+      : { greeting: "Добър вечер 💛", subtitle: "Не е нужно да мислиш. Ние вече направихме това." };
+  }
+  return name
+    ? { greeting: `${name}, нощта е твоя 💛`, subtitle: "Нещо тихо и лесно преди сън." }
+    : { greeting: "Нощта е твоя 💛", subtitle: "Нещо тихо и лесно преди сън." };
 }
 
 function resolveFilters(partial: Partial<Filters>): Filters {
@@ -125,24 +151,13 @@ export default function Home() {
   const surprise = useSurpriseIdea(filters);
 
   const [idea, setIdea] = useState<Activity | null>(null);
-  const [backupIdeas, setBackupIdeas] = useState<Activity[]>([]);
   const [shownIds, setShownIds] = useState<string[]>([]);
-  const [shuffleCount, setShuffleCount] = useState(0);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [done, setDone] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [surpriseLoading, setSurpriseLoading] = useState(false);
-  const [selectedIdea, setSelectedIdea] = useState<Activity | null>(null);
   const [toast, setToast] = useState<string | null>(null);
-
-  // Filter button tooltip & pulse
-  const [showTooltip,    setShowTooltip]    = useState(false);
-  const [filterBtnPulse, setFilterBtnPulse] = useState(false);
-
-  function dismissTooltip() {
-    setShowTooltip(false);
-  }
 
   function showToast(msg: string) {
     setToast(msg);
@@ -166,42 +181,13 @@ export default function Home() {
         city: s.profile.city,
       },
     );
-    const [first, ...rest] = results;
+    const [first] = results;
     if (first) {
       setIdea(first);
-      setBackupIdeas(rest.slice(0, 2));
       setShownIds([first.id]);
       s.addRecentId(first.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Pulse + tooltip — localStorage, shown if never opened filters OR new day
-  useEffect(() => {
-    const today      = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-    const opened     = localStorage.getItem("filtersOpened");
-    const lastVisit  = localStorage.getItem("lastVisitDate");
-    const shouldShow = opened !== "true" || lastVisit !== today;
-    if (!shouldShow) return;
-
-    // Pulse: 2 × 0.8s = 1.6s total
-    setFilterBtnPulse(true);
-    const pulseEnd = setTimeout(() => {
-      setFilterBtnPulse(false);
-      localStorage.setItem("lastVisitDate", today);
-    }, 1600);
-
-    // Tooltip fades in after animation completes
-    const tooltipShow = setTimeout(() => setShowTooltip(true), 1600);
-
-    // Auto-dismiss tooltip after 3s
-    const tooltipHide = setTimeout(() => setShowTooltip(false), 4600);
-
-    return () => {
-      clearTimeout(pulseEnd);
-      clearTimeout(tooltipShow);
-      clearTimeout(tooltipHide);
-    };
   }, []);
 
   function swapIdea(next: Activity) {
@@ -226,20 +212,36 @@ export default function Home() {
     setTimeout(() => {
       const nextShown = [...shownIds, idea.id].slice(-5);
       setShownIds(nextShown);
-      setShuffleCount((c) => c + 1);
       const next = pickIdea(filters, nextShown);
       if (next) swapIdea(next);
     }, 1800);
   }
 
-  function handleRefineApply() {
-    store.setFilter("time", filters.time);
-    store.setFilter("energy", filters.energy);
-    store.setFilter("ctx", filters.ctx);
+  function applyFilter(patch: Partial<Filters>) {
+    const newFilters = { ...filters, ...patch };
+    setFilters(newFilters);
+    if (patch.energy !== undefined) store.setFilter("energy", patch.energy);
+    if (patch.time   !== undefined) store.setFilter("time",   patch.time);
+    if (patch.ctx    !== undefined) store.setFilter("ctx",    patch.ctx);
     setShownIds([]);
-    setShuffleCount(0);
-
     surprise.reset();
+    const s = useMomlyStore.getState();
+    const results = getBestIdeas(
+      allActivities,
+      newFilters,
+      s.profile,
+      s.recentIds,
+      s.userPreferences,
+      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city },
+    );
+    const [first] = results;
+    if (first) {
+      swapIdea(first);
+      setShownIds([first.id]);
+    }
+  }
+
+  function handleNeedsClose() {
     const s = useMomlyStore.getState();
     const results = getBestIdeas(
       allActivities,
@@ -247,38 +249,11 @@ export default function Home() {
       s.profile,
       s.recentIds,
       s.userPreferences,
-      {
-        favorites: s.favorites,
-        completedIds: s.completedIds,
-        city: s.profile.city,
-      },
+      { favorites: s.favorites, completedIds: s.completedIds, city: s.profile.city },
     );
-    const [first, ...rest] = results;
-    if (first) {
-      swapIdea(first);
-      setBackupIdeas(rest.slice(0, 2));
-    }
+    const [first] = results;
+    if (first) swapIdea(first);
     setIsFilterModalOpen(false);
-  }
-
-  function handleConfirmBackup(b: Activity) {
-    const s = useMomlyStore.getState();
-    const exclude = [b.id, ...shownIds];
-    swapIdea(b);
-    const fresh = getBestIdeas(
-      allActivities,
-      filters,
-      s.profile,
-      s.recentIds,
-      s.userPreferences,
-      {
-        favorites: s.favorites,
-        completedIds: s.completedIds,
-        city: s.profile.city,
-      },
-    ).filter((a) => !exclude.includes(a.id));
-    setBackupIdeas(fresh.slice(0, 2));
-    setSelectedIdea(null);
   }
 
   function handleSurprise() {
@@ -290,30 +265,14 @@ export default function Home() {
       const picked = surprise.pick(exclude);
       if (picked) {
         swapIdea(picked);
-        const newShown = [...exclude, picked.id].slice(-5);
-        setShownIds(newShown);
-        const s = useMomlyStore.getState();
-        const fresh = getBestIdeas(
-          allActivities,
-          filters,
-          s.profile,
-          s.recentIds,
-          s.userPreferences,
-          {
-            favorites: s.favorites,
-            completedIds: s.completedIds,
-            city: s.profile.city,
-          },
-        ).filter((a) => !newShown.includes(a.id));
-        setBackupIdeas(fresh.slice(0, 2));
+        setShownIds((prev) => [...prev, picked.id].slice(-5));
       }
       setSurpriseLoading(false);
     }, delay);
   }
 
   // ── Main home ─────────────────────────────────────────────────────────────
-  const headline = dailyHeadline();
-  const hlIdx = headline.text.indexOf(headline.highlight);
+  const contextualGreeting = getContextualGreeting(displayName ?? "");
 
   return (
     <div className={styles.wrap}>
@@ -328,68 +287,37 @@ export default function Home() {
               className={styles.headerLogo}
               priority
             />
-            <p className={styles.greetingText}>
-              {displayName ? `Здравей, ${displayName} 💛` : "Здравей 💛"}
-            </p>
           </div>
-          <h1 className={styles.mainMessage}>
-            {hlIdx >= 0 ? (
-              <>
-                {headline.text.slice(0, hlIdx)}
-                <span className={styles.headlineAccent}>
-                  {headline.highlight}
-                </span>
-                {headline.text.slice(hlIdx + headline.highlight.length)}
-              </>
-            ) : (
-              headline.text
-            )}
-          </h1>
-          <p className={styles.modeSubtitle}>Как си днес?</p>
+          <h1 className={styles.mainMessage}>{contextualGreeting.greeting}</h1>
+          <p className={styles.greetingSubtitle}>{contextualGreeting.subtitle}</p>
         </div>
 
-        {/* ── Context pills ─────────────────────────────────────────────── */}
-        <div className={`${styles.pillsOuter} anim-fade-up`}>
-          <div className={styles.pillsRow}>
-            <span className={styles.pill}>
-              {ENERGY_OPTS.find((o) => o.value === filters.energy)?.emoji}{" "}
-              {ENERGY_OPTS.find((o) => o.value === filters.energy)?.label ??
-                filters.energy}
-            </span>
-            <span className={styles.pill}>
-              {TIME_OPTS.find((o) => o.value === filters.time)?.label ??
-                filters.time}
-            </span>
-            <span className={styles.pill}>
-              {CTX_OPTS.find((o) => o.value === filters.ctx)?.emoji}{" "}
-              {CTX_OPTS.find((o) => o.value === filters.ctx)?.label ??
-                filters.ctx}
-            </span>
-          </div>
-          <div className={styles.filterBtnWrap}>
-            {showTooltip && (
-              <div className={styles.filterTooltip}>
-                Хайде да го нагласим за теб 👆
-              </div>
-            )}
+        {/* ── Energy selector ───────────────────────────────────────────── */}
+        <div className={`${styles.energySection} anim-fade-up`}>
+          <div className={styles.energyHeader}>
+            <p className={styles.energyTitle}>Как си днес?</p>
             <button
-              className={[
-                styles.pillsFilterBtn,
-                filterBtnPulse ? styles.pillsFilterBtnPulse : "",
-              ].join(" ")}
-              onClick={() => {
-                dismissTooltip();
-                localStorage.setItem("filtersOpened", "true");
-                setIsFilterModalOpen(true);
-              }}
-              aria-label="Отвори филтри"
+              className={styles.pillsFilterBtn}
+              onClick={() => setIsFilterModalOpen(true)}
+              aria-label="Филтри"
             >
               <SlidersHorizontal size={15} strokeWidth={2} />
             </button>
           </div>
+          <div className={styles.energyChips}>
+            {ENERGY_OPTS.map((o) => (
+              <button
+                key={o.value}
+                className={[styles.energyChip, filters.energy === o.value ? styles.energyChipSel : ""].join(" ")}
+                onClick={() => applyFilter({ energy: o.value })}
+              >
+                {o.emoji} {o.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* ── Main card + backups with unified refresh transition ───────── */}
+        {/* ── Main card ────────────────────────────────────────────────── */}
         <div
           className={[
             styles.cardsSection,
@@ -412,41 +340,20 @@ export default function Home() {
               onToggleFavorite={() => store.toggleFavorite(idea.id)}
             />
           )}
-
-          {/* ── Backup ideas ────────────────────────────────────────────── */}
-          {backupIdeas.length > 0 && (
-            <div className={styles.backupsRow}>
-              {backupIdeas.map((b) => (
-                <button
-                  key={b.id}
-                  className={styles.backupCard}
-                  onClick={() => setSelectedIdea(b)}
-                >
-                  <span className={styles.backupTitle}>
-                    {b.emoji && (
-                      <span style={{ marginRight: 6 }}>{b.emoji}</span>
-                    )}
-                    {b.title}
-                  </span>
-                  <span className={styles.backupArrow}>→</span>
-                </button>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* ── Surprise me ───────────────────────────────────────────────── */}
         <button
-          className={[
-            styles.surpriseBtn,
-            surpriseLoading ? styles.surpriseBtnLoading : "",
-            "anim-fade-up delay-2",
-          ].join(" ")}
+          className={["anim-fade-up delay-2", styles.surpriseBtn].join(" ")}
           onClick={handleSurprise}
           disabled={surpriseLoading}
+          aria-label="Дай друга идея"
         >
-          <Dice6 size={18} strokeWidth={2} />
-          {surpriseLoading ? "Търся нещо..." : "Изненадай ме"}
+          <RotateCcw
+            size={20}
+            strokeWidth={2}
+            className={surpriseLoading ? styles.surpriseBtnSpin : ""}
+          />
         </button>
 
         {todayDone.length > 0 && (
@@ -471,22 +378,11 @@ export default function Home() {
       {/* ── Toast ────────────────────────────────────────────────────────── */}
       {toast && <div className={styles.toast}>{toast}</div>}
 
-      {/* ── Idea detail modal ────────────────────────────────────────────── */}
-      {selectedIdea && (
-        <IdeaDetailModal
-          idea={selectedIdea}
-          isFavorite={favorites.includes(selectedIdea.id)}
-          onClose={() => setSelectedIdea(null)}
-          onConfirm={() => handleConfirmBackup(selectedIdea)}
-          onToggleFavorite={() => store.toggleFavorite(selectedIdea.id)}
-        />
-      )}
-
       {/* ── Refine modal (bottom sheet) ───────────────────────────────────── */}
       {isFilterModalOpen && (
         <div
           className={styles.modalBackdrop}
-          onClick={() => setIsFilterModalOpen(false)}
+          onClick={handleNeedsClose}
         >
           <div
             className={styles.modalSheet}
@@ -494,10 +390,10 @@ export default function Home() {
           >
             <div className={styles.sheetHandle} />
             <div className={styles.sheetHeader}>
-              <h2 className={styles.refineTitle}>Да го нагласим за теб</h2>
+              <h2 className={styles.refineTitle}>Нагласи за теб</h2>
               <button
                 className={styles.closeBtn}
-                onClick={() => setIsFilterModalOpen(false)}
+                onClick={handleNeedsClose}
                 aria-label="Затвори"
               >
                 <X size={20} strokeWidth={2} />
@@ -511,54 +407,22 @@ export default function Home() {
                   {TIME_OPTS.map((o) => (
                     <button
                       key={o.value}
-                      className={[
-                        styles.chip,
-                        filters.time === o.value ? styles.chipSel : "",
-                      ].join(" ")}
-                      onClick={() =>
-                        setFilters((f) => ({ ...f, time: o.value }))
-                      }
+                      className={[styles.chip, filters.time === o.value ? styles.chipSel : ""].join(" ")}
+                      onClick={() => setFilters((f) => ({ ...f, time: o.value }))}
                     >
                       {o.label}
                     </button>
                   ))}
                 </div>
               </div>
-
-              <div className={styles.refineGroup}>
-                <p className={styles.refineLabel}>Как се чувстваш?</p>
-                <div className={styles.chipRow}>
-                  {ENERGY_OPTS.map((o) => (
-                    <button
-                      key={o.value}
-                      className={[
-                        styles.chip,
-                        filters.energy === o.value ? styles.chipSel : "",
-                      ].join(" ")}
-                      onClick={() =>
-                        setFilters((f) => ({ ...f, energy: o.value }))
-                      }
-                    >
-                      <span className={styles.chipEmoji}>{o.emoji}</span>
-                      <span className={styles.chipText}>{o.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               <div className={styles.refineGroup}>
                 <p className={styles.refineLabel}>Сама ли си или с детето?</p>
                 <div className={styles.chipRow}>
                   {CTX_OPTS.map((o) => (
                     <button
                       key={o.value}
-                      className={[
-                        styles.chip,
-                        filters.ctx === o.value ? styles.chipSel : "",
-                      ].join(" ")}
-                      onClick={() =>
-                        setFilters((f) => ({ ...f, ctx: o.value }))
-                      }
+                      className={[styles.chip, filters.ctx === o.value ? styles.chipSel : ""].join(" ")}
+                      onClick={() => setFilters((f) => ({ ...f, ctx: o.value }))}
                     >
                       <span className={styles.chipEmoji}>{o.emoji}</span>
                       <span className={styles.chipText}>{o.label}</span>
@@ -605,7 +469,7 @@ export default function Home() {
             </div>
 
             <div className={styles.refineCta}>
-              <Btn onClick={handleRefineApply}>Запази</Btn>
+              <Btn onClick={handleNeedsClose}>Готово</Btn>
             </div>
           </div>
         </div>

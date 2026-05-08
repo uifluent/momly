@@ -16,6 +16,7 @@ interface MomlyState {
   setDisplayName: (name: string) => void;
   setCity: (city: string) => void;
   completeOnboarding: () => void;
+  resetStore: () => void;
 
   // ── Decision filters ────────────────────────────────────────────────────────
   filters: Partial<Filters>;
@@ -149,6 +150,18 @@ export const useMomlyStore = create<MomlyState>()(
 
       completeOnboarding: () =>
         set((s) => ({ profile: { ...s.profile, onboardingComplete: true } })),
+
+      resetStore: () =>
+        set({
+          profile: defaultProfile,
+          filters: {},
+          results: [],
+          recentIds: [],
+          acceptedActivity: null,
+          favorites: [],
+          completedIds: {},
+          userPreferences: { likedTags: {}, skippedTags: {} },
+        }),
 
       // ── Filters ─────────────────────────────────────────────────────────────
       filters: {},

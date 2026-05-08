@@ -111,6 +111,13 @@ export default function SavedPage() {
   const [activeTab,   setActiveTab]   = useState<MainTab>("favorites");
   const [typeFilter,  setTypeFilter]  = useState<TypeFilter>("all");
   const [localFavIds, setLocalFavIds] = useState<string[]>(() => getFavoriteLocalItems());
+  const [heartedId,   setHeartedId]   = useState<string | null>(null);
+
+  function handleHeartRemove(id: string, removeFn: () => void) {
+    setHeartedId(null);
+    requestAnimationFrame(() => setHeartedId(id));
+    setTimeout(() => { setHeartedId(null); removeFn(); }, 400);
+  }
 
   const savedActivities    = allActivities.filter((a) => favorites.includes(a.id));
   const localFavItems      = buildLocalFavItems(localFavIds);
@@ -278,6 +285,13 @@ function SavedCard({ activity, onRemove }: { activity: Activity; onRemove: () =>
 
   const [expanded, setExpanded] = useState(false);
   const [done, setDone]         = useState(false);
+  const [hearted, setHearted]   = useState(false);
+
+  function handleHeart() {
+    setHearted(false);
+    requestAnimationFrame(() => setHearted(true));
+    setTimeout(() => { setHearted(false); onRemove(); }, 420);
+  }
 
   function handleDo() {
     markCompleted(activity.id);
@@ -290,7 +304,11 @@ function SavedCard({ activity, onRemove }: { activity: Activity; onRemove: () =>
 
   return (
     <li className={[styles.ideaCard, isCompleted ? styles.cardDone : ""].join(" ")}>
-      <button className={styles.heartBtn} onClick={onRemove} aria-label="Премахни от любими">
+      <button
+        className={[styles.heartBtn, hearted ? "heart-popped" : ""].join(" ")}
+        onClick={handleHeart}
+        aria-label="Премахни от любими"
+      >
         <Heart size={18} strokeWidth={1.75} fill="currentColor" />
       </button>
 

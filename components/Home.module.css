@@ -58,12 +58,97 @@
   color: var(--text-3);
   line-height: 1.5;
 }
-.modeSubtitle {
+.greetingSubtitle {
   font-family: 'Comfortaa', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-3);
-  margin-top: 4px;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ── Context pills ───────────────────────────────────────────────────────────── */
+.pillsOuter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.pillsRow {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pill {
+  padding: 5px 11px;
+  border-radius: 9999px;
+  border: none;
+  background: #EFECEC;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8C7F7A;
+  cursor: default;
+  user-select: none;
+  white-space: nowrap;
+}
+.filterBtnWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.filterTooltip {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  background: var(--text);
+  color: #fff;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: tooltipFadeIn 0.2s ease;
+  z-index: 10;
+}
+.filterTooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 11px;
+  border: 5px solid transparent;
+  border-top-color: var(--text);
+}
+@keyframes tooltipFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pillsFilterBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  border: none;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.pillsFilterBtn:active { transform: scale(0.92); }
+
+@keyframes softPulse {
+  0%   { transform: scale(1);    opacity: 1;   }
+  50%  { transform: scale(1.08); opacity: 0.9; }
+  100% { transform: scale(1);    opacity: 1;   }
+}
+.pillsFilterBtnPulse {
+  animation: softPulse 0.8s ease-in-out 2;
 }
 
 /* ── Daily progress ──────────────────────────────────────────────────────────── */
@@ -127,7 +212,6 @@
 /* ── Upcoming event card ─────────────────────────────────────────────────────── */
 .eventsCarousel {
   display: flex;
-  overflow-x: auto;
   scroll-snap-type: x mandatory;
   gap: 12px;
   -webkit-overflow-scrolling: touch;
@@ -507,19 +591,55 @@
   animation: toastIn 0.2s ease-out both;
 }
 
-/* ── Context pills ───────────────────────────────────────────────────────────── */
-.pillsOuter {
+/* ── Energy selector ─────────────────────────────────────────────────────────── */
+.energySection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.energyHeader {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 6px;
+  justify-content: space-between;
 }
-.pillsRow {
-  flex: 1;
+
+.energyTitle {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.energyChips {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
+
+.energyChip {
+  flex: 1;
+  padding: 9px 6px;
+  border-radius: 10px;
+  border: 1.5px solid #E5E0E0;
+  background: #fff;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.energyChip:active { opacity: 0.72; }
+
+.energyChipSel {
+  border-color: var(--primary);
+  background: #FDF6F5;
+  color: var(--primary);
+}
+
+/* ── Context pills (legacy, kept for saved/page usage) ──────────────────────── */
 .pill {
   padding: 5px 11px;
   border-radius: 9999px;
@@ -532,63 +652,6 @@
   cursor: default;
   user-select: none;
   white-space: nowrap;
-}
-.filterBtnWrap {
-  position: relative;
-  flex-shrink: 0;
-}
-
-.filterTooltip {
-  position: absolute;
-  right: 0;
-  bottom: calc(100% + 8px);
-  background: var(--text);
-  color: #fff;
-  padding: 7px 12px;
-  border-radius: 10px;
-  font-family: 'Comfortaa', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  white-space: nowrap;
-  pointer-events: none;
-  animation: tooltipFadeIn 0.2s ease;
-  z-index: 10;
-}
-.filterTooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  right: 11px;
-  border: 5px solid transparent;
-  border-top-color: var(--text);
-}
-@keyframes tooltipFadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.pillsFilterBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 9999px;
-  border: none;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
-}
-.pillsFilterBtn:active { transform: scale(0.92); }
-
-@keyframes softPulse {
-  0%   { transform: scale(1);    opacity: 1;   }
-  50%  { transform: scale(1.08); opacity: 0.9; }
-  100% { transform: scale(1);    opacity: 1;   }
-}
-.pillsFilterBtnPulse {
-  animation: softPulse 0.8s ease-in-out 2;
 }
 
 /* ── Cards section (main + backups) with refresh transition ─────────────────── */
@@ -640,36 +703,49 @@
   flex-shrink: 0;
 }
 
-/* ── Surprise me button ──────────────────────────────────────────────────────── */
-@keyframes surprisePulse {
-  0%, 100% { opacity: 1;   transform: scale(1);    }
-  50%       { opacity: 0.7; transform: scale(0.97); }
+/* ── Skip button (below backups) ────────────────────────────────────────────── */
+.skipBtn {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 0 2px;
+  text-align: center;
+  width: 100%;
+  transition: color 0.15s;
+}
+.skipBtn:hover { color: var(--text); }
+
+/* ── Refresh button ──────────────────────────────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .surpriseBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  width: 100%;
+  width: 48px;
   height: 48px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-  box-shadow: 0 4px 16px rgba(217, 115, 101, 0.32);
-  font-family: 'Comfortaa', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  background: var(--surface, #fff);
+  color: var(--text-3);
   cursor: pointer;
+  align-self: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: opacity 0.15s, transform 0.1s;
 }
-.surpriseBtn:hover  { opacity: 0.82; }
-.surpriseBtn:active { transform: scale(0.97); opacity: 0.7; }
-.surpriseBtn:disabled { cursor: default; }
+.surpriseBtn:hover  { opacity: 0.75; }
+.surpriseBtn:active { transform: scale(0.92); }
+.surpriseBtn:disabled { cursor: default; opacity: 0.4; }
 
-.surpriseBtnLoading {
-  animation: surprisePulse 0.9s ease-in-out infinite;
+.surpriseBtnSpin {
+  animation: spin 0.7s linear infinite;
 }
 
 .surpriseAgainBtn {

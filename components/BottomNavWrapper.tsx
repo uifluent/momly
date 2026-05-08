@@ -3,7 +3,7 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { BottomNav } from "./BottomNav";
 
-const HIDDEN_ON = ["/login", "/onboarding", "/decide", "/result"];
+const HIDDEN_ON = ["/login", "/onboarding"];
 
 export function BottomNavWrapper() {
   const pathname     = usePathname();
