@@ -1,26 +1,5 @@
 [
   {
-    "id": "plays-19963",
-    "title": "\"Да поЧетем\" 24 часа литература на 24 май",
-    "description": "Заповядайте на площад „Славейков“ да отпразнуваме 24 май по неповторим начин!Да, правилно сте разбрали от заглавието!…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19963/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260521-074756/banner_pochetem.jpg"
-  },
-  {
     "id": "plays-19940",
     "title": "Скаутски лагер в Банско",
     "description": "Какво очаква малките скаути?Приключения сред природата - планински преходи по красиви и безопасни маршрути, посещение…",
@@ -34,1601 +13,13 @@
       "min": 6,
       "max": 12
     },
-    "link": "https://sofia.plays.bg/events/view/19940/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
+    "link": "https://sofia.plays.bg/events/view/19940/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
     "source": "Plays.bg",
     "isClear": true,
     "easyAccess": true,
     "image": "https://sofia.plays.bg/img/events/image/20260519-073529/banner_1.png"
-  },
-  {
-    "id": "plays-19967",
-    "title": "Банкя чества 24 май",
-    "description": "Уважаеми съграждани и гости на град Банкя,Каним ви да отбележим заедно най-светлия български празник - Деня на светит…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19967/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260522-075120/banner_Base%28184%29.png"
-  },
-  {
-    "id": "plays-19964",
-    "title": "Ден на българската азбука, просвета и култура и на славянската книжовност",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19964/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260521-075943/banner_stolica.jpg"
-  },
-  {
-    "id": "plays-18495",
-    "title": "Концерт на книгата",
-    "description": "Уважаеми съграждани, Заповядайте на ежегодния “Концерт на книгата” по случай празника на българската азбука, просвета…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/18495/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260521-080345/banner_koncert.jpg"
-  },
-  {
-    "id": "plays-19956",
-    "title": "Приключение с букви 5",
-    "description": "Този 24 май парк „Гео Милев“ отново ще се превърне в арена за истински откриватели! За пета поредна година ви каним д…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19956/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-123357/banner_bukvi1.jpg"
-  },
-  {
-    "id": "plays-19887",
-    "title": "Лятна приключенска занималня на Витоша с Мачирски Спорт и Био игри",
-    "description": "Това лято Ви очаква лавина от експерименти, спортни активности, игри, наука и творчество! Заповядайте на база Офелиит…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19887/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260511-061132/banner_marchirski.jpg"
-  },
-  {
-    "id": "plays-19826",
-    "title": "Незабравимо лято в конна база \"Алюр\"",
-    "description": "Цената за 5 (пет) лагерни дни с включен транспорт, 3 хранения и всички консумативи е 207,07 евро/405 лв и 181,50 евро…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 5,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19826/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260424-113720/banner_aliur.png"
-  },
-  {
-    "id": "plays-19962",
-    "title": "Летни лагери 2026",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19962/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-142818/banner_kursove%2818%29.png"
-  },
-  {
-    "id": "plays-19944",
-    "title": "Превърнете свободното време пред екрана в полезно приключение с Logiscool!",
-    "description": "Специален комплимент за общността на Sofia Plays!Използвайте промокод SOFIAPLAYS2026LOGI и вземете 15 евро отстъпка з…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 18
-    },
-    "link": "https://sofia.plays.bg/events/view/19944/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260519-111716/banner_Base%28179%29.png"
-  },
-  {
-    "id": "plays-19928",
-    "title": "Творчески предизвикателства: Изкуството на красивите букви",
-    "description": "1. Гост в Музейко – БуквАрт – (Подходящо за деца 5+ години)„БуквАрт“е образователна игра, която превръща буквите в пр…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19928/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260518-095521/banner_Base%28167%29.png"
-  },
-  {
-    "id": "plays-19850",
-    "title": "Лятна Арт Занималня | Студио Арти – Младост и Иван Вазов",
-    "description": "Докато творят, децата създават приятелства, развиват въображението си и се забавляват.Заниманията се водят от препода…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 7,
-      "max": 13
-    },
-    "link": "https://sofia.plays.bg/events/view/19850/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260430-055342/banner_Base%28128%29.png"
-  },
-  {
-    "id": "plays-19833",
-    "title": "ОТКРИЙТЕ МАГИЯТА НА ЛЯТОТО С НАШИТЕ УНИКАЛНИ ОБРАЗОВАТЕЛНИ ПРОГРАМИ",
-    "description": "СУТРЕШНИ ЗАНИМАНИЯ ПО АНГЛИЙСКИ ЕЗИКНашият подход към обучението по английски език е изграден върху принципите за заб…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19833/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260427-122206/banner_785%D1%85440%D1%80%D1%85-AVO-summer.jpg"
-  },
-  {
-    "id": "plays-19825",
-    "title": "ЛЯТНА ЗАНИМАЛНЯ В АДЕЛИ",
-    "description": "Подходящо за деца между 3-6 годиниРаботим в малки групи, с внимание към всяко дете.Местата са ограничени!Запишете дет…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 6
-    },
-    "link": "https://sofia.plays.bg/events/view/19825/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260422-160948/banner_Base%2886%29.png"
-  },
-  {
-    "id": "plays-19904",
-    "title": "Твоята първа книжка",
-    "description": "На 24 май празнуваме буквите, знанието и безкрайното детско въображение! Каним малките откриватели на специално творч…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 5,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19904/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260513-141225/banner_knijka.jpg"
-  },
-  {
-    "id": "plays-18073",
-    "title": "Ателие \"История на ритъма\"",
-    "description": "Времетраене : 75 мин.Подходящо за деца възраст над 6 год.Участниците ще се запознаят с историята на ударните инструме…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/18073/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20250212-162647/banner_ritam.jpg"
-  },
-  {
-    "id": "plays-13701",
-    "title": "Ателие за етнографски костюми на кукли",
-    "description": "Ателие за етнографски костюми на куклиНационален изторически музей, ул. „Витошко лале“ 16, 1404 кв. Бояна, София, Бъл…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 5,
-      "max": 10
-    },
-    "link": "https://sofia.plays.bg/events/view/13701/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20220420-153147/banner_kostiumi2.jpg"
-  },
-  {
-    "id": "plays-19968",
-    "title": "ДЕТСКИ ПРАЗНИЧЕН КОНЦЕРТ ПО СЛУЧАЙ 24 МАЙ В WEST MALL",
-    "description": "На 24 май празнуваме Деня на българската азбука, просвета и култура и на славянската книжовност – един от най-светлит…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19968/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260522-075517/banner_koncert2.jpg"
-  },
-  {
-    "id": "plays-19884",
-    "title": "СВЕТЪТ ОТВЪД ЗЕМЯТА -КОСМИЧЕСКО ПРИКЛЮЧЕНИЕ ЗА ДЕЦА!",
-    "description": "24.05. (СЪБОТА) - 11:00-13:00Ч.ЦЕНА: 35€ / 2 ЧАСАПРИ ЗАПИСВАНЕ СЕ ЗАПЛАЩА КАПАРО 16 €(ИЗИПЕЙ / РЕВОЛЮТ / БАНКОВ ПЪТ).…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 8
-    },
-    "link": "https://sofia.plays.bg/events/view/19884/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260508-130649/banner_kosmos.jpeg"
-  },
-  {
-    "id": "plays-19801",
-    "title": "Пазителят на книгите - рисуване с акрил за деца",
-    "description": "Рисуване с акрилни бои- сгушено коте сред книги.Това, което те очаква е:- усвояване на знания за изобразяване на живо…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 5,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19801/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260420-161836/banner_knigi.jpg"
-  },
-  {
-    "id": "plays-19849",
-    "title": "Юбилеен урок по театър \"Принцесата с ехото\"",
-    "description": "По случай 80-годишнината на Столичнен куклен театър ви каним на специален двудневен „Урок по театър за деца и родител…",
-    "city": "София",
-    "duration": "short",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19849/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260430-055037/banner_Base%28129%29.png"
-  },
-  {
-    "id": "plays-19946",
-    "title": "Лятна занималня – Център и Младост 1",
-    "description": "Лятна занималня за деца от 1. до 4. клас с малки групи, творчески занимания, музика, детски етикет, разходки и спокой…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19946/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-070832/banner_Sofiaplays11.png"
-  },
-  {
-    "id": "plays-19945",
-    "title": "Лято в „Рема“ - развитие на речта, активни игри, творчество и социални умения",
-    "description": "Търсите място, където детето ви ще се чувства спокойно, ще се забавлява и едновременно с това ще развива важни умения…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19945/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-064702/banner_%D0%9B%D0%AF%D0%A2%D0%9D%D0%90%20%D0%97%D0%90%D0%9D%D0%98%D0%9C%D0%90%D0%9B%D0%9D%D0%AF%20%282%29.png"
-  },
-  {
-    "id": "plays-19844",
-    "title": "Детска градина \"Изобретатели\" - майски срещи и прием",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 5,
-      "max": 5
-    },
-    "link": "https://sofia.plays.bg/events/view/19844/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260429-095327/banner_%D0%A1%D0%BE%D1%84%D0%B8%D1%8F%20%D0%B8%D0%B3%D1%80%D0%B0%D0%B5.png"
-  },
-  {
-    "id": "plays-19765",
-    "title": "MindHub лятна академия по програмиране",
-    "description": "ЛИНК ЗА ПОВЕЧЕ ИНФОРМАЦИЯ И ЗАПИСВАНЕKато част от общността на СОФИЯ ИГРАЕ ползвате и уникален промо код с допълнител…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 11
-    },
-    "link": "https://sofia.plays.bg/events/view/19765/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260415-065600/banner_mindhub1.png"
-  },
-  {
-    "id": "plays-19599",
-    "title": "Летен лагер по МУЗИКАЛЕН ТЕАТЪР/ МЮЗИКЪЛ",
-    "description": "13-19 юли 2026 - за Напреднали27юли - 2 август 2026 - за НачинаещиМясто: Корнелия Делукс Линк към страницата ни за вр…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "low",
-      "medium"
-    ],
-    "ageRange": {
-      "min": 7,
-      "max": 18
-    },
-    "link": "https://sofia.plays.bg/events/view/19599/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260306-114641/banner_IMG_7046.png"
-  },
-  {
-    "id": "plays-19902",
-    "title": "Червената шапчица - театър Гестус",
-    "description": "На 24 май от 11:00 часа тази така позната приказна история за Червената шапчица придобива съвременен звук, изпълнен с…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19902/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260513-135102/banner_chervena.jpg"
-  },
-  {
-    "id": "plays-16979",
-    "title": "Снежанка и седемте джуджета",
-    "description": "Класическа приказка, покорила сърцата на десетки поколения и преобърнала представите за истинската красота, която е м…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/16979/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20240508-124219/banner_snejanka11.JPG"
-  },
-  {
-    "id": "plays-14626",
-    "title": "Куклен театър Гринуич - МАЙ",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "short",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/14626/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20230111-160653/banner_green2.jpg"
-  },
-  {
-    "id": "plays-11308",
-    "title": "ЛЕЧЕ-БУБОЛЕЧЕ",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/11308/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20201118-162722/banner_leche2.jpg"
-  },
-  {
-    "id": "plays-59",
-    "title": "Котаракът с чизми",
-    "description": "Приказките на Шарл Перо разкриват един приказен свят, изпълнен с много вълшебства, царе, царици, храбри юнаци, говоре…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 2,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/59/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20240703-100420/banner_kotarak.jpg"
-  },
-  {
-    "id": "plays-31",
-    "title": "Златка златното момиче",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/31/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20250521-123056/banner_zlatka1.jpg"
-  },
-  {
-    "id": "plays-17036",
-    "title": "Театър за деца в лунапарка - „Клоунът и неговите деца\" - Театър Жороси",
-    "description": "24.05 - „Клоунът и неговите деца“ - Театър ЖоросиКой всъщност управлява представлението?Клоунът или неговите деца?Тоз…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low",
-      "medium"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/17036/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260430-073146/banner_maj.jpg"
-  },
-  {
-    "id": "plays-19911",
-    "title": "Кай - тигърът от голямото езеро",
-    "description": "Съвсем близо до един град, в едно езеро – което всъщност било язовир – живеела малка рибка на име Кай. И до днес тя п…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19911/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260513-162500/banner_kaj.jpg"
-  },
-  {
-    "id": "plays-19140",
-    "title": "Ние, врабчетата",
-    "description": "Ние врабчетата сме се излюпили на този свят, за да покажем на Вас хората как да полетите, чуруликате и мечтаете заедн…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19140/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20251112-163531/banner_Copy%20of%20base%28259%29.png"
-  },
-  {
-    "id": "plays-19835",
-    "title": "Лятна ученическа занималня KoalaKids",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19835/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260429-061151/banner_banner_liatnaKK2.jpg"
-  },
-  {
-    "id": "plays-19834",
-    "title": "Детска ясла и градина „Германи“",
-    "description": "• Ранно обучение по немски език с преподаватели и native speakers• Малки групи, които позволяват индивидуално внимани…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 6
-    },
-    "link": "https://sofia.plays.bg/events/view/19834/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260428-084139/banner_785x440_Germani_baner2.png"
-  },
-  {
-    "id": "plays-19785",
-    "title": "Лятна занималня „Знам и Мога“ 2026",
-    "description": "• Магията на числата по метода MathRidersДецата се потапят във вълшебствата на числата и цифрите чрез игри, логически…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19785/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260429-122120/banner_znamimoga11.png"
-  },
-  {
-    "id": "plays-19922",
-    "title": "Лятна ваканция с Пипита 2026",
-    "description": "Лятното ни предложение се състои от два месеца на интензивни забавления в нашата школа, която се намира в кв. Гео Мил…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19922/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260515-055059/banner_pipita.png"
-  },
-  {
-    "id": "plays-19913",
-    "title": "ХАЙДИ – СПАСЯВАНЕТО НА РИСА",
-    "description": "В сърцето на Алпите, сред тучни пасища и побелели върхове, енергичният Хайди и нейният грубоват, но любящ дядо, се на…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19913/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true
-  },
-  {
-    "id": "plays-19875",
-    "title": "Овце детективи",
-    "description": "Овце детективи ни запознава с Джордж – овчар, който всяка вечер чете детективски романи на своите овце, убеден, че те…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 5,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19875/24/May/Sun/2026",
-    "date": "2026-05-24",
-    "dateLabel": "24 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true
-  },
-  {
-    "id": "plays-19802",
-    "title": "Таралежко - рисуване с акрил за деца",
-    "description": "Рисуване с акрилни бои на таралеж с авокадо.Това, което те очаква е:- съставяне на композиция, изобразяване на специф…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 5,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19802/25/May/Mon/2026",
-    "date": "2026-05-25",
-    "dateLabel": "25 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260420-162040/banner_taralejko.jpg"
-  },
-  {
-    "id": "plays-16918",
-    "title": "Грижи за бебето у дома",
-    "description": "В поредния епизод на \"Първи стъпки\" започваме една голяма тема за грижите за бебето. В този епизод те са свързани с к…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/16918/26/May/Tue/2026",
-    "date": "2026-05-26",
-    "dateLabel": "26 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260513-142903/banner_doma.jpg"
-  },
-  {
-    "id": "plays-19809",
-    "title": "Кино ваканция 2026",
-    "description": "И през 2026 година - 5 РАЗЛИЧНИ СЕДМИЦИ!!!15.06-19.06игрално кино, реклама, анимацията преди филмите, посещение на ки…",
-    "city": "София",
-    "duration": "long",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 7,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19809/26/May/Tue/2026",
-    "date": "2026-05-26",
-    "dateLabel": "26 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260421-091134/banner_Base%2870%29.png"
-  },
-  {
-    "id": "plays-14982",
-    "title": "Светлинка",
-    "description": "В един магически купол деца и родители ще се запознаят със Светлинка …Драги родители, разкажете на децата си, че отив…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 2,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/14982/27/May/Wed/2026",
-    "date": "2026-05-27",
-    "dateLabel": "27 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20221220-153959/banner_svetlinka2.jpg"
-  },
-  {
-    "id": "plays-17675",
-    "title": "Първите дни и грижи за бебето - как хомеопатията може да помогне?",
-    "description": "Лектор: д-р Мариян Иванов, хомеопат, специалист по вътрешни болести, основател и собственикна Медицински Център “ФИТО…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/17675/28/May/Thu/2026",
-    "date": "2026-05-28",
-    "dateLabel": "28 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-121248/banner_griji.jpg"
-  },
-  {
-    "id": "plays-17579",
-    "title": "Как се къпе бебе?",
-    "description": "Къпането на новороденото често създава несигурност у родителите: дали водата е с подходящата температура, как да държ…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/17579/28/May/Thu/2026",
-    "date": "2026-05-28",
-    "dateLabel": "28 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260513-143213/banner_kape.jpg"
-  },
-  {
-    "id": "plays-19447",
-    "title": "Приказки по ноти",
-    "description": "БИЛЕТИ ОНЛАЙН ТУКЗаедно ще пеем, ще имитираме животни, ще танцуваме като котки, ще свирим на детски инструменти, ще п…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19447/28/May/Thu/2026",
-    "date": "2026-05-28",
-    "dateLabel": "28 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260209-121045/banner_Copy%20of%20base%28412%29.png"
-  },
-  {
-    "id": "plays-19895",
-    "title": "Kids Expo Sofia",
-    "description": "Светът на децата оживява за ВТОРИ път в центъра на София !След безапелационният си успех с първото и единствено по ро…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19895/29/May/Fri/2026",
-    "date": "2026-05-29",
-    "dateLabel": "29 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260513-063733/banner_kidsexpo.jpg"
-  },
-  {
-    "id": "plays-19954",
-    "title": "Всичко за новороденото",
-    "description": "На 29 май ви очаква специална програма, посветена на най-важните теми за бъдещите и настоящи родители - 12:30, Capell…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19954/29/May/Fri/2026",
-    "date": "2026-05-29",
-    "dateLabel": "29 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-121826/banner_novorodeno.jpg"
-  },
-  {
-    "id": "plays-483",
-    "title": "СПЯЩАТА КРАСАВИЦА - отменен",
-    "description": "Спящата красавица - балет-приказка от П.И. Чайковски, адаптация за деца „Гледахте ли „Спящата красавица“?“ – казват, …",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/483/29/May/Fri/2026",
-    "date": "2026-05-29",
-    "dateLabel": "29 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20160524-093516/banner_spi.jpg"
-  },
-  {
-    "id": "plays-17458",
-    "title": "НЕБИВАЛИЦИ С БУКВИ",
-    "description": "„Небивалици с Букви“ е представление създадено по невероятната книга „Небивалици с буквите от А до Я“ на Цвета Брестн…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/17458/29/May/Fri/2026",
-    "date": "2026-05-29",
-    "dateLabel": "29 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20240830-111819/banner_bukvi2.jpg"
-  },
-  {
-    "id": "plays-19951",
-    "title": "МозайКАП - Мозайка от капачки",
-    "description": "Стани част от голямата картина! 8 години след първите ни ателиета „МозайКАП“ в Зоологическа градина - София, ви каним…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19951/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-111124/banner_mozajka.jpg"
-  },
-  {
-    "id": "plays-19906",
-    "title": "Денят на пчелата I Еднодневен фестивал от Истински мед",
-    "description": "Ще бъде ден, изпълнен с музика, игри, творчество и вдъхновение, в който ще си припомним колко важни са пчелите за наш…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19906/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260513-144557/banner_pcheli.jpg"
-  },
-  {
-    "id": "plays-19917",
-    "title": "Аз рисувам като ... Клод Моне - творческа работилница за деца",
-    "description": "Ателиета, посветени на Клод Моне, за деца ще се проведат на две дати на две локации в София. Билети може да намерите …",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19917/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260514-070131/banner_698557974_992363939988494_2502789874322480809_n.jpg"
-  },
-  {
-    "id": "plays-19891",
-    "title": "Мама, татко и аз: Фестивал за цялото семейство",
-    "description": "Пригответе се за един незабравим ден, изпълнен с усмивки, игри и споделени моменти! „Мама, татко и аз“ е фестивал, съ…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19891/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260511-103035/banner_semejstvo.jpg"
-  },
-  {
-    "id": "plays-19803",
-    "title": "Астронавт - рисуване с акрил за деца",
-    "description": "Рисуване с акрилни бои -астронавт.Това, което те очаква е:- съставяне на композиция в космоса, изобразяване на специф…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 5,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19803/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260420-162224/banner_astro.jpg"
-  },
-  {
-    "id": "plays-19971",
-    "title": "СВЕТЪТ НА ПЕПА ПИГ – ПРИКЛЮЧЕНИЕ С МНОГО СМЯХ!",
-    "description": "30.05. (СЪБОТА) • 11:00 – 13:00 ч.Важно: САМО ЗА ДЕЦА! ПРОГРАМА НА ДЕНЯ:ПЕПА ПИГ КИНО – гледане на любими епизоди с П…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 7
-    },
-    "link": "https://sofia.plays.bg/events/view/19971/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260522-140556/banner_98098E3A-ABAF-4DC5-A599-36D3A1DF0D74.jpeg"
-  },
-  {
-    "id": "plays-19955",
-    "title": "КОНЦЕРТ ЗА МЪНИЦИ",
-    "description": "Каним те на едно различно и незабравимо музикално преживяване за бебета и малки деца. КОНЦЕРТ ЗА МЪНИЦИ е първата им …",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 4
-    },
-    "link": "https://sofia.plays.bg/events/view/19955/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-122320/banner_Copy%20of%20Base%28527%29.png"
-  },
-  {
-    "id": "plays-19950",
-    "title": "Интерактивен театър на английски език: Gruffalo в България Мол",
-    "description": "Заповядайте на незабравимо интерактивно театрално преживяване по обичаната история на Джулия Доналдсън – \"Gruffalo\", …",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 1,
-      "max": 7
-    },
-    "link": "https://sofia.plays.bg/events/view/19950/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-104344/banner_gruf.jpg"
-  },
-  {
-    "id": "plays-19870",
-    "title": "Готварска работилничка за приготвяне на курабийки",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 7
-    },
-    "link": "https://sofia.plays.bg/events/view/19870/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260507-055757/banner_Base%28141%29.png"
-  },
-  {
-    "id": "plays-19957",
-    "title": "Катерачно състезание \"Мама, татко и аз\"",
-    "description": "СЪСТЕЗАНИЕ „МАМА, ТАТКО И АЗ“ Важно:Участието е с предварителна регистрация.Форма за записване https://forms.gle/G1x7…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19957/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260520-123925/banner_sastezanie.jpg"
-  },
-  {
-    "id": "plays-19810",
-    "title": "Стая без стени",
-    "description": "„Това не е просто театър, а място между континентите, където всеки е добре дошъл, независимо откъде идва“, споделят о…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low",
-      "medium"
-    ],
-    "ageRange": {
-      "min": 6,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19810/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260422-120445/banner_Staya-bez-steni-Iskar-website-banner-v2.png"
-  },
-  {
-    "id": "plays-104",
-    "title": "Котаракът Шарл",
-    "description": "Мюзикъл за деца от Жул Леви по приказката на Шарл Перо “Котаракът в чизми”. Хитрият Шарл старателно напътства своя пр…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/104/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20220413-121048/banner_sharl.jpg"
-  },
-  {
-    "id": "plays-19882",
-    "title": "Брас концерт на възглавници",
-    "description": "Малки и големи са добре дошли в уютна и вдъхновяваща атмосфера за първа среща с класическата музика. Любимците на пуб…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19882/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260508-120401/banner_Base%28148%29.png"
-  },
-  {
-    "id": "plays-19867",
-    "title": "Рибарят и Златната рибка",
-    "description": "Къде се крие щастието?Може ли да бъдем щастливи с това, което имаме?Историята ни разказва за дядо и баба, които живея…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19867/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260505-102042/banner_rivae.jpg"
-  },
-  {
-    "id": "plays-19254",
-    "title": "Снежната кралица",
-    "description": "Приятелството е могъща сила...Снежната кралица е приказка за обичта и приятелството, за доброто и злото, за разума и …",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19254/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20251203-155433/banner_kralica233.jpg"
-  },
-  {
-    "id": "plays-17375",
-    "title": "Малкият принц",
-    "description": "„..Ето моята тайна. Тя е много проста: най-хубавото се вижда само със сърцето. Най-същественото е невидимо за очите.“…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 10,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/17375/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20241009-131533/banner_princ55.jpg"
-  },
-  {
-    "id": "plays-16530",
-    "title": "ЧУДНИТЕ ПРИКЛЮЧЕНИЯ НА ПИНОКИО",
-    "description": "Талантливият кукломайстор Джепето е човек на изкуството! С обич и майсторлък, той сътворява своя мечтан син от едно с…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium",
-      "high"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/16530/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260210-104451/banner_pinok1.jpg"
-  },
-  {
-    "id": "plays-11847",
-    "title": "Косе Босе - премиера",
-    "description": "Едва ли има българско дете, което да не знае приказката „Косе Босе”...Но в нашия спектакъл-водевил с кукли и живи акт…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/11847/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20210330-133725/banner_kose1.jpg"
-  },
-  {
-    "id": "plays-2821",
-    "title": "Принцесата и свинарят",
-    "description": "По приказката на Х. К. АндерсенСпектакълът е подходящ за деца над 3 години. Продължителността на представлението е в …",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/2821/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20240117-160743/banner_svinar2.jpg"
-  },
-  {
-    "id": "plays-56",
-    "title": "Макс и Мориц",
-    "description": "„Макс и Мориц“ е литературно произведение за деца, написано на немски език. Негов автор и илюстратор е писателят-хумо…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 4,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/56/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20191010-110621/banner_banner_maks.jpg"
-  },
-  {
-    "id": "plays-19879",
-    "title": "Детски представления в НДК за 1 ЮНИ",
-    "description": "Изненада за малки и големи! 100 билета за детски представления на цена от 10 евро.Зарадвайте своето дете по случай на…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low",
-      "medium"
-    ],
-    "ageRange": {
-      "min": 0,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/19879/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260508-102205/banner_Base%28146%29.png"
-  },
-  {
-    "id": "plays-17",
-    "title": "Една история с две мишки",
-    "description": "Полският мишок и градският мишок ни повеждат през редица изпитания, за да се замислим за приятелството, свободата, от…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 2,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/17/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20191018-110539/banner_banner_mishki.jpg"
-  },
-  {
-    "id": "plays-15344",
-    "title": "Трите прасенца",
-    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "medium"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/15344/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20230308-140938/banner_trite.jpg"
-  },
-  {
-    "id": "plays-18207",
-    "title": "Пипи дългото чорапче - театър Карлсон",
-    "description": "Наситени цветни картини се допълват като пъзел и ни показват, че всички отговори се съдържат в самите нас, стига да с…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low",
-      "medium"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/18207/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20260513-135444/banner_pipi.jpg"
-  },
-  {
-    "id": "plays-2316",
-    "title": "Грозното патенце",
-    "description": "Куклен мюзикъл по приказката на X. К. Андерсен „Грозното патенце\".Кое всъщност е истински хубаво и добро, и кое е лош…",
-    "city": "София",
-    "duration": "medium",
-    "energy": [
-      "low"
-    ],
-    "ageRange": {
-      "min": 3,
-      "max": 12
-    },
-    "link": "https://sofia.plays.bg/events/view/2316/30/May/Sat/2026",
-    "date": "2026-05-30",
-    "dateLabel": "30 май",
-    "source": "Plays.bg",
-    "isClear": true,
-    "easyAccess": true,
-    "image": "https://sofia.plays.bg/img/events/image/20211110-132225/banner_patence.jpg"
   },
   {
     "id": "plays-19961",
@@ -1651,6 +42,134 @@
     "isClear": true,
     "easyAccess": true,
     "image": "https://sofia.plays.bg/img/events/image/20260520-130530/banner_velo.jpg"
+  },
+  {
+    "id": "plays-19989",
+    "title": "Отбелязване на 01 юни – Международния ден на детето",
+    "description": "Празник за Деня на детето в район \"Връбница\"!СО – район \"Връбница\" и МКБППМН - \"Връбница\" канят всички деца и техните…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19989/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260526-113846/banner_Base%28195%29.png"
+  },
+  {
+    "id": "plays-19988",
+    "title": "Да празнуваме заедно - Денят на детето",
+    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19988/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260526-113134/banner_Base%28194%29.png"
+  },
+  {
+    "id": "plays-19985",
+    "title": "Сила, скорост и смях",
+    "description": "Всички наши партньори имат завиден опит в адаптиране на спорта, затова вземи приятел и се забавлявайте заедно. Музика…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium",
+      "high"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19985/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260526-103429/banner_liulin.jpg"
+  },
+  {
+    "id": "plays-19984",
+    "title": "Сила, скорост и смях",
+    "description": "Всички наши партньори имат завиден опит в адаптиране на спорта, затова вземи приятел и се забавлявайте заедно. Музика…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium",
+      "high"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19984/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260526-103220/banner_sila.jpg"
+  },
+  {
+    "id": "plays-19976",
+    "title": "Детски празник",
+    "description": "Празнуваме 1-ви юни ден по-рано с игри, книги, творчество и семейно време!Местната комисия за борба срещу противообще…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "high"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19976/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260526-080445/banner_ovcha.jpg"
+  },
+  {
+    "id": "plays-19895",
+    "title": "Kids Expo Sofia",
+    "description": "Светът на децата оживява за ВТОРИ път в центъра на София !След безапелационният си успех с първото и единствено по ро…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19895/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260513-063733/banner_kidsexpo.jpg"
   },
   {
     "id": "plays-19894",
@@ -1698,7 +217,7 @@
   {
     "id": "plays-19960",
     "title": "София лети: парад на хвърчилата",
-    "description": "София лети: Парадът на хвърчилата тази година обещава да е по-цветен от всякога!На 31 май от 10:30 часа в местността …",
+    "description": "СОФИЯ ЛЕТИ – ПАРАД НА ХВЪРЧИЛАТА ще бъде с творчески характерЩе бъде обособена зона „Летим и творим“, в която ще бъда…",
     "city": "София",
     "duration": "medium",
     "energy": [
@@ -1715,6 +234,49 @@
     "isClear": true,
     "easyAccess": true,
     "image": "https://sofia.plays.bg/img/events/image/20260520-125958/banner_hvarchila.jpg"
+  },
+  {
+    "id": "plays-19993",
+    "title": "Деня на детето с езда, билкови сърца, игри в гората и приключения с животните",
+    "description": "На 31.05.26 г. подгряваме за Деня на детето с езда, билкови сърца, рисуване върху пънчета, игри в гората и приключени…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium",
+      "high"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19993/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260528-043121/banner_Base%28200%29.png"
+  },
+  {
+    "id": "plays-19977",
+    "title": "Ден на детето в \"Слатина\" с \"Ракла фест\"",
+    "description": "Денят на детето идва в район „Слатина“ на 31 май с много игри, мимове, клоуни, артисти на кокили, магьосници, театри …",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19977/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260526-080716/banner_rakla.jpg"
   },
   {
     "id": "plays-19880",
@@ -1736,6 +298,92 @@
     "isClear": true,
     "easyAccess": true,
     "image": "https://sofia.plays.bg/img/events/image/20260508-103323/banner_dvoreca.jpg"
+  },
+  {
+    "id": "plays-19826",
+    "title": "Незабравимо лято в конна база \"Алюр\"",
+    "description": "Цената за 5 (пет) лагерни дни с включен транспорт, 3 хранения и всички консумативи е 207,07 евро/405 лв и 181,50 евро…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "medium",
+      "high"
+    ],
+    "ageRange": {
+      "min": 5,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19826/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260424-113720/banner_aliur.png"
+  },
+  {
+    "id": "plays-19962",
+    "title": "Летни лагери 2026",
+    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19962/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260520-142818/banner_kursove%2818%29.png"
+  },
+  {
+    "id": "plays-19944",
+    "title": "Превърнете свободното време пред екрана в полезно приключение с Logiscool!",
+    "description": "Специален комплимент за общността на Sofia Plays!Използвайте промокод SOFIAPLAYS2026LOGI и вземете 15 евро отстъпка з…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium",
+      "high"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 18
+    },
+    "link": "https://sofia.plays.bg/events/view/19944/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260526-114709/banner_Sofia%20plays%20%284%29.png"
+  },
+  {
+    "id": "plays-19850",
+    "title": "Лятна Арт Занималня | Студио Арти – Младост и Иван Вазов",
+    "description": "Докато творят, децата създават приятелства, развиват въображението си и се забавляват.Заниманията се водят от препода…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 7,
+      "max": 13
+    },
+    "link": "https://sofia.plays.bg/events/view/19850/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260430-055342/banner_Base%28128%29.png"
   },
   {
     "id": "plays-19952",
@@ -1781,6 +429,27 @@
     "image": "https://sofia.plays.bg/img/events/image/20260522-140225/banner_Base%28185%29.png"
   },
   {
+    "id": "plays-19992",
+    "title": "ПРЕДИ ГЛАГОЛИЦАТА И СЛЕД ТОВА",
+    "description": "Елате с нас на пътешествие из залите на Националния археологически музей, за да открием първите писмени знаци, които …",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 7,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19992/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260527-084903/banner_%D0%B0%D1%82%D0%B5%D0%BB%D0%B8%D0%B5%20%D0%B3%D0%BB%D0%B0%D0%B3%D0%BE%D0%BB%D0%B8%D1%86%D0%B0%20%281%29.png"
+  },
+  {
     "id": "plays-19804",
     "title": "Блуи - рисуване за деца",
     "description": "Събитието е подходящо за деца над 5 години.Цена с включени материали: 18.50 евро/36.18 лв, продължителност 1,30 чНужн…",
@@ -1821,6 +490,91 @@
     "isClear": true,
     "easyAccess": true,
     "image": "https://sofia.plays.bg/img/events/image/20260508-103949/banner_sarce.jpg"
+  },
+  {
+    "id": "plays-19946",
+    "title": "Лятна занималня – Център и Младост 1",
+    "description": "Лятна занималня за деца от 1. до 4. клас с малки групи, творчески занимания, музика, детски етикет, разходки и спокой…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19946/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260520-070832/banner_Sofiaplays11.png"
+  },
+  {
+    "id": "plays-19945",
+    "title": "Лято в „Рема“ - развитие на речта, активни игри, творчество и социални умения",
+    "description": "Търсите място, където детето ви ще се чувства спокойно, ще се забавлява и едновременно с това ще развива важни умения…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium",
+      "high"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19945/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260520-064702/banner_%D0%9B%D0%AF%D0%A2%D0%9D%D0%90%20%D0%97%D0%90%D0%9D%D0%98%D0%9C%D0%90%D0%9B%D0%9D%D0%AF%20%282%29.png"
+  },
+  {
+    "id": "plays-19844",
+    "title": "Детска градина \"Изобретатели\" - майски срещи и прием",
+    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 5,
+      "max": 5
+    },
+    "link": "https://sofia.plays.bg/events/view/19844/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260429-095327/banner_%D0%A1%D0%BE%D1%84%D0%B8%D1%8F%20%D0%B8%D0%B3%D1%80%D0%B0%D0%B5.png"
+  },
+  {
+    "id": "plays-19765",
+    "title": "MindHub лятна академия по програмиране",
+    "description": "ЛИНК ЗА ПОВЕЧЕ ИНФОРМАЦИЯ И ЗАПИСВАНЕKато част от общността на СОФИЯ ИГРАЕ ползвате и уникален промо код с допълнител…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 11
+    },
+    "link": "https://sofia.plays.bg/events/view/19765/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260415-065600/banner_mindhub1.png"
   },
   {
     "id": "plays-12986",
@@ -1931,6 +685,28 @@
     "image": "https://sofia.plays.bg/img/events/image/20260415-132246/banner_lightson.png"
   },
   {
+    "id": "plays-19599",
+    "title": "Летен лагер по МУЗИКАЛЕН ТЕАТЪР/ МЮЗИКЪЛ",
+    "description": "13-19 юли 2026 - за Напреднали27юли - 2 август 2026 - за НачинаещиМясто: Корнелия Делукс Линк към страницата ни за вр…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "low",
+      "medium"
+    ],
+    "ageRange": {
+      "min": 7,
+      "max": 18
+    },
+    "link": "https://sofia.plays.bg/events/view/19599/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260306-114641/banner_IMG_7046.png"
+  },
+  {
     "id": "plays-16933",
     "title": "Трите прасенца",
     "description": "Една много смешна, наивна и изключително забавна приказка, която ще Ви остави с привкус на детство, безгрижие и радос…",
@@ -2016,6 +792,48 @@
     "image": "https://sofia.plays.bg/img/events/image/20221116-103245/banner_emil.jpg"
   },
   {
+    "id": "plays-14626",
+    "title": "Куклен театър Гринуич - МАЙ",
+    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
+    "city": "София",
+    "duration": "short",
+    "energy": [
+      "low"
+    ],
+    "ageRange": {
+      "min": 3,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/14626/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20230111-160653/banner_green2.jpg"
+  },
+  {
+    "id": "plays-11847",
+    "title": "Косе Босе - премиера",
+    "description": "Едва ли има българско дете, което да не знае приказката „Косе Босе”...Но в нашия спектакъл-водевил с кукли и живи акт…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "low"
+    ],
+    "ageRange": {
+      "min": 3,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/11847/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20210330-133725/banner_kose1.jpg"
+  },
+  {
     "id": "plays-3004",
     "title": "КОФИЧКА С ЛОПАТКА",
     "description": "\"Детските кофички, пълни с игри…който не вярва, нека провери“Заповядайте да се уверите колко много неща могат да изск…",
@@ -2079,6 +897,28 @@
     "image": "https://sofia.plays.bg/img/events/image/20191024-161137/banner_banner_pin0.jpg"
   },
   {
+    "id": "plays-19879",
+    "title": "Детски представления в НДК за 1 ЮНИ",
+    "description": "Изненада за малки и големи! 100 билета за детски представления на цена от 10 евро.Зарадвайте своето дете по случай на…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "low",
+      "medium"
+    ],
+    "ageRange": {
+      "min": 0,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19879/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260508-102205/banner_Base%28146%29.png"
+  },
+  {
     "id": "plays-19049",
     "title": "Новите дрехи на краля",
     "description": "Трябва да обичаме, да си играем, да бъдем искрени, да не прогонваме детето от себе си. Това е посланието на букета от…",
@@ -2098,6 +938,28 @@
     "isClear": true,
     "easyAccess": true,
     "image": "https://sofia.plays.bg/img/events/image/20251023-063952/banner_Copy%20of%20base%28233%29.png"
+  },
+  {
+    "id": "plays-17036",
+    "title": "Театър за деца в лунапарка - „Палечка\" - Театър Гестус",
+    "description": "31.05 - „Палечка“ - Театър ГестусКолко смелост трябва, за да последваш сърцето си? „Палечка“ оживява в магичен спекта…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "low",
+      "medium"
+    ],
+    "ageRange": {
+      "min": 3,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/17036/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260430-073146/banner_maj.jpg"
   },
   {
     "id": "plays-6620",
@@ -2141,5 +1003,192 @@
     "isClear": true,
     "easyAccess": true,
     "image": "https://sofia.plays.bg/img/events/image/20220302-153258/banner_marzelivka.jpg"
+  },
+  {
+    "id": "plays-19835",
+    "title": "Лятна ученическа занималня KoalaKids",
+    "description": "Детска ясла и градина „Германи“ е място, където детството започва спокойно, уверено и с вдъхновение. С повече от 15 г…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19835/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260429-061151/banner_banner_liatnaKK2.jpg"
+  },
+  {
+    "id": "plays-19834",
+    "title": "Детска ясла и градина „Германи“",
+    "description": "• Ранно обучение по немски език с преподаватели и native speakers• Малки групи, които позволяват индивидуално внимани…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 6
+    },
+    "link": "https://sofia.plays.bg/events/view/19834/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260428-084139/banner_785x440_Germani_baner2.png"
+  },
+  {
+    "id": "plays-19785",
+    "title": "Лятна занималня „Знам и Мога“ 2026",
+    "description": "• Магията на числата по метода MathRidersДецата се потапят във вълшебствата на числата и цифрите чрез игри, логически…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19785/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260429-122120/banner_znamimoga11.png"
+  },
+  {
+    "id": "plays-20000",
+    "title": "Мъмбо Джъмбо",
+    "description": "Не е лесно да си малък, но е трудно и да си голям. Това разбира малкият хипопотам Мъмбо Джъмбо, когато изяжда една ма…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 4,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/20000/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true
+  },
+  {
+    "id": "plays-19999",
+    "title": "Момчето делфин 2: Пазителят на морето",
+    "description": "В „Момчето делфин 2“ любимият морски герой отново се впуска в голямо приключение! Заедно със своя брат и верните си п…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium",
+      "high"
+    ],
+    "ageRange": {
+      "min": 5,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19999/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true
+  },
+  {
+    "id": "plays-19922",
+    "title": "Лятна ваканция с Пипита 2026",
+    "description": "Лятното ни предложение се състои от два месеца на интензивни забавления в нашата школа, която се намира в кв. Гео Мил…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium",
+      "high"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19922/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260515-055059/banner_pipita.png"
+  },
+  {
+    "id": "plays-19913",
+    "title": "ХАЙДИ – СПАСЯВАНЕТО НА РИСА",
+    "description": "В сърцето на Алпите, сред тучни пасища и побелели върхове, енергичният Хайди и нейният грубоват, но любящ дядо, се на…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 6,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19913/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true
+  },
+  {
+    "id": "plays-19875",
+    "title": "Овце детективи",
+    "description": "Овце детективи ни запознава с Джордж – овчар, който всяка вечер чете детективски романи на своите овце, убеден, че те…",
+    "city": "София",
+    "duration": "medium",
+    "energy": [
+      "medium"
+    ],
+    "ageRange": {
+      "min": 5,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19875/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true
+  },
+  {
+    "id": "plays-19809",
+    "title": "Кино ваканция 2026",
+    "description": "И през 2026 година - 5 РАЗЛИЧНИ СЕДМИЦИ!!!15.06-19.06игрално кино, реклама, анимацията преди филмите, посещение на ки…",
+    "city": "София",
+    "duration": "long",
+    "energy": [
+      "low"
+    ],
+    "ageRange": {
+      "min": 7,
+      "max": 12
+    },
+    "link": "https://sofia.plays.bg/events/view/19809/31/May/Sun/2026",
+    "date": "2026-05-31",
+    "dateLabel": "31 май",
+    "source": "Plays.bg",
+    "isClear": true,
+    "easyAccess": true,
+    "image": "https://sofia.plays.bg/img/events/image/20260421-091134/banner_Base%2870%29.png"
   }
 ]
